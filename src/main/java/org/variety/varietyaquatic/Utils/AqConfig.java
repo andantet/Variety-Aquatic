@@ -1,11 +1,6 @@
-package org.variety.variety_aquatic.Util;
-
-import java.io.IOException;
-
+package org.variety.varietyaquatic.Utils;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Properties;
 
 public class AqConfig {
@@ -34,14 +29,14 @@ public class AqConfig {
         return Double.parseDouble(aqprop.getProperty(key));
     }
 
-    private final File file = new File("./config/TexMods/Aquatic.config");
+    private File file = new File("./config/TexMods/Variety-Aquatic.config");
 
     private void load() {
         loaded = true;
         try {
-            Files.createDirectories(Paths.get("./config/TexMods/"));
+            new File("./config/TexMods").mkdir();
 
-            if(file.exists() && file.length() != 0) {
+            if(file.exists()) {
                 var reader = new FileReader(file);
                 aqprop.load(reader);
                 reader.close();
@@ -49,15 +44,13 @@ public class AqConfig {
                 var writer = new FileOutputStream(file);
                 file.createNewFile();
                 aqprop.setProperty("config.version","1");
-                aqprop.setProperty("sunfish.health","30.0");
-                aqprop.setProperty("sunfish.speed","2.5");
                 aqprop.setProperty("shark.health","30.0");
                 aqprop.setProperty("shark.speed","2.5");
                 aqprop.setProperty("shark.attack_speed","4.0");
                 aqprop.setProperty("shark.follow","32.0");
                 aqprop.setProperty("shark.damage","8.0");
                 aqprop.setProperty("shark.knockback","0.1");
-                aqprop.store(writer, "Configuration file for aquatic from Aqmods");
+                aqprop.store(writer, "Configuration file for Variety Savanna mod");
                 writer.close();
             }
         } catch (IOException e) {
