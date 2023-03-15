@@ -19,6 +19,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -183,8 +184,11 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         this.goalSelector.add(9, new HermitcrabEntity.WanderOnLandGoal(this, 1.0, 100));
     }
 
-    public static DefaultAttributeContainer.Builder createTurtleAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 30.0).add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25);
+
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return AnimalEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 30)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1);
     }
 
     @Override

@@ -1,6 +1,10 @@
 {
   "entity.varietyaquatic.shark": "Shark",
   "entity.varietyaquatic.sunfish": "Sunfish",
+  "entity.varietyaquatic.jellyfish": "Jellyfish",
+  "entity.varietyaquatic.hermitcrab": "Hermit Crab",
   "item.varietyaquatic.shark_egg": "Shark Spawn Egg",
-  "item.varietyaquatic.sunfish_egg": "Sunfish Spawn Egg"
+  "item.varietyaquatic.sunfish_egg": "Sunfish Spawn Egg",
+  "item.varietyaquatic.hermitcrab_egg": "Hermit Crab Spawn Egg",
+  "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg"
 }

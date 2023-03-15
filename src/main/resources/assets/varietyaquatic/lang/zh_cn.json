@@ -1,0 +1,10 @@
+{
+  "entity.varietyaquaticforge.sunfish": "翻车鱼",
+  "entity.varietyaquaticforge.shark": "鲨鱼",
+  "entity.varietyaquatic.jellyfish": "Jellyfish",
+  "entity.varietyaquatic.hermitcrab": "Hermit Crab",
+  "item.varietyaquaticforge.shark_spawn_egg":"鲨鱼刷怪蛋",
+  "item.varietyaquaticforge.sunfish_spawn_egg":"翻车鱼刷怪蛋",
+  "item.varietyaquatic.hermitcrab_egg": "Hermit Crab Spawn Egg",
+  "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg"
+}
