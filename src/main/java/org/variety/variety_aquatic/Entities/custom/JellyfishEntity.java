@@ -7,7 +7,6 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.Angerable;
@@ -68,12 +67,13 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
     protected void initGoals() {
         this.goalSelector.add(0, new JellyfishEntity.SwimGoal(this));
         this.goalSelector.add(1, new JellyfishEntity.AttackGoal());
-        this.goalSelector.add(1, new JellyfishEntity.EscapeAttackerGoal());
+        this.goalSelector.add(2, new JellyfishEntity.EscapeAttackerGoal());
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED,2);
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
@@ -207,14 +207,14 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
                 float f = this.thrustTimer / 3.1415927F;
                 this.tentacleAngle = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
                 if ((double)f > 0.75) {
-                    this.swimVelocityScale = 1.0F;
+                    this.swimVelocityScale = 0.8F;
                     this.turningSpeed = 1.0F;
                 } else {
                     this.turningSpeed *= 0.8F;
                 }
             } else {
                 this.tentacleAngle = 0.0F;
-                this.swimVelocityScale *= 0.9F;
+                this.swimVelocityScale *= 0.6F;
                 this.turningSpeed *= 0.99F;
             }
 
@@ -277,7 +277,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
     }
 
     protected ParticleEffect getInkParticle() {
-        return ParticleTypes.SQUID_INK;
+        return ParticleTypes.DRIPPING_WATER;
     }
 
     public void travel(Vec3d movementInput) {

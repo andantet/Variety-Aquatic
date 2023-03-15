@@ -16,6 +16,7 @@ import org.variety.variety_aquatic.Entities.custom.HermitcrabEntity;
 import org.variety.variety_aquatic.Entities.custom.JellyfishEntity;
 import org.variety.variety_aquatic.Entities.custom.SharkEntity;
 import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
+import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib.GeckoLib;
 
@@ -28,6 +29,7 @@ public class Variety_Aquatic implements ModInitializer {
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
+        ModItems.registerModItems();
         ModWorldGen.generateWorldGen();
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());

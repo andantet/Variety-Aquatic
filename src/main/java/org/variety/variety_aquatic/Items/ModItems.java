@@ -44,4 +44,9 @@ public class ModItems {
     public static void addToItemGroup(ItemGroup group, Item item) {
         ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
     }
+    public static void registerModItems() {
+        Variety_Aquatic.LOGGER.debug("Registering Mod Items for " + Variety_Aquatic.MOD_ID);
+
+        addItemsToItemGroups();
+    }
 }

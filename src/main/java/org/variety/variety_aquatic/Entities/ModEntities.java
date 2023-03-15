@@ -18,16 +18,16 @@ public class ModEntities {
     public static final EntityType<SharkEntity> SHARK = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "shark"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SharkEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 1.5f)).build());
+                    .dimensions(EntityDimensions.fixed(1.3f, 1.6f)).build());
 
     public static final EntityType<SunfishEntity> SUNFISH = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "sunfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SunfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
     public static final EntityType<JellyfishEntity> JELLYFISH = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "jellyfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, JellyfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1f, 1.2f)).build());
 
     public static final EntityType<HermitcrabEntity> HERMITCRAB = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "hermitcrab"),

@@ -22,6 +22,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,6 +35,8 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -50,11 +53,10 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Predicate;
 
-public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
+public class HermitcrabEntity extends TameableEntity implements GeoEntity {
     private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
     private static final TrackedData<BlockPos> HOME_POS = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
-    private static final TrackedData<Boolean> HAS_EGG = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> DIGGING_SAND = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<BlockPos> TRAVEL_POS = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
     private static final TrackedData<Boolean> LAND_BOUND = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -64,7 +66,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
     public static final Predicate<LivingEntity> BABY_TURTLE_ON_LAND_FILTER = entity -> entity.isBaby() && !entity.isTouchingWater();
 
     public HermitcrabEntity(EntityType<? extends HermitcrabEntity> entityType, World world) {
-        super((EntityType<? extends AnimalEntity>)entityType, world);
+        super((EntityType<? extends TameableEntity>)entityType, world);
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0f);
         this.setPathfindingPenalty(PathNodeType.DOOR_IRON_CLOSED, -1.0f);
         this.setPathfindingPenalty(PathNodeType.DOOR_WOOD_CLOSED, -1.0f);
@@ -89,13 +91,6 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         return this.dataTracker.get(TRAVEL_POS);
     }
 
-    public boolean hasEgg() {
-        return this.dataTracker.get(HAS_EGG);
-    }
-
-    void setHasEgg(boolean hasEgg) {
-        this.dataTracker.set(HAS_EGG, hasEgg);
-    }
 
     public boolean isDiggingSand() {
         return this.dataTracker.get(DIGGING_SAND);
@@ -126,7 +121,6 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(HOME_POS, BlockPos.ORIGIN);
-        this.dataTracker.startTracking(HAS_EGG, false);
         this.dataTracker.startTracking(TRAVEL_POS, BlockPos.ORIGIN);
         this.dataTracker.startTracking(LAND_BOUND, false);
         this.dataTracker.startTracking(ACTIVELY_TRAVELING, false);
@@ -139,7 +133,6 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         nbt.putInt("HomePosX", this.getHomePos().getX());
         nbt.putInt("HomePosY", this.getHomePos().getY());
         nbt.putInt("HomePosZ", this.getHomePos().getZ());
-        nbt.putBoolean("HasEgg", this.hasEgg());
         nbt.putInt("TravelPosX", this.getTravelPos().getX());
         nbt.putInt("TravelPosY", this.getTravelPos().getY());
         nbt.putInt("TravelPosZ", this.getTravelPos().getZ());
@@ -152,7 +145,6 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         int k = nbt.getInt("HomePosZ");
         this.setHomePos(new BlockPos(i, j, k));
         super.readCustomDataFromNbt(nbt);
-        this.setHasEgg(nbt.getBoolean("HasEgg"));
         int l = nbt.getInt("TravelPosX");
         int m = nbt.getInt("TravelPosY");
         int n = nbt.getInt("TravelPosZ");
@@ -173,13 +165,13 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new HermitcrabEntity.TurtleEscapeDangerGoal(this, 1.2));
-        this.goalSelector.add(1, new HermitcrabEntity.MateGoal(this, 1.0));
-        this.goalSelector.add(1, new HermitcrabEntity.LayEggGoal(this, 1.0));
+        this.goalSelector.add(0, new HermitcrabEntity.HermitcrabEscapeDangerGoal(this, 1.2));
+        this.goalSelector.add(1, new AnimalMateGoal(this, 1.0D));
+
         this.goalSelector.add(2, new TemptGoal(this, 1.1, BREEDING_ITEM, false));
-        this.goalSelector.add(3, new HermitcrabEntity.WanderInWaterGoal(this, 1.0));
+        //this.goalSelector.add(3, new HermitcrabEntity.WanderInWaterGoal(this, 1.0));
         this.goalSelector.add(4, new HermitcrabEntity.GoHomeGoal(this, 1.0));
-        this.goalSelector.add(7, new HermitcrabEntity.TravelGoal(this, 1.0));
+        //this.goalSelector.add(7, new HermitcrabEntity.TravelGoal(this, 1.0));
         this.goalSelector.add(8, new LookAtEntityGoal(this, PlayerEntity.class, 8.0f));
         this.goalSelector.add(9, new HermitcrabEntity.WanderOnLandGoal(this, 1.0, 100));
     }
@@ -256,7 +248,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
 
     @Override
     public boolean canEat() {
-        return super.canEat() && !this.hasEgg();
+        return super.canEat();
     }
 
     @Override
@@ -269,21 +261,34 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         return this.isBaby() ? 0.3f : 1.0f;
     }
 
+    /*
     @Override
     protected EntityNavigation createNavigation(World world) {
         return new HermitcrabEntity.TurtleSwimNavigation(this, world);
-    }
+   }
+*/
+
 
     @Override
-    @Nullable
+
+
     public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
         return ModEntities.HERMITCRAB.create(world);
     }
 
-    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return stack.isOf(Blocks.SEAGRASS.asItem());
     }
+
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        boolean bl = this.isBreedingItem(player.getStackInHand(hand));
+        if (!bl && !player.shouldCancelInteraction()) {
+            return ActionResult.success(this.world.isClient);
+        } else {
+            return super.interactMob(player, hand);
+        }
+    }
+
 
     @Override
     public float getPathfindingFavor(BlockPos pos, WorldView world) {
@@ -405,9 +410,9 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         }
     }
 
-    static class TurtleEscapeDangerGoal
+    static class HermitcrabEscapeDangerGoal
             extends EscapeDangerGoal {
-        TurtleEscapeDangerGoal(HermitcrabEntity hermitcrab, double speed) {
+        HermitcrabEscapeDangerGoal(HermitcrabEntity hermitcrab, double speed) {
             super(hermitcrab, speed);
         }
 
@@ -427,94 +432,10 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         }
     }
 
-    static class MateGoal
-            extends AnimalMateGoal {
-        private final HermitcrabEntity hermitcrab;
 
-        MateGoal(HermitcrabEntity hermitcrab, double speed) {
-            super(hermitcrab, speed);
-            this.hermitcrab = hermitcrab;
-        }
 
-        @Override
-        public boolean canStart() {
-            return super.canStart() && !this.hermitcrab.hasEgg();
-        }
 
-        @Override
-        protected void breed() {
-            ServerPlayerEntity serverPlayerEntity = this.animal.getLovingPlayer();
-            if (serverPlayerEntity == null && this.mate.getLovingPlayer() != null) {
-                serverPlayerEntity = this.mate.getLovingPlayer();
-            }
-            if (serverPlayerEntity != null) {
-                serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-                Criteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, null);
-            }
-            this.hermitcrab.setHasEgg(true);
-            this.animal.setBreedingAge(6000);
-            this.mate.setBreedingAge(6000);
-            this.animal.resetLoveTicks();
-            this.mate.resetLoveTicks();
-            Random random = this.animal.getRandom();
-            if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                this.world.spawnEntity(new ExperienceOrbEntity(this.world, this.animal.getX(), this.animal.getY(), this.animal.getZ(), random.nextInt(7) + 1));
-            }
-        }
-    }
-
-    static class LayEggGoal
-            extends MoveToTargetPosGoal {
-        private final HermitcrabEntity hermitcrab;
-
-        LayEggGoal(HermitcrabEntity hermitcrab, double speed) {
-            super(hermitcrab, speed, 16);
-            this.hermitcrab = hermitcrab;
-        }
-
-        @Override
-        public boolean canStart() {
-            if (this.hermitcrab.hasEgg() && this.hermitcrab.getHomePos().isWithinDistance(this.hermitcrab.getPos(), 9.0)) {
-                return super.canStart();
-            }
-            return false;
-        }
-
-        @Override
-        public boolean shouldContinue() {
-            return super.shouldContinue() && this.hermitcrab.hasEgg() && this.hermitcrab.getHomePos().isWithinDistance(this.hermitcrab.getPos(), 9.0);
-        }
-
-        @Override
-        public void tick() {
-            super.tick();
-            BlockPos blockPos = this.hermitcrab.getBlockPos();
-            if (!this.hermitcrab.isTouchingWater() && this.hasReached()) {
-                if (this.hermitcrab.sandDiggingCounter < 1) {
-                    this.hermitcrab.setDiggingSand(true);
-                } else if (this.hermitcrab.sandDiggingCounter > this.getTickCount(200)) {
-                    World world = this.hermitcrab.world;
-                    world.playSound(null, blockPos, SoundEvents.ENTITY_TURTLE_LAY_EGG, SoundCategory.BLOCKS, 0.3f, 0.9f + world.random.nextFloat() * 0.2f);
-                    world.setBlockState(this.targetPos.up(), (BlockState)Blocks.TURTLE_EGG.getDefaultState().with(TurtleEggBlock.EGGS, this.hermitcrab.random.nextInt(4) + 1), Block.NOTIFY_ALL);
-                    this.hermitcrab.setHasEgg(false);
-                    this.hermitcrab.setDiggingSand(false);
-                    this.hermitcrab.setLoveTicks(600);
-                }
-                if (this.hermitcrab.isDiggingSand()) {
-                    ++this.hermitcrab.sandDiggingCounter;
-                }
-            }
-        }
-
-        @Override
-        protected boolean isTargetPos(WorldView world, BlockPos pos) {
-            if (!world.isAir(pos.up())) {
-                return false;
-            }
-            return TurtleEggBlock.isSand(world, pos);
-        }
-    }
-
+/*
     static class WanderInWaterGoal
             extends MoveToTargetPosGoal {
         private static final int field_30385 = 1200;
@@ -552,6 +473,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
             return world.getBlockState(pos).isOf(Blocks.WATER);
         }
     }
+    */
 
     static class GoHomeGoal
             extends Goal {
@@ -570,9 +492,6 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         public boolean canStart() {
             if (this.hermitcrab.isBaby()) {
                 return false;
-            }
-            if (this.hermitcrab.hasEgg()) {
-                return true;
             }
             if (this.hermitcrab.getRandom().nextInt(HermitcrabEntity.GoHomeGoal.toGoalTicks(700)) != 0) {
                 return false;
@@ -622,6 +541,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         }
     }
 
+    /*
     static class TravelGoal
             extends Goal {
         private final HermitcrabEntity hermitcrab;
@@ -635,7 +555,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
 
         @Override
         public boolean canStart() {
-            return !this.hermitcrab.isLandBound() && !this.hermitcrab.hasEgg() && this.hermitcrab.isTouchingWater();
+            return !this.hermitcrab.isLandBound() && this.hermitcrab.isTouchingWater();
         }
 
         @Override
@@ -691,6 +611,8 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
         }
     }
 
+     */
+
     static class WanderOnLandGoal
             extends WanderAroundGoal {
         private final HermitcrabEntity hermitcrab;
@@ -702,13 +624,13 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
 
         @Override
         public boolean canStart() {
-            if (!(this.mob.isTouchingWater() || this.hermitcrab.isLandBound() || this.hermitcrab.hasEgg())) {
+            if (!(this.mob.isTouchingWater() || this.hermitcrab.isLandBound())) {
                 return super.canStart();
             }
             return false;
         }
     }
-
+/*
     static class TurtleSwimNavigation
             extends AmphibiousSwimNavigation {
         TurtleSwimNavigation(HermitcrabEntity owner, World world) {
@@ -725,5 +647,7 @@ public class HermitcrabEntity extends AnimalEntity implements GeoEntity {
             return !this.world.getBlockState(pos.down()).isAir();
         }
     }
+
+ */
 }
 

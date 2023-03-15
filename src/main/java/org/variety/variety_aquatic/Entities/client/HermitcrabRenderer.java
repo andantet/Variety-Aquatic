@@ -26,6 +26,8 @@ public class HermitcrabRenderer extends GeoEntityRenderer<HermitcrabEntity> {
     @Override
     public void preRender(MatrixStack poseStack, HermitcrabEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
-        poseStack.scale(1.2F, 1.2F, 1.2F); }
+        if (animatable.isBaby()) { poseStack.scale(0.7F, 0.7F, 0.7F); }
+        else poseStack.scale(1.2F, 1.2F, 1.2F); }
+
 
 }

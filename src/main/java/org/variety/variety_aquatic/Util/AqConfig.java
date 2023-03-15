@@ -55,11 +55,13 @@ public class AqConfig {
                 reader.close();
 
                 double configversion = getDoubleProperty("config.version");
-                if (configversion != 1.1) {
+                if (configversion != 1.2) {
                     file.delete();
                     file.createNewFile();
                     var writer = new FileOutputStream(file);
-                    aqprop.setProperty("config.version", "1.1");
+                    aqprop.setProperty("config.version", "1.2");
+                    aqprop.setProperty("jellyfish.spawnweight", "50");
+                    aqprop.setProperty("hermitcrab.spawnweight", "50");
                     aqprop.setProperty("sunfish.health", "30.0");
                     aqprop.setProperty("sunfish.speed", "2.5");
                     aqprop.setProperty("sunfish.spawnweight", "50");
@@ -77,7 +79,9 @@ public class AqConfig {
             } else {
                 var writer = new FileOutputStream(file);
                 file.createNewFile();
-                aqprop.setProperty("config.version", "1.1");
+                aqprop.setProperty("config.version", "1.2");
+                aqprop.setProperty("jellyfish.spawnweight", "50");
+                aqprop.setProperty("hermitcrab.spawnweight", "50");
                 aqprop.setProperty("sunfish.health", "30.0");
                 aqprop.setProperty("sunfish.speed", "2.5");
                 aqprop.setProperty("sunfish.spawnweight", "50");
