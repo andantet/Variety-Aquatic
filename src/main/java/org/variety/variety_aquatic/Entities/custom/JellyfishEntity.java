@@ -1,6 +1,5 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
@@ -10,21 +9,24 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -37,25 +39,31 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
+import java.util.UUID;
 import java.util.function.Predicate;
 
-
-public class SunfishEntity extends WaterCreatureEntity implements GeoEntity {
+public class JellyfishEntity extends WaterCreatureEntity implements Angerable,GeoEntity {
     private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
-
+    private int angerTime;
+    private UUID targetUuid;
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
+    private static final UniformIntProvider ANGER_TIME_RANGE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("sunfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("sunfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("shark.health");
+    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("shark.attackfish");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("shark.speed");
+    private static double follow = AqConfig.INSTANCE.getDoubleProperty("shark.follow");
+    private static double damage = AqConfig.INSTANCE.getDoubleProperty("shark.damage");
+    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("shark.knockback");
 
-    public SunfishEntity(EntityType<? extends SunfishEntity> entityType, World world) {
+    public JellyfishEntity(EntityType<? extends JellyfishEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new LookControl(this);
 
     }
     @Nullable
-    public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -76,25 +84,30 @@ public class SunfishEntity extends WaterCreatureEntity implements GeoEntity {
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        this.readAngerFromNbt(this.world, nbt);
         nbt.putInt("Moistness", this.getMoistness());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
+        this.writeAngerToNbt(nbt);
         this.setMoistness(nbt.getInt("Moistness"));
     }
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 3f));
-
+        this.goalSelector.add(1, new JellyfishEntity.AttackGoal());
+        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
+        this.goalSelector.add(6, new SwimAroundGoal(this, 0.50, 2));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
@@ -195,13 +208,39 @@ public class SunfishEntity extends WaterCreatureEntity implements GeoEntity {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(SunfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        MOISTNESS = DataTracker.registerData(JellyfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
+    public boolean tryAttack(Entity target) {
+        if (super.tryAttack(target)) {
+            if (target instanceof LivingEntity) {
+                int i = 0;
+                if (this.world.getDifficulty() == Difficulty.NORMAL) {
+                    i = 7;
+                } else if (this.world.getDifficulty() == Difficulty.HARD) {
+                    i = 15;
+                }
+
+                if (i > 0) {
+                    ((LivingEntity)target).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, i * 20, 0), this);
+                }
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     private PlayState predicate(AnimationState animationState) {
         if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("swim2", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if(this.isAttacking()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if(this.isDead()){
@@ -221,10 +260,59 @@ public class SunfishEntity extends WaterCreatureEntity implements GeoEntity {
         return factory;
     }
 
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final SunfishEntity owner;
+    private class AttackGoal extends MeleeAttackGoal {
+        public AttackGoal() {
+            super(JellyfishEntity.this, 1.25D, true);
+        }
 
-        public InWaterPredicate(SunfishEntity owner) {
+        protected void attack(LivingEntity target, double squaredDistance) {
+            double d = this.getSquaredMaxAttackDistance(target);
+            if (squaredDistance <= d && this.isCooledDown()) {
+                this.resetCooldown();
+                this.mob.tryAttack(target);
+            } else if (squaredDistance <= d * 2.0D) {
+                if (this.isCooledDown()) {
+                    this.resetCooldown();
+                }
+
+            } else {
+                this.resetCooldown();
+            }
+
+        }
+
+        public void stop() {
+            super.stop();
+        }
+
+        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+            return 4.0F + entity.getWidth();
+        }
+    }
+
+    public void chooseRandomAngerTime() {
+        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
+    }
+    public void setAngerTime(int ticks) {
+        this.angerTime = ticks;
+    }
+
+    public int getAngerTime() {
+        return this.angerTime;
+    }
+
+    public void setAngryAt(@Nullable UUID uuid) {
+        this.targetUuid = uuid;
+    }
+
+    public UUID getAngryAt() {
+        return this.targetUuid;
+    }
+
+    static class InWaterPredicate implements Predicate<LivingEntity> {
+        private final JellyfishEntity owner;
+
+        public InWaterPredicate(JellyfishEntity owner) {
             this.owner = owner;
         }
 

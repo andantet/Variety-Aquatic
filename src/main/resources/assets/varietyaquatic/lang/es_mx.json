@@ -1,0 +1,10 @@
+{
+  "entity.varietyaquatic.shark": "Tiburón",
+  "entity.varietyaquatic.sunfish": "Pez Luna",
+  "entity.varietyaquatic.jellyfish": "Medusa",
+  "entity.varietyaquatic.hermitcrab": "Cangrejo Ermitaño",
+  "item.varietyaquatic.shark_egg": "Generador de Tiburón",
+  "item.varietyaquatic.sunfish_egg": "Generador de Pez Luna",
+  "item.varietyaquatic.hermitcrab_egg": "Generador de Cangrejo Ermitaño",
+  "item.varietyaquatic.jellyfish_egg": "Generador de Medusa"
+}

@@ -17,6 +17,7 @@ import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
@@ -51,6 +52,7 @@ public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
     private static double health = AqConfig.INSTANCE.getDoubleProperty("shark.health");
+    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("shark.attackfish");
     private static double speed = AqConfig.INSTANCE.getDoubleProperty("shark.speed");
     private static double follow = AqConfig.INSTANCE.getDoubleProperty("shark.follow");
     private static double damage = AqConfig.INSTANCE.getDoubleProperty("shark.damage");
@@ -96,8 +98,10 @@ public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
         this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.goalSelector.add(6, new SwimAroundGoal(this, 0.50, 2));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, WaterCreatureEntity.class, 10, true, true, null));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, WaterCreatureEntity.class, 10, true, true, null));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+        if (doattack) {
+            this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));
+        }
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
     }
 
@@ -144,7 +148,7 @@ public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
             } else {
                 this.setMoistness(this.getMoistness() - 1);
                 if (this.getMoistness() <= 0) {
-                    this.damage(DamageSource.DRYOUT, 1.0F);
+                    this.damage(this.getDamageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {

@@ -1,0 +1,10 @@
+{
+  "entity.varietyaquatic.shark": "Squalo",
+  "entity.varietyaquatic.sunfish": "Pesce luna",
+  "entity.varietyaquatic.jellyfish": "Medusa",
+  "entity.varietyaquatic.hermitcrab": "Paguro",
+  "item.varietyaquatic.shark_egg": "Uovo generatore di squalo",
+  "item.varietyaquatic.sunfish_egg": "Uovo generatore di pesce luna",
+  "item.varietyaquatic.hermitcrab_egg": "Uovo generatore di paguro",
+  "item.varietyaquatic.jellyfish_egg": "Uovo generatore di medusa"
+}

@@ -3,8 +3,7 @@
   "id": "varietyaquatic",
   "version": "${version}",
   "name": "variety_aquatic",
-  "description": "",
-  "authors": [],
+  "description": "A mod adding features through voting!",
   "contact": {
     "repo": "https://github.com/Colin Vaughn/Variety_Aquatic"
   },
@@ -20,10 +19,14 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14.9",
+    "fabricloader": ">=0.14.17",
     "fabric": "*",
-    "fabric-api": ">=0.60.0+1.19.2",
-    "minecraft": "1.19.3",
+    "fabric-api": ">=0.75.3+1.19.4",
+    "minecraft": ">=1.19.4",
     "geckolib": "*"
+  },
+  "recommends": {
+    "yet-another-config-lib": "*",
+    "modmenu": "*"
   }
 }
