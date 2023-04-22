@@ -55,11 +55,11 @@ public class AqConfig {
                 reader.close();
 
                 double configversion = getDoubleProperty("config.version");
-                if (configversion != 1.2) {
+                if (configversion != 1.3) {
                     file.delete();
                     file.createNewFile();
                     var writer = new FileOutputStream(file);
-                    aqprop.setProperty("config.version", "1.2");
+                    aqprop.setProperty("config.version", "1.3");
                     aqprop.setProperty("jellyfish.spawnweight", "50");
                     aqprop.setProperty("hermitcrab.spawnweight", "50");
                     aqprop.setProperty("sunfish.health", "30.0");
@@ -73,13 +73,26 @@ public class AqConfig {
                     aqprop.setProperty("shark.follow", "32.0");
                     aqprop.setProperty("shark.damage", "8.0");
                     aqprop.setProperty("shark.knockback", "0.1");
+                    aqprop.setProperty("whaleshark.spawnweight", "50");
+                    aqprop.setProperty("whaleshark.health", "30.0");
+                    aqprop.setProperty("whaleshark.attackfish", "true");
+                    aqprop.setProperty("whaleshark.spawnweight", "50");
+                    aqprop.setProperty("whaleshark.speed", "2.5");
+                    aqprop.setProperty("whaleshark.attack_speed", "4.0");
+                    aqprop.setProperty("whaleshark.follow", "32.0");
+                    aqprop.setProperty("whaleshark.damage", "8.0");
+                    aqprop.setProperty("whaleshark.knockback", "0.1");
+                    aqprop.setProperty("moonjelly.spawnweight", "50");
+                    aqprop.setProperty("moonjelly.spawnweight", "50");
+                    aqprop.setProperty("bluefin.spawnweight", "50");
+                    aqprop.setProperty("cuttlefish.spawnweight", "50");
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
                 }
             } else {
                 var writer = new FileOutputStream(file);
                 file.createNewFile();
-                aqprop.setProperty("config.version", "1.2");
+                aqprop.setProperty("config.version", "1.3");
                 aqprop.setProperty("jellyfish.spawnweight", "50");
                 aqprop.setProperty("hermitcrab.spawnweight", "50");
                 aqprop.setProperty("sunfish.health", "30.0");
@@ -93,6 +106,18 @@ public class AqConfig {
                 aqprop.setProperty("shark.follow", "32.0");
                 aqprop.setProperty("shark.damage", "8.0");
                 aqprop.setProperty("shark.knockback", "0.1");
+                aqprop.setProperty("whaleshark.spawnweight", "50");
+                aqprop.setProperty("whaleshark.health", "30.0");
+                aqprop.setProperty("whaleshark.attackfish", "true");
+                aqprop.setProperty("whaleshark.spawnweight", "50");
+                aqprop.setProperty("whaleshark.speed", "2.5");
+                aqprop.setProperty("whaleshark.attack_speed", "4.0");
+                aqprop.setProperty("whaleshark.follow", "32.0");
+                aqprop.setProperty("whaleshark.damage", "8.0");
+                aqprop.setProperty("whaleshark.knockback", "0.1");
+                aqprop.setProperty("moonjelly.spawnweight", "50");
+                aqprop.setProperty("bluefin.spawnweight", "50");
+                aqprop.setProperty("cuttlefish.spawnweight", "50");
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

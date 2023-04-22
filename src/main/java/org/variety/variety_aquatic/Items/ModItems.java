@@ -21,11 +21,24 @@ public class ModItems {
     public static final Item SHARK_EGG = registerItem("shark_egg",
             new SpawnEggItem(ModEntities.SHARK,0x22b341, 0x19732e,
                     new FabricItemSettings()));
+    public static final Item WHALESHARK_EGG = registerItem("whaleshark_egg",
+            new SpawnEggItem(ModEntities.WHALESHARK,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
+    public static final Item BLUEFIN_EGG = registerItem("bluefin_egg",
+            new SpawnEggItem(ModEntities.BLUEFIN,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
+
+    public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
+            new SpawnEggItem(ModEntities.MOONJELLY,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
     public static final Item JELLYFISH_EGG = registerItem("jellyfish_egg",
             new SpawnEggItem(ModEntities.JELLYFISH,0x22b341, 0x19732e,
                     new FabricItemSettings()));
     public static final Item HERMITCRAB_EGG = registerItem("hermitcrab_egg",
             new SpawnEggItem(ModEntities.HERMITCRAB,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
+    public static final Item CUTTLEFISH_EGG = registerItem("cuttlefish_egg",
+            new SpawnEggItem(ModEntities.CUTTLEFISH,0x22b341, 0x19732e,
                     new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item) {
@@ -35,7 +48,12 @@ public class ModItems {
     public static void addItemsToItemGroups() {
         addToItemGroup(ItemGroups.SPAWN_EGGS, SUNFISH_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, SHARK_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, CUTTLEFISH_EGG);
+
         addToItemGroup(ItemGroups.SPAWN_EGGS, JELLYFISH_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, WHALESHARK_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, MOONJELLY_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, BLUEFIN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, HERMITCRAB_EGG);
 
 

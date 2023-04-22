@@ -12,10 +12,7 @@ import net.minecraft.world.biome.BiomeKeys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.HermitcrabEntity;
-import org.variety.variety_aquatic.Entities.custom.JellyfishEntity;
-import org.variety.variety_aquatic.Entities.custom.SharkEntity;
-import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
+import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib.GeckoLib;
@@ -33,9 +30,16 @@ public class Variety_Aquatic implements ModInitializer {
         ModWorldGen.generateWorldGen();
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.WHALESHARK, WhaleSharkEntity.setAttributes());
+
         FabricDefaultAttributeRegistry.register(ModEntities.SUNFISH, SunfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.HERMITCRAB, HermitcrabEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.JELLYFISH, JellyfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.MOONJELLY, MoonJellyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.BLUEFIN, MoonJellyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CUTTLEFISH, MoonJellyEntity.setAttributes());
+
+
 
 
     }

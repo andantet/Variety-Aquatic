@@ -3,8 +3,16 @@
   "entity.varietyaquatic.sunfish": "Sunfish",
   "entity.varietyaquatic.jellyfish": "Jellyfish",
   "entity.varietyaquatic.hermitcrab": "Hermit Crab",
+  "entity.varietyaquatic.whaleshark": "Whale Shark",
+  "entity.varietyaquatic.moonjelly": "Moon Jellyfish",
+  "entity.varietyaquatic.bluefin": "Blue fin Tuna",
+  "entity.varietyaquatic.cuttlefish": "Cuttlefish",
+
   "item.varietyaquatic.shark_egg": "Shark Spawn Egg",
+  "item.varietyaquatic.whaleshark_egg": "Whale Shark Spawn Egg",
+  "item.varietyaquatic.moonjelly_egg": "Moon Jelly Spawn Egg",
   "item.varietyaquatic.sunfish_egg": "Sunfish Spawn Egg",
+  "item.varietyaquatic.cuttlefish_egg": "Cuttlefish Spawn Egg",
   "item.varietyaquatic.hermitcrab_egg": "Hermit Crab Spawn Egg",
   "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg"
 }
