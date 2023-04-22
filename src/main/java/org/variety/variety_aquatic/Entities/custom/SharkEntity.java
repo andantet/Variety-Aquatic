@@ -51,6 +51,7 @@ public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
+    //test
     private static final TrackedData<Integer> SHARKHUNGER = null;
 
     private static double health = AqConfig.INSTANCE.getDoubleProperty("shark.health");
