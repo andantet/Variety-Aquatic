@@ -40,6 +40,12 @@ public class ModItems {
     public static final Item CUTTLEFISH_EGG = registerItem("cuttlefish_egg",
             new SpawnEggItem(ModEntities.CUTTLEFISH,0x22b341, 0x19732e,
                     new FabricItemSettings()));
+    public static final Item OPAH_EGG = registerItem("opah_egg",
+            new SpawnEggItem(ModEntities.OPAH,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
+    public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
+            new SpawnEggItem(ModEntities.LIONFISH,0x22b341, 0x19732e,
+                    new FabricItemSettings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
@@ -49,7 +55,8 @@ public class ModItems {
         addToItemGroup(ItemGroups.SPAWN_EGGS, SUNFISH_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, SHARK_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, CUTTLEFISH_EGG);
-
+        addToItemGroup(ItemGroups.SPAWN_EGGS, OPAH_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, LIONFISH_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, JELLYFISH_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, WHALESHARK_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MOONJELLY_EGG);

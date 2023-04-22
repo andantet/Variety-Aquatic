@@ -6,9 +6,15 @@
   "entity.varietyaquatic.whaleshark": "Whale Shark",
   "entity.varietyaquatic.moonjelly": "Moon Jellyfish",
   "entity.varietyaquatic.bluefin": "Blue fin Tuna",
+  "entity.varietyaquatic.opah": "Opah",
   "entity.varietyaquatic.cuttlefish": "Cuttlefish",
+  "entity.varietyaquatic.lionfish": "Lionfish",
+
 
   "item.varietyaquatic.shark_egg": "Shark Spawn Egg",
+  "item.varietyaquatic.opah_egg": "Opah Spawn Egg",
+  "item.varietyaquatic.lionfish_egg": "Lionfish Spawn Egg",
+
   "item.varietyaquatic.whaleshark_egg": "Whale Shark Spawn Egg",
   "item.varietyaquatic.moonjelly_egg": "Moon Jelly Spawn Egg",
   "item.varietyaquatic.sunfish_egg": "Sunfish Spawn Egg",

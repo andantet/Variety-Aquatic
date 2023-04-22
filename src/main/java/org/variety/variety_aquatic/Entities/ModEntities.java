@@ -43,7 +43,14 @@ public class ModEntities {
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "cuttlefish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CuttlefishEntity::new)
                     .dimensions(EntityDimensions.fixed(1f, 2f)).build());
-
+    public static final EntityType<OpahEntity> OPAH = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "opah"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, OpahEntity::new)
+                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+    public static final EntityType<LionfishEntity> LIONFISH = Registry.register(
+            Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "lionfish"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LionfishEntity::new)
+                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
 
     public static final EntityType<BluefinTuna> BLUEFIN = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "bluefin"),
