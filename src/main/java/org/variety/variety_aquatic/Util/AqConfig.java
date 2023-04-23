@@ -75,9 +75,9 @@ public class AqConfig {
                     aqprop.setProperty("shark.knockback", "0.1");
                     aqprop.setProperty("whaleshark.spawnweight", "50");
                     aqprop.setProperty("whaleshark.health", "30.0");
-                    aqprop.setProperty("whaleshark.attackfish", "true");
+                    aqprop.setProperty("whaleshark.attackfish", "false");
                     aqprop.setProperty("whaleshark.spawnweight", "50");
-                    aqprop.setProperty("whaleshark.speed", "2.5");
+                    aqprop.setProperty("whaleshark.speed", "2.0");
                     aqprop.setProperty("whaleshark.attack_speed", "4.0");
                     aqprop.setProperty("whaleshark.follow", "32.0");
                     aqprop.setProperty("whaleshark.damage", "8.0");
@@ -110,9 +110,9 @@ public class AqConfig {
                 aqprop.setProperty("shark.knockback", "0.1");
                 aqprop.setProperty("whaleshark.spawnweight", "50");
                 aqprop.setProperty("whaleshark.health", "30.0");
-                aqprop.setProperty("whaleshark.attackfish", "true");
+                aqprop.setProperty("whaleshark.attackfish", "false");
                 aqprop.setProperty("whaleshark.spawnweight", "50");
-                aqprop.setProperty("whaleshark.speed", "2.5");
+                aqprop.setProperty("whaleshark.speed", "2.0");
                 aqprop.setProperty("whaleshark.attack_speed", "4.0");
                 aqprop.setProperty("whaleshark.follow", "32.0");
                 aqprop.setProperty("whaleshark.damage", "8.0");
