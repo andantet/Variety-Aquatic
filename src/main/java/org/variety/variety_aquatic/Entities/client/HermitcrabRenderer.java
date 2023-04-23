@@ -1,15 +1,15 @@
 package org.variety.variety_aquatic.Entities.client;
 
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.HermitcrabEntity;
-import org.variety.variety_aquatic.Entities.custom.SharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+
 
 public class HermitcrabRenderer extends GeoEntityRenderer<HermitcrabEntity> {
     public HermitcrabRenderer(EntityRendererFactory.Context ctx) {
@@ -18,16 +18,22 @@ public class HermitcrabRenderer extends GeoEntityRenderer<HermitcrabEntity> {
     }
 
     @Override
-    public Identifier getTextureLocation(HermitcrabEntity instance) {
+    public Identifier getTextureResource(HermitcrabEntity instance) {
         return new Identifier(Variety_Aquatic.MOD_ID, "textures/entity/hermitcrab_texture.png");
     }
 
 
+
+
+
     @Override
-    public void preRender(MatrixStack poseStack, HermitcrabEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
-        if (animatable.isBaby()) { poseStack.scale(0.7F, 0.7F, 0.7F); }
-        else poseStack.scale(1.2F, 1.2F, 1.2F); }
-
-
+    public RenderLayer getRenderType(HermitcrabEntity animatable, float partialTicks, MatrixStack stack,
+                                     VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder,
+                                     int packedLightIn, Identifier textureLocation) {
+        if(animatable.isBaby()) {
+            stack.scale(0.7f, 0.7f, 0.7f);
+        }
+        else stack.scale(1.2f, 1.2f, 1.2f);
+        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    }
 }

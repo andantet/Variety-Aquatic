@@ -1,12 +1,11 @@
 package org.variety.variety_aquatic.Entities.client;
 
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
 import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class WhaleSharkModel extends GeoModel<WhaleSharkEntity> {
+public class WhaleSharkModel extends AnimatedGeoModel<WhaleSharkEntity> {
     @Override
     public Identifier getModelResource(WhaleSharkEntity object) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/whaleshark.geo.json");

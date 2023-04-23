@@ -2,11 +2,10 @@ package org.variety.variety_aquatic.Entities.client;
 
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.OpahEntity;
-import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class OpahModel extends GeoModel<OpahEntity> {
+public class OpahModel extends AnimatedGeoModel<OpahEntity> {
     @Override
     public Identifier getModelResource(OpahEntity object) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/opah.geo.json");

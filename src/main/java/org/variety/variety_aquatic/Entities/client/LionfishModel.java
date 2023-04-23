@@ -2,11 +2,10 @@ package org.variety.variety_aquatic.Entities.client;
 
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.LionfishEntity;
-import org.variety.variety_aquatic.Entities.custom.OpahEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class LionfishModel extends GeoModel<LionfishEntity> {
+public class LionfishModel extends AnimatedGeoModel<LionfishEntity> {
     @Override
     public Identifier getModelResource(LionfishEntity object) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/lionfish.geo.json");

@@ -1,15 +1,14 @@
 package org.variety.variety_aquatic.Entities.client;
 
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
 import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.cache.object.BakedGeoModel;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class WhaleSharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     public WhaleSharkRenderer(EntityRendererFactory.Context ctx) {
@@ -18,14 +17,17 @@ public class WhaleSharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     }
 
     @Override
-    public Identifier getTextureLocation(WhaleSharkEntity instance) {
+    public Identifier getTextureResource(WhaleSharkEntity instance) {
         return new Identifier(Variety_Aquatic.MOD_ID, "textures/entity/whaleshark_texture.png");
     }
 
 
     @Override
-    public void preRender(MatrixStack poseStack, WhaleSharkEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
-        poseStack.scale(1.0F, 1.0F, 1.0F); }
+    public RenderLayer getRenderType(WhaleSharkEntity animatable, float partialTicks, MatrixStack stack,
+                                     VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder,
+                                     int packedLightIn, Identifier textureLocation) {
+        stack.scale(1.3f, 1.3f, 1.3f);
 
+        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    }
 }

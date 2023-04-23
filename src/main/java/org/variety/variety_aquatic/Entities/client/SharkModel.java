@@ -3,9 +3,9 @@ package org.variety.variety_aquatic.Entities.client;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.SharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class SharkModel extends GeoModel<SharkEntity> {
+public class SharkModel extends AnimatedGeoModel<SharkEntity> {
 
     @Override
     public Identifier getModelResource(SharkEntity object) {

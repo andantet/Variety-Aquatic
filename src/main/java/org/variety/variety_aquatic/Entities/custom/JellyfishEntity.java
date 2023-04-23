@@ -16,29 +16,30 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, Angerable {
-    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+public class JellyfishEntity extends WaterCreatureEntity implements IAnimatable, Angerable {
+    private AnimationFactory factory = new AnimationFactory(this);
 
     private static final UniformIntProvider ANGER_TIME_RANGE;
     private int angerTime;
@@ -60,7 +61,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
 
     public JellyfishEntity(EntityType<? extends JellyfishEntity> entityType, World world) {
         super(entityType, world);
-        this.random.setSeed((long)this.getId());
+        this.random.setSeed((long) this.getId());
         this.thrustTimerSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
     }
 
@@ -73,12 +74,14 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED,2);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.readAngerFromNbt(this.world, nbt);
     }
+
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         this.writeAngerToNbt(nbt);
@@ -108,6 +111,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
     static {
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
     }
+
     private class AttackGoal extends MeleeAttackGoal {
         public AttackGoal() {
             super(JellyfishEntity.this, 1.25D, true);
@@ -128,6 +132,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
             }
 
         }
+
         public void stop() {
             super.stop();
         }
@@ -140,14 +145,13 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
 
     public boolean tryAttack(Entity target) {
 
-            boolean bl = ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0), this);
-            if (bl) {
-                this.applyDamageEffects(this, target);
-            }
-
-            return bl;
+        boolean bl = ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0), this);
+        if (bl) {
+            this.applyDamageEffects(this, target);
         }
 
+        return bl;
+    }
 
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
@@ -189,7 +193,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
         this.prevThrustTimer = this.thrustTimer;
         this.prevTentacleAngle = this.tentacleAngle;
         this.thrustTimer += this.thrustTimerSpeed;
-        if ((double)this.thrustTimer > 6.283185307179586) {
+        if ((double) this.thrustTimer > 6.283185307179586) {
             if (this.world.isClient) {
                 this.thrustTimer = 6.2831855F;
             } else {
@@ -198,7 +202,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
                     this.thrustTimerSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.sendEntityStatus(this, (byte)19);
+                this.world.sendEntityStatus(this, (byte) 19);
             }
         }
 
@@ -206,7 +210,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
             if (this.thrustTimer < 3.1415927F) {
                 float f = this.thrustTimer / 3.1415927F;
                 this.tentacleAngle = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
-                if ((double)f > 0.75) {
+                if ((double) f > 0.75) {
                     this.swimVelocityScale = 0.8F;
                     this.turningSpeed = 1.0F;
                 } else {
@@ -219,21 +223,21 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
             }
 
             if (!this.world.isClient) {
-                this.setVelocity((double)(this.swimX * this.swimVelocityScale), (double)(this.swimY * this.swimVelocityScale), (double)(this.swimZ * this.swimVelocityScale));
+                this.setVelocity((double) (this.swimX * this.swimVelocityScale), (double) (this.swimY * this.swimVelocityScale), (double) (this.swimZ * this.swimVelocityScale));
             }
 
             Vec3d vec3d = this.getVelocity();
             double d = vec3d.horizontalLength();
-            this.bodyYaw += (-((float)MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F - this.bodyYaw) * 0.1F;
+            this.bodyYaw += (-((float) MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F - this.bodyYaw) * 0.1F;
             this.setYaw(this.bodyYaw);
             this.rollAngle += 3.1415927F * this.turningSpeed * 1.5F;
-            this.tiltAngle += (-((float)MathHelper.atan2(d, vec3d.y)) * 57.295776F - this.tiltAngle) * 0.1F;
+            this.tiltAngle += (-((float) MathHelper.atan2(d, vec3d.y)) * 57.295776F - this.tiltAngle) * 0.1F;
         } else {
             this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.thrustTimer)) * 3.1415927F * 0.25F;
             if (!this.world.isClient) {
                 double e = this.getVelocity().y;
                 if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
-                    e = 0.05 * (double)(this.getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
+                    e = 0.05 * (double) (this.getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
                 } else if (!this.hasNoGravity()) {
                     e -= 0.08;
                 }
@@ -268,10 +272,10 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
         this.playSound(this.getSquirtSound(), this.getSoundVolume(), this.getSoundPitch());
         Vec3d vec3d = this.applyBodyRotations(new Vec3d(0.0, -1.0, 0.0)).add(this.getX(), this.getY(), this.getZ());
 
-        for(int i = 0; i < 30; ++i) {
-            Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double)this.random.nextFloat() * 0.6 - 0.3, -1.0, (double)this.random.nextFloat() * 0.6 - 0.3));
-            Vec3d vec3d3 = vec3d2.multiply(0.3 + (double)(this.random.nextFloat() * 2.0F));
-            ((ServerWorld)this.world).spawnParticles(this.getInkParticle(), vec3d.x, vec3d.y + 0.5, vec3d.z, 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
+        for (int i = 0; i < 30; ++i) {
+            Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double) this.random.nextFloat() * 0.6 - 0.3, -1.0, (double) this.random.nextFloat() * 0.6 - 0.3));
+            Vec3d vec3d3 = vec3d2.multiply(0.3 + (double) (this.random.nextFloat() * 2.0F));
+            ((ServerWorld) this.world).spawnParticles(this.getInkParticle(), vec3d.x, vec3d.y + 0.5, vec3d.z, 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
         }
 
     }
@@ -380,7 +384,7 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
                         vec3d = vec3d.subtract(0.0, vec3d.y, 0.0);
                     }
 
-                    JellyfishEntity.this.setSwimmingVector((float)vec3d.x / 20.0F, (float)vec3d.y / 20.0F, (float)vec3d.z / 20.0F);
+                    JellyfishEntity.this.setSwimmingVector((float) vec3d.x / 20.0F, (float) vec3d.y / 20.0F, (float) vec3d.z / 20.0F);
                 }
 
                 if (this.timer % 10 == 5) {
@@ -391,21 +395,27 @@ public class JellyfishEntity extends WaterCreatureEntity implements GeoEntity, A
         }
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(this.isDead()){
-            animationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
+
+
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (this.isDead()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
         }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
     }
 
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(new AnimationController(this, "controller",
                 0, this::predicate));
     }
 
+
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return factory;
     }
 }

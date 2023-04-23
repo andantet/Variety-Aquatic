@@ -15,7 +15,7 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.world.ModWorldGen;
-import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib3.GeckoLib;
 
 import java.util.Arrays;
 

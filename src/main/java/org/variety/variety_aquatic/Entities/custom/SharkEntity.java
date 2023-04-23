@@ -23,7 +23,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -36,22 +35,22 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Util.AqConfig;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 
 import java.util.function.Predicate;
 @SuppressWarnings({"ConstantConditions", "FieldMayBeFinal", "rawtypes"})
-public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
-    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
-
+public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
+    private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    //test
     private static final TrackedData<Integer> SHARKHUNGER = null;
 
     private static double health = AqConfig.INSTANCE.getDoubleProperty("shark.health");
@@ -232,31 +231,38 @@ public class SharkEntity extends WaterCreatureEntity implements GeoEntity {
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if(event.isMoving()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return PlayState.CONTINUE;
         }
-        if(this.isAttacking()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
+        if(this.isAttacking()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
             return PlayState.CONTINUE;
         }
         if(this.isDead()){
-            animationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
+            return PlayState.CONTINUE;
+
         }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+
         return PlayState.CONTINUE;
     }
+
+
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(new AnimationController(this, "controller",
                 0, this::predicate));
     }
 
+
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return factory;
     }
+
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
         private final SharkEntity owner;

@@ -4,9 +4,9 @@ import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.BluefinTuna;
 import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class BlueFinTunaModel extends GeoModel<BluefinTuna> {
+public class BlueFinTunaModel extends AnimatedGeoModel<BluefinTuna> {
     @Override
     public Identifier getModelResource(BluefinTuna object) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/bluefintuna.geo.json");

@@ -29,18 +29,20 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Util.AqConfig;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.function.Predicate;
 
 
-public class CuttlefishEntity extends WaterCreatureEntity implements GeoEntity {
-    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+public class CuttlefishEntity extends WaterCreatureEntity implements IAnimatable {
+    private AnimationFactory factory = new AnimationFactory(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -198,21 +200,25 @@ public class CuttlefishEntity extends WaterCreatureEntity implements GeoEntity {
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("CuttlefishSwim", Animation.LoopType.LOOP));
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("CuttlefishSwim", true));
             return PlayState.CONTINUE;
         }
+
         return PlayState.STOP;
     }
+
+
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(new AnimationController(this, "controller",
                 0, this::predicate));
     }
 
+
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return factory;
     }
 

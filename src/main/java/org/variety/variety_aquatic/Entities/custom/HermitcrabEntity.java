@@ -9,8 +9,6 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.NoPenaltyTargeting;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.ai.pathing.AmphibiousSwimNavigation;
-import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -18,8 +16,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -28,13 +24,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -44,17 +37,18 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.function.Predicate;
 
-public class HermitcrabEntity extends TameableEntity implements GeoEntity {
-    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+public class HermitcrabEntity extends TameableEntity implements IAnimatable {
+    private AnimationFactory factory = new AnimationFactory(this);
 
     private static final TrackedData<BlockPos> HOME_POS = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BLOCK_POS);
     private static final TrackedData<Boolean> DIGGING_SAND = DataTracker.registerData(HermitcrabEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -342,29 +336,34 @@ public class HermitcrabEntity extends TameableEntity implements GeoEntity {
         this.damage(DamageSource.LIGHTNING_BOLT, Float.MAX_VALUE);
     }
 
-    private PlayState predicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return PlayState.CONTINUE;
         }
-
         if(this.isDead()){
-            animationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
         }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+
         return PlayState.CONTINUE;
     }
 
+
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller",
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(new AnimationController(this, "controller",
                 0, this::predicate));
     }
 
+
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
+    public AnimationFactory getFactory() {
         return factory;
     }
+
 
     static class TurtleMoveControl
             extends MoveControl {

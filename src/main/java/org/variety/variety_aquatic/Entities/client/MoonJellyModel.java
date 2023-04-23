@@ -2,11 +2,10 @@ package org.variety.variety_aquatic.Entities.client;
 
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.MoonJellyEntity;
-import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class MoonJellyModel extends GeoModel<MoonJellyEntity> {
+public class MoonJellyModel extends AnimatedGeoModel<MoonJellyEntity> {
     @Override
     public Identifier getModelResource(MoonJellyEntity object) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/moonjelly.geo.json");
