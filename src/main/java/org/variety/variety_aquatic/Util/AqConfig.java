@@ -83,12 +83,25 @@ public class AqConfig {
                     aqprop.setProperty("whaleshark.damage", "8.0");
                     aqprop.setProperty("whaleshark.knockback", "0.1");
                     aqprop.setProperty("moonjelly.spawnweight", "50");
-                    aqprop.setProperty("moonjelly.spawnweight", "50");
+                    aqprop.setProperty("bluefin.health", "15.0");
+                    aqprop.setProperty("bluefin.speed", "2.0");
                     aqprop.setProperty("bluefin.spawnweight", "50");
+                    aqprop.setProperty("cuttlefish.health", "15.0");
+                    aqprop.setProperty("cuttlefish.speed", "2.0");
                     aqprop.setProperty("cuttlefish.spawnweight", "50");
+                    aqprop.setProperty("opah.health", "15.0");
+                    aqprop.setProperty("opah.speed", "2.0");
                     aqprop.setProperty("opah.spawnweight", "50");
+                    aqprop.setProperty("lionfish.health", "15.0");
+                    aqprop.setProperty("lionfish.speed", "2.0");
                     aqprop.setProperty("lionfish.spawnweight", "50");
+                    aqprop.setProperty("clownfish.health", "15.0");
+                    aqprop.setProperty("clownfish.speed", "2.0");
                     aqprop.setProperty("clownfish.spawnweight", "50");
+                    aqprop.setProperty("spottedstingray.health", "15.0");
+                    aqprop.setProperty("spottedstingray.speed", "2.0");
+                    aqprop.setProperty("spottedstingray.spawnweight", "50");
+
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
                 }
@@ -119,13 +132,24 @@ public class AqConfig {
                 aqprop.setProperty("whaleshark.damage", "8.0");
                 aqprop.setProperty("whaleshark.knockback", "0.1");
                 aqprop.setProperty("moonjelly.spawnweight", "50");
-                aqprop.setProperty("moonjelly.spawnweight", "50");
+                aqprop.setProperty("bluefin.health", "15.0");
+                aqprop.setProperty("bluefin.speed", "2.0");
                 aqprop.setProperty("bluefin.spawnweight", "50");
+                aqprop.setProperty("cuttlefish.health", "15.0");
+                aqprop.setProperty("cuttlefish.speed", "2.0");
                 aqprop.setProperty("cuttlefish.spawnweight", "50");
+                aqprop.setProperty("opah.health", "15.0");
+                aqprop.setProperty("opah.speed", "2.0");
                 aqprop.setProperty("opah.spawnweight", "50");
+                aqprop.setProperty("lionfish.health", "15.0");
+                aqprop.setProperty("lionfish.speed", "2.0");
                 aqprop.setProperty("lionfish.spawnweight", "50");
+                aqprop.setProperty("clownfish.health", "15.0");
+                aqprop.setProperty("clownfish.speed", "2.0");
                 aqprop.setProperty("clownfish.spawnweight", "50");
-
+                aqprop.setProperty("spottedstingray.health", "15.0");
+                aqprop.setProperty("spottedstingray.speed", "2.0");
+                aqprop.setProperty("spottedstingray.spawnweight", "50");
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

@@ -46,8 +46,8 @@ public class CuttlefishEntity extends WaterCreatureEntity implements IAnimatable
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("sunfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("sunfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("cuttlefish.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("cuttlefish.speed");;
 
     public CuttlefishEntity(EntityType<? extends CuttlefishEntity> entityType, World world) {
         super(entityType, world);

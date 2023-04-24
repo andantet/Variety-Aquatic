@@ -46,8 +46,8 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("sunfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("sunfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("opah.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("opah.speed");;
 
     public OpahEntity(EntityType<? extends OpahEntity> entityType, World world) {
         super(entityType, world);

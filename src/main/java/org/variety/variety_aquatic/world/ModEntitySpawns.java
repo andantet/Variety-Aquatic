@@ -26,6 +26,7 @@ public class ModEntitySpawns {
     private static int lionfishspawnweight = AqConfig.INSTANCE.getNumberProperty("lionfish.spawnweight");
     private static int clownfishspawnweight = AqConfig.INSTANCE.getNumberProperty("clownfish.spawnweight");
 
+    private static int spottedastingray = AqConfig.INSTANCE.getNumberProperty("spottedstingray.spawnweight");
 
 
 
@@ -51,6 +52,8 @@ public class ModEntitySpawns {
                 ModEntities.CUTTLEFISH, cuttlefishspawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.LIONFISH, lionfishspawnweight, 1, 1);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.SPOTTEDSTINGRAY, spottedastingray, 1, 1);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.JELLYFISH, jellyfishspawnweight, 2, 4);
@@ -75,6 +78,8 @@ public class ModEntitySpawns {
 
         SpawnRestriction.register(
                 ModEntities.MOONJELLY, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+        SpawnRestriction.register(
+                ModEntities.SPOTTEDSTINGRAY, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
 
         SpawnRestriction.register(
                 ModEntities.HERMITCRAB, SpawnRestriction.Location.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, HermitcrabEntity::canMobSpawn);

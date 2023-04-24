@@ -170,12 +170,12 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
     }
 
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
+        return ModSound.WHALE_HURT;
     }
 
     @Nullable
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
+        return ModSound.WHALE_DEATH;
     }
 
     @Nullable

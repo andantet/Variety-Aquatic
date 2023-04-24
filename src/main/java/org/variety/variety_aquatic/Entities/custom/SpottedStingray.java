@@ -16,14 +16,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -44,15 +40,15 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class LionfishEntity extends WaterCreatureEntity implements IAnimatable {
+public class SpottedStingray extends WaterCreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("lionfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("lionfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("spottedstingray.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("spottedstingray.speed");;
 
-    public LionfishEntity(EntityType<? extends LionfishEntity> entityType, World world) {
+    public SpottedStingray(EntityType<? extends SpottedStingray> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new LookControl(this);
@@ -77,7 +73,6 @@ public class LionfishEntity extends WaterCreatureEntity implements IAnimatable {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
     }
-
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -104,16 +99,7 @@ public class LionfishEntity extends WaterCreatureEntity implements IAnimatable {
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
-    public void onPlayerCollision(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {
-            if (!this.isSilent()) {
-                ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
-            }
 
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0), this);
-        }
-
-    }
     public int getMaxAir() {
         return 4800;
     }
@@ -209,13 +195,15 @@ public class LionfishEntity extends WaterCreatureEntity implements IAnimatable {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(LionfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        MOISTNESS = DataTracker.registerData(SpottedStingray.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
+
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("LionfishSwim", true));
+        if(event.isMoving()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("StingraySwim", true));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
@@ -236,9 +224,9 @@ public class LionfishEntity extends WaterCreatureEntity implements IAnimatable {
 
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final LionfishEntity owner;
+        private final SpottedStingray owner;
 
-        public InWaterPredicate(LionfishEntity owner) {
+        public InWaterPredicate(SpottedStingray owner) {
             this.owner = owner;
         }
 

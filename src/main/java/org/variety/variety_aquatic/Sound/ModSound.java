@@ -10,6 +10,10 @@ public class ModSound {
 
     public static SoundEvent WHALE_AMBIENT = registerSound("whale_ambient");
     public static SoundEvent DEEP_GROWL = registerSound("deep_growl");
+    public static SoundEvent WHALE_DEATH = registerSound("whale_death");
+    public static SoundEvent WHALE_HURT = registerSound("whale_hurt");
+
+
 
 
     // actual registration of all the custom SoundEvents

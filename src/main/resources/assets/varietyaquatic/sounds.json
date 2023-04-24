@@ -10,5 +10,17 @@
     "sounds": [
       "varietyaquatic:deep_growl"
     ]
+  },
+  "whale_death": {
+    "subtitle": "varietyaquatic.whale_death",
+    "sounds": [
+      "varietyaquatic:whale_death"
+    ]
+  },
+  "whale_hurt": {
+    "subtitle": "varietyaquatic.whale_hurt",
+    "sounds": [
+      "varietyaquatic:whale_hurt"
+    ]
   }
 }

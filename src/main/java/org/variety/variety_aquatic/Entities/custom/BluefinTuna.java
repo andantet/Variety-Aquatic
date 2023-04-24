@@ -45,8 +45,8 @@ public class BluefinTuna extends WaterCreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("sunfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("sunfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("bluefin.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("bluefin.speed");;
 
     public BluefinTuna(EntityType<? extends BluefinTuna> entityType, World world) {
         super(entityType, world);

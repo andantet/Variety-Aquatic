@@ -50,7 +50,11 @@ public class ModEntities {
     public static final EntityType<LionfishEntity> LIONFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "lionfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LionfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+    public static final EntityType<SpottedStingray> SPOTTEDSTINGRAY = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "spottedstingray"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SpottedStingray::new)
+                    .dimensions(EntityDimensions.fixed(1.2f, 1.0f)).build());
 
     public static final EntityType<BluefinTuna> BLUEFIN = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "bluefin"),
