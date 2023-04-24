@@ -88,6 +88,7 @@ public class AqConfig {
                     aqprop.setProperty("cuttlefish.spawnweight", "50");
                     aqprop.setProperty("opah.spawnweight", "50");
                     aqprop.setProperty("lionfish.spawnweight", "50");
+                    aqprop.setProperty("clownfish.spawnweight", "50");
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
                 }
@@ -123,6 +124,8 @@ public class AqConfig {
                 aqprop.setProperty("cuttlefish.spawnweight", "50");
                 aqprop.setProperty("opah.spawnweight", "50");
                 aqprop.setProperty("lionfish.spawnweight", "50");
+                aqprop.setProperty("clownfish.spawnweight", "50");
+
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

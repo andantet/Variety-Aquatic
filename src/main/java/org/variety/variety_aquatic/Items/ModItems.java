@@ -31,6 +31,9 @@ public class ModItems {
     public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
             new SpawnEggItem(ModEntities.MOONJELLY,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item CLOWNFISH_EGG = registerItem("clownfish_egg",
+            new SpawnEggItem(ModEntities.CLOWNFISH,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item JELLYFISH_EGG = registerItem("jellyfish_egg",
             new SpawnEggItem(ModEntities.JELLYFISH,0x22b341, 0x19732e,

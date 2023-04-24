@@ -57,4 +57,8 @@ public class ModEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BluefinTuna::new)
                     .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
 
+    public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "clownfish"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, ClownfishEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
 }

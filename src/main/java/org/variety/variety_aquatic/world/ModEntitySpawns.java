@@ -24,6 +24,8 @@ public class ModEntitySpawns {
     private static int cuttlefishspawnweight = AqConfig.INSTANCE.getNumberProperty("cuttlefish.spawnweight");
     private static int opahspawnweight = AqConfig.INSTANCE.getNumberProperty("opah.spawnweight");
     private static int lionfishspawnweight = AqConfig.INSTANCE.getNumberProperty("lionfish.spawnweight");
+    private static int clownfishspawnweight = AqConfig.INSTANCE.getNumberProperty("clownfish.spawnweight");
+
 
 
 
@@ -34,6 +36,9 @@ public class ModEntitySpawns {
     public static void addEntitySpawn() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.SHARK, sharkspawnweight, 1, 2);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.CLOWNFISH, clownfishspawnweight, 1, 2);
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.WHALESHARK, whalesharkspawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
