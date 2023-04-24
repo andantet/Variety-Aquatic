@@ -15,7 +15,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.Tile.ModTileRegistry;
 
 public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider {
 
@@ -23,9 +22,10 @@ public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider
     protected static final VoxelShape COLLISION_SHAPE;
 
 
-    public AnemoneBlock() {
-        super(AbstractBlock.Settings.of(Material.UNDERWATER_PLANT).nonOpaque());
+    public AnemoneBlock(Settings settings) {
+        super(settings);
     }
+
 
     /*
      * Hides the normal block and only shows the block entity created below
@@ -59,7 +59,7 @@ public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return ModTileRegistry.ANEMONE_TILE.instantiate(pos, state);
+        return ModTileEntity.ANEMONE.instantiate(pos, state);
     }
 
     /*

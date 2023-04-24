@@ -52,11 +52,19 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
+
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
             new SpawnEggItem(ModEntities.LIONFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
+    public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
+            new Item(new FabricItemSettings().group(ItemGroup.FOOD)
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+
+    public static final Item LIONFISH_COOKED = registerItem("lionfish_cooked",
+            new Item(new FabricItemSettings().group(ItemGroup.FOOD)
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);

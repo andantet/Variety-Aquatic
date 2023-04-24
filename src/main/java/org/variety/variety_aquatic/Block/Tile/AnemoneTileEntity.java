@@ -3,6 +3,7 @@ package org.variety.variety_aquatic.Block.Tile;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.BlockPos;
+import org.variety.variety_aquatic.Block.ModTileEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -15,7 +16,7 @@ public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     public AnemoneTileEntity(BlockPos pos, BlockState state) {
-        super(ModTileRegistry.ANEMONE_TILE, pos, state);
+        super(ModTileEntity.ANEMONE, pos, state);
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {

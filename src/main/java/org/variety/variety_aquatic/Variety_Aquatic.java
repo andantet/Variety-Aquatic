@@ -18,7 +18,7 @@ import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.variety.variety_aquatic.Block.ModBlock;
-import org.variety.variety_aquatic.Block.Tile.ModTileRegistry;
+import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Items.ModItems;
@@ -34,10 +34,8 @@ public class Variety_Aquatic implements ModInitializer {
         GeckoLib.initialize();
         ModItems.registerModItems();
         ModSound.initializeSounds();
-        new ModTileRegistry();
-        new ModBlock();
-
-
+        ModBlock.registerModBlocks();
+        ModTileEntity.registerBlockEntities();
         ModWorldGen.generateWorldGen();
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());

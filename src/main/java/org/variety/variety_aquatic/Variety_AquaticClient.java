@@ -8,8 +8,8 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
+import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
-import org.variety.variety_aquatic.Block.Tile.ModTileRegistry;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.*;
 import org.variety.variety_aquatic.Entities.custom.CuttlefishEntity;
@@ -33,7 +33,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.LIONFISH, LionfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, ClownfishRenderer::new);
 
-        BlockEntityRendererRegistry.register(ModTileRegistry.ANEMONE_TILE,
+        BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
 
