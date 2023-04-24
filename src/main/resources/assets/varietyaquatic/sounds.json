@@ -1,0 +1,14 @@
+{
+  "whale_ambient": {
+    "subtitle": "varietyaquatic.whale_ambient",
+    "sounds": [
+      "varietyaquatic:whale_ambient"
+    ]
+  },
+  "deep_growl": {
+    "subtitle": "varietyaquatic.deep_growl",
+    "sounds": [
+      "varietyaquatic:deep_growl"
+    ]
+  }
+}

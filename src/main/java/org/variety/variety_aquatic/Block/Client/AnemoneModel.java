@@ -3,7 +3,6 @@ package org.variety.variety_aquatic.Block.Client;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib3.GeckoLib;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class AnemoneModel extends AnimatedGeoModel<AnemoneTileEntity> {
