@@ -17,7 +17,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
@@ -41,7 +43,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class BluefinTuna extends WaterCreatureEntity implements IAnimatable {
+public class BluefinTuna extends SchoolingFishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -194,6 +196,11 @@ public class BluefinTuna extends WaterCreatureEntity implements IAnimatable {
 
     }
 
+    @Override
+    protected SoundEvent getFlopSound() {
+        return null;
+    }
+
     static {
         MOISTNESS = DataTracker.registerData(BluefinTuna.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
@@ -220,6 +227,11 @@ public class BluefinTuna extends WaterCreatureEntity implements IAnimatable {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public ItemStack getBucketItem() {
+        return null;
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {

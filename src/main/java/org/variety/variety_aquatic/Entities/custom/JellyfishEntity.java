@@ -11,11 +11,15 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -28,6 +32,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import org.variety.variety_aquatic.Items.ModItems;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -38,12 +43,9 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class JellyfishEntity extends WaterCreatureEntity implements IAnimatable, Angerable {
+public class JellyfishEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
-    private static final UniformIntProvider ANGER_TIME_RANGE;
-    private int angerTime;
-    private UUID targetUuid;
     public float tiltAngle;
     public float prevTiltAngle;
     public float rollAngle;
@@ -67,7 +69,6 @@ public class JellyfishEntity extends WaterCreatureEntity implements IAnimatable,
 
     protected void initGoals() {
         this.goalSelector.add(0, new JellyfishEntity.SwimGoal(this));
-        this.goalSelector.add(1, new JellyfishEntity.AttackGoal());
         this.goalSelector.add(2, new JellyfishEntity.EscapeAttackerGoal());
     }
 
@@ -77,83 +78,19 @@ public class JellyfishEntity extends WaterCreatureEntity implements IAnimatable,
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
 
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.readAngerFromNbt(this.world, nbt);
-    }
-
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        this.writeAngerToNbt(nbt);
-    }
-
-    public void chooseRandomAngerTime() {
-        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
-    }
-
-
-    public void setAngerTime(int ticks) {
-        this.angerTime = ticks;
-    }
-
-    public int getAngerTime() {
-        return this.angerTime;
-    }
-
-    public void setAngryAt(@Nullable UUID uuid) {
-        this.targetUuid = uuid;
-    }
-
-    public UUID getAngryAt() {
-        return this.targetUuid;
-    }
-
-    static {
-        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-    }
-
-    private class AttackGoal extends MeleeAttackGoal {
-        public AttackGoal() {
-            super(JellyfishEntity.this, 1.25D, true);
-        }
-
-        protected void attack(LivingEntity target, double squaredDistance) {
-            double d = this.getSquaredMaxAttackDistance(target);
-            if (squaredDistance <= d && this.isCooledDown()) {
-                this.resetCooldown();
-                this.mob.tryAttack(target);
-            } else if (squaredDistance <= d * 2.0D) {
-                if (this.isCooledDown()) {
-                    this.resetCooldown();
-                }
-
-            } else {
-                this.resetCooldown();
+    public void onPlayerCollision(PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {
+            if (!this.isSilent()) {
+                ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
             }
 
+            player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0), this);
         }
 
-        public void stop() {
-            super.stop();
-        }
     }
-
-    protected double getSquaredMaxAttackDistance(LivingEntity entity) {
-        return 4.0F + entity.getWidth();
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.JELLYFISH_BUCKET);
     }
-
-
-    public boolean tryAttack(Entity target) {
-
-        boolean bl = ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 20, 0), this);
-        if (bl) {
-            this.applyDamageEffects(this, target);
-        }
-
-        return bl;
-    }
-
-
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.5F;
     }
@@ -248,6 +185,11 @@ public class JellyfishEntity extends WaterCreatureEntity implements IAnimatable,
             this.tiltAngle += (-90.0F - this.tiltAngle) * 0.02F;
         }
 
+    }
+
+    @Override
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
     }
 
     public boolean damage(DamageSource source, float amount) {

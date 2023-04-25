@@ -4,10 +4,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -16,17 +13,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -35,7 +27,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Items.ModItems;
+import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.AqConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -47,23 +39,26 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.function.Predicate;
 
-
-public class LionfishEntity extends FishEntity implements IAnimatable {
+public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("lionfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("lionfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
+    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("whaleshark.attackfish");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
+    private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
+    private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
+    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("whaleshark.knockback");
 
-    public LionfishEntity(EntityType<? extends LionfishEntity> entityType, World world) {
+    public GiantsquidEntity(EntityType<? extends GiantsquidEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new LookControl(this);
 
     }
     @Nullable
-    public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -71,9 +66,6 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
 
     public int getMoistness() {
         return this.dataTracker.get(MOISTNESS);
-    }
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.LIONFISH_BUCKET);
     }
 
     public void setMoistness(int moistness) {
@@ -84,7 +76,6 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
     }
-
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -97,30 +88,28 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 3f));
-
+        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
+        this.goalSelector.add(6, new SwimAroundGoal(this, 0.50, 2));
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+        if (doattack==true) {
+            this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));
+        }
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
-    public void onPlayerCollision(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {
-            if (!this.isSilent()) {
-                ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
-            }
 
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0), this);
-        }
-
-    }
     public int getMaxAir() {
         return 4800;
     }
@@ -180,17 +169,17 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
     }
 
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
+        return ModSound.WHALE_HURT;
     }
 
     @Nullable
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
+        return ModSound.WHALE_DEATH;
     }
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isTouchingWater() ? SoundEvents.ENTITY_DOLPHIN_AMBIENT_WATER : SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return  ModSound.GIANTSQUID_AMBIENT;
     }
 
     protected SoundEvent getSplashSound() {
@@ -215,19 +204,15 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
 
     }
 
-    @Override
-    protected SoundEvent getFlopSound() {
-            return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-    }
-
     static {
-        MOISTNESS = DataTracker.registerData(LionfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        MOISTNESS = DataTracker.registerData(GiantsquidEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("LionfishSwim", true));
+        if(event.isMoving()){
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("SquidSwim", true));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
@@ -246,11 +231,10 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
         return factory;
     }
 
-
     static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final LionfishEntity owner;
+        private final GiantsquidEntity owner;
 
-        public InWaterPredicate(LionfishEntity owner) {
+        public InWaterPredicate(GiantsquidEntity owner) {
             this.owner = owner;
         }
 

@@ -17,7 +17,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
@@ -28,6 +30,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.AqConfig;
 
 import software.bernie.geckolib3.core.IAnimatable;
@@ -41,7 +44,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.function.Predicate;
 
 
-public class CuttlefishEntity extends WaterCreatureEntity implements IAnimatable {
+public class CuttlefishEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
@@ -195,6 +198,12 @@ public class CuttlefishEntity extends WaterCreatureEntity implements IAnimatable
 
     }
 
+    @Override
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
+
+    }
+
     static {
         MOISTNESS = DataTracker.registerData(CuttlefishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
@@ -220,6 +229,11 @@ public class CuttlefishEntity extends WaterCreatureEntity implements IAnimatable
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.CUTTLEFISH_BUCKET);
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {

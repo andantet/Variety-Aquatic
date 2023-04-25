@@ -1,8 +1,11 @@
 package org.variety.variety_aquatic.Items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.sound.SoundEvents;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
@@ -31,13 +34,18 @@ public class ModItems {
     public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
             new SpawnEggItem(ModEntities.MOONJELLY,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item MOONJELLY_BUCKET = registerItem("moonjelly_bucket",
+            new EntityBucketItem(ModEntities.MOONJELLY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
     public static final Item CLOWNFISH_EGG = registerItem("clownfish_egg",
             new SpawnEggItem(ModEntities.CLOWNFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
-
+    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
     public static final Item JELLYFISH_EGG = registerItem("jellyfish_egg",
             new SpawnEggItem(ModEntities.JELLYFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item JELLYFISH_BUCKET = registerItem("jellyfish_bucket",
+            new EntityBucketItem(ModEntities.JELLYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 
     public static final Item HERMITCRAB_EGG = registerItem("hermitcrab_egg",
             new SpawnEggItem(ModEntities.HERMITCRAB,0x22b341, 0x19732e,
@@ -46,6 +54,9 @@ public class ModItems {
     public static final Item CUTTLEFISH_EGG = registerItem("cuttlefish_egg",
             new SpawnEggItem(ModEntities.CUTTLEFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+
+    public static final Item CUTTLEFISH_BUCKET = registerItem("cuttlefish_bucket",
+            new EntityBucketItem(ModEntities.CUTTLEFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 
     public static final Item OPAH_EGG = registerItem("opah_egg",
             new SpawnEggItem(ModEntities.OPAH,0x22b341, 0x19732e,
@@ -57,6 +68,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.LIONFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
+    public static final Item LIONFISH_BUCKET = registerItem("lionfish_bucket",
+            new EntityBucketItem(ModEntities.LIONFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 
     public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
             new Item(new FabricItemSettings().group(ItemGroup.FOOD)

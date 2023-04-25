@@ -20,7 +20,7 @@ public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.gecko_habitat.idle", true));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("sway", true));
         return PlayState.CONTINUE;
     }
 

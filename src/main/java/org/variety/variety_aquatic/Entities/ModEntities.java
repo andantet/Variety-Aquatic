@@ -20,6 +20,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "whaleshark"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, WhaleSharkEntity::new)
                     .dimensions(EntityDimensions.fixed(5f, 2f)).build());
+    public static final EntityType<GiantsquidEntity> GIANTSQUID = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "giantsquid"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, GiantsquidEntity::new)
+                    .dimensions(EntityDimensions.fixed(3f, 6f)).build());
 
     public static final EntityType<SunfishEntity> SUNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "sunfish"),

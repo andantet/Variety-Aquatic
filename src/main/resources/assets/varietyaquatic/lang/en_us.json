@@ -28,6 +28,18 @@
   "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg",
 
   "item.varietyaquatic.raw_lionfish": "Raw Lionfish",
-  "item.varietyaquatic.lionfish_cooked": "Cooked Lionfish"
+  "item.varietyaquatic.lionfish_cooked": "Cooked Lionfish",
+
+
+  "item.varietyaquatic.moonjelly_bucket": "Moonjelly Bucket",
+  "item.varietyaquatic.clownfish_bucket": "Clownfish Bucket",
+  "item.varietyaquatic.jellyfish_bucket": "Jellyfish Bucket",
+  "item.varietyaquatic.cuttlefish_bucket": "Cuttlefish Bucket",
+  "item.varietyaquatic.lionfishfish_bucket": "Lionfish Bucket"
+
+
+
+
+
 
 }

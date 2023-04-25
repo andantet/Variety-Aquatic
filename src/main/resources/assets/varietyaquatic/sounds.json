@@ -22,5 +22,11 @@
     "sounds": [
       "varietyaquatic:whale_hurt"
     ]
+  },
+  "giantsquid_ambient": {
+    "subtitle": "varietyaquatic.giantsquid_ambient",
+    "sounds": [
+      "varietyaquatic:giantsquid_ambient"
+    ]
   }
 }
