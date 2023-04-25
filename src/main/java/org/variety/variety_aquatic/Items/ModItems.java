@@ -63,7 +63,9 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
-
+    public static final Item GIANTSQUID_EGG = registerItem("giantsquid_egg",
+            new SpawnEggItem(ModEntities.GIANTSQUID,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
             new SpawnEggItem(ModEntities.LIONFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));

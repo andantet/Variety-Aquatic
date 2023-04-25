@@ -10,6 +10,8 @@
   "entity.varietyaquatic.cuttlefish": "Cuttlefish",
   "entity.varietyaquatic.lionfish": "Lionfish",
   "entity.varietyaquatic.clownfish": "Clownfish",
+  "entity.varietyaquatic.giantsquid": "Giant Squid",
+
 
   "block.varietyaquatic.anemone_block": "Anemone",
 
@@ -26,6 +28,8 @@
   "item.varietyaquatic.cuttlefish_egg": "Cuttlefish Spawn Egg",
   "item.varietyaquatic.hermitcrab_egg": "Hermit Crab Spawn Egg",
   "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg",
+  "item.varietyaquatic.giantsquid_egg": "Giant Squid Spawn Egg",
+
 
   "item.varietyaquatic.raw_lionfish": "Raw Lionfish",
   "item.varietyaquatic.lionfish_cooked": "Cooked Lionfish",
