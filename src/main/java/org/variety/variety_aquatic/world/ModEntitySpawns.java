@@ -29,6 +29,8 @@ public class ModEntitySpawns {
 
     private static int spottedastingray = AqConfig.INSTANCE.getNumberProperty("spottedstingray.spawnweight");
     private static int piranhaspawnweight = AqConfig.INSTANCE.getNumberProperty("piranha.spawnweight");
+    private static int spermwhalespawnweight = AqConfig.INSTANCE.getNumberProperty("spermwhale.spawnweight");
+
 
 
 
@@ -41,6 +43,8 @@ public class ModEntitySpawns {
                 ModEntities.SHARK, sharkspawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.CLOWNFISH, clownfishspawnweight, 1, 2);
+        SpawnRestriction.register(
+                ModEntities.SPERMWHALE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.WHALESHARK, whalesharkspawnweight, 1, 2);
@@ -61,6 +65,9 @@ public class ModEntitySpawns {
                 ModEntities.JELLYFISH, jellyfishspawnweight, 2, 4);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.MOONJELLY, moonjellyspawnweight, 1, 1);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.SPERMWHALE, spermwhalespawnweight, 1, 1);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
                 ModEntities.PIRANHA, piranhaspawnweight, 3, 5);

@@ -28,5 +28,17 @@
     "sounds": [
       "varietyaquatic:giantsquid_ambient"
     ]
+  },
+  "giantsquid_hurt": {
+    "subtitle": "varietyaquatic.giantsquid_hurt",
+    "sounds": [
+      "varietyaquatic:giantsquid_hurt"
+    ]
+  },
+  "spermwhale_death": {
+    "subtitle": "varietyaquatic.spermwhale_death",
+    "sounds": [
+      "varietyaquatic:spermwhale_death"
+    ]
   }
 }

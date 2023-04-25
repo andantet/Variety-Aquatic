@@ -13,6 +13,10 @@ public class ModSound {
     public static SoundEvent WHALE_DEATH = registerSound("whale_death");
     public static SoundEvent WHALE_HURT = registerSound("whale_hurt");
     public static SoundEvent GIANTSQUID_AMBIENT = registerSound("giantsquid_ambient");
+    public static SoundEvent GIANTSQUID_HURT = registerSound("giantsquid_hurt");
+    public static SoundEvent SPERMWHALE_DEATH = registerSound("spermwhale_death");
+
+
 
 
 
