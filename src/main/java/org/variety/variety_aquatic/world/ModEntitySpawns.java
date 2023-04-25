@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
@@ -27,6 +28,7 @@ public class ModEntitySpawns {
     private static int clownfishspawnweight = AqConfig.INSTANCE.getNumberProperty("clownfish.spawnweight");
 
     private static int spottedastingray = AqConfig.INSTANCE.getNumberProperty("spottedstingray.spawnweight");
+    private static int piranhaspawnweight = AqConfig.INSTANCE.getNumberProperty("piranha.spawnweight");
 
 
 
@@ -59,11 +61,16 @@ public class ModEntitySpawns {
                 ModEntities.JELLYFISH, jellyfishspawnweight, 2, 4);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.MOONJELLY, moonjellyspawnweight, 1, 1);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
+                ModEntities.PIRANHA, piranhaspawnweight, 3, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.CREATURE,
                 ModEntities.HERMITCRAB, herbitcrabspawnweight, 1, 2);
 
         SpawnRestriction.register(
                 ModEntities.SHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+        SpawnRestriction.register(
+                ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
                 ModEntities.WHALESHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(

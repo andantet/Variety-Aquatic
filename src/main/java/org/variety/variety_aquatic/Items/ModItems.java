@@ -2,6 +2,8 @@ package org.variety.variety_aquatic.Items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
@@ -75,11 +77,21 @@ public class ModItems {
 
     public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
             new Item(new FabricItemSettings().group(ItemGroup.FOOD)
-                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 0), 0.8F).meat().build())));
+
 
     public static final Item LIONFISH_COOKED = registerItem("lionfish_cooked",
             new Item(new FabricItemSettings().group(ItemGroup.FOOD)
                     .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+
+
+
+    public static final Item PIRANHA_EGG = registerItem("piranha_egg",
+            new SpawnEggItem(ModEntities.PIRANHA,0x5e6989, 0x864e3b,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+
+    public static final Item PIRANHA_BUCKET = registerItem("piranha_bucket",
+            new EntityBucketItem(ModEntities.PIRANHA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);

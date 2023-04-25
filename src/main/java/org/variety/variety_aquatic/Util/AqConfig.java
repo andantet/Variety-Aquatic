@@ -101,6 +101,8 @@ public class AqConfig {
                     aqprop.setProperty("spottedstingray.health", "15.0");
                     aqprop.setProperty("spottedstingray.speed", "2.0");
                     aqprop.setProperty("spottedstingray.spawnweight", "50");
+                    aqprop.setProperty("piranha.spawnweight", "50");
+
 
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
@@ -150,6 +152,7 @@ public class AqConfig {
                 aqprop.setProperty("spottedstingray.health", "15.0");
                 aqprop.setProperty("spottedstingray.speed", "2.0");
                 aqprop.setProperty("spottedstingray.spawnweight", "50");
+                aqprop.setProperty("piranha.spawnweight", "50");
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

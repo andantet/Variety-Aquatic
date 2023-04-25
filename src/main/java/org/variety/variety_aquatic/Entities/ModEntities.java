@@ -23,12 +23,12 @@ public class ModEntities {
     public static final EntityType<GiantsquidEntity> GIANTSQUID = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "giantsquid"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, GiantsquidEntity::new)
-                    .dimensions(EntityDimensions.fixed(3f, 6f)).build());
+                    .dimensions(EntityDimensions.fixed(3.5f, -6f)).build());
 
     public static final EntityType<SunfishEntity> SUNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "sunfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SunfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1.5f, 2.3f)).build());
     public static final EntityType<JellyfishEntity> JELLYFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "jellyfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, JellyfishEntity::new)
@@ -46,11 +46,11 @@ public class ModEntities {
     public static final EntityType<CuttlefishEntity> CUTTLEFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "cuttlefish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CuttlefishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1f, 1.7f)).build());
     public static final EntityType<OpahEntity> OPAH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "opah"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, OpahEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1f, 1.7f)).build());
     public static final EntityType<LionfishEntity> LIONFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "lionfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LionfishEntity::new)
@@ -58,15 +58,20 @@ public class ModEntities {
     public static final EntityType<SpottedStingray> SPOTTEDSTINGRAY = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "spottedstingray"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SpottedStingray::new)
-                    .dimensions(EntityDimensions.fixed(1.2f, 1.0f)).build());
+                    .dimensions(EntityDimensions.fixed(1.2f, 0.7f)).build());
 
     public static final EntityType<YellowfinTunaEntity> YELLOWFIN = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "yellowfin"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, YellowfinTunaEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1.4f, 1.7f)).build());
 
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "clownfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, ClownfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
+                    .dimensions(EntityDimensions.fixed(1.3f, 1.3f)).build());
+
+    public static final EntityType<PiranhaEntity> PIRANHA = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "piranha"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, PiranhaEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.0f, 0.9f)).build());
 }
