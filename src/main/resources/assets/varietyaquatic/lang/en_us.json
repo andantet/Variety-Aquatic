@@ -5,7 +5,7 @@
   "entity.varietyaquatic.hermitcrab": "Hermit Crab",
   "entity.varietyaquatic.whaleshark": "Whale Shark",
   "entity.varietyaquatic.moonjelly": "Moon Jellyfish",
-  "entity.varietyaquatic.bluefin": "Blue fin Tuna",
+  "entity.varietyaquatic.yellowfin": "Yellow fin Tuna",
   "entity.varietyaquatic.opah": "Opah",
   "entity.varietyaquatic.cuttlefish": "Cuttlefish",
   "entity.varietyaquatic.lionfish": "Lionfish",
@@ -21,6 +21,7 @@
   "item.varietyaquatic.lionfish_egg": "Lionfish Spawn Egg",
   "item.varietyaquatic.clownfish_egg": "Clownfish Spawn Egg",
 
+  "item.varietyaquatic.yellowfin_egg": "Yellow fin tuna Spawn Egg",
 
   "item.varietyaquatic.whaleshark_egg": "Whale Shark Spawn Egg",
   "item.varietyaquatic.moonjelly_egg": "Moon Jelly Spawn Egg",

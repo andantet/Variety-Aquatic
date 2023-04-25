@@ -15,7 +15,7 @@ import org.variety.variety_aquatic.Variety_Aquatic;
 public class ModBlock {
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone_block",
-            new AnemoneBlock(FabricBlockSettings.of(Material.METAL)
+            new AnemoneBlock(FabricBlockSettings.of(Material.UNDERWATER_PLANT)
                     .strength(4f).requiresTool().nonOpaque()), ItemGroup.MISC);
 
     private static Block registerBlock(String name, Block block, ItemGroup tab) {

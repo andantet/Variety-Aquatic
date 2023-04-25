@@ -6,7 +6,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Entities.custom.BluefinTuna;
 import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;

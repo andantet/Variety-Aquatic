@@ -60,9 +60,9 @@ public class ModEntities {
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SpottedStingray::new)
                     .dimensions(EntityDimensions.fixed(1.2f, 1.0f)).build());
 
-    public static final EntityType<BluefinTuna> BLUEFIN = Registry.register(
-            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "bluefin"),
-            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BluefinTuna::new)
+    public static final EntityType<YellowfinTunaEntity> YELLOWFIN = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "yellowfin"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, YellowfinTunaEntity::new)
                     .dimensions(EntityDimensions.fixed(1.3f, 2f)).build());
 
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(

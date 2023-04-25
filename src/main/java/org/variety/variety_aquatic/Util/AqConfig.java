@@ -83,9 +83,9 @@ public class AqConfig {
                     aqprop.setProperty("whaleshark.damage", "8.0");
                     aqprop.setProperty("whaleshark.knockback", "0.1");
                     aqprop.setProperty("moonjelly.spawnweight", "50");
-                    aqprop.setProperty("bluefin.health", "15.0");
-                    aqprop.setProperty("bluefin.speed", "2.0");
-                    aqprop.setProperty("bluefin.spawnweight", "50");
+                    aqprop.setProperty("yellowfin.health", "15.0");
+                    aqprop.setProperty("yellowfin.speed", "2.0");
+                    aqprop.setProperty("yellowfin.spawnweight", "50");
                     aqprop.setProperty("cuttlefish.health", "15.0");
                     aqprop.setProperty("cuttlefish.speed", "2.0");
                     aqprop.setProperty("cuttlefish.spawnweight", "50");
@@ -132,9 +132,9 @@ public class AqConfig {
                 aqprop.setProperty("whaleshark.damage", "8.0");
                 aqprop.setProperty("whaleshark.knockback", "0.1");
                 aqprop.setProperty("moonjelly.spawnweight", "50");
-                aqprop.setProperty("bluefin.health", "15.0");
-                aqprop.setProperty("bluefin.speed", "2.0");
-                aqprop.setProperty("bluefin.spawnweight", "50");
+                aqprop.setProperty("yellowfin.health", "15.0");
+                aqprop.setProperty("yellowfin.speed", "2.0");
+                aqprop.setProperty("yellowfin.spawnweight", "50");
                 aqprop.setProperty("cuttlefish.health", "15.0");
                 aqprop.setProperty("cuttlefish.speed", "2.0");
                 aqprop.setProperty("cuttlefish.spawnweight", "50");

@@ -43,14 +43,14 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class BluefinTuna extends SchoolingFishEntity implements IAnimatable {
+public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("bluefin.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("bluefin.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("yellowfin.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("yellowfin.speed");;
 
-    public BluefinTuna(EntityType<? extends BluefinTuna> entityType, World world) {
+    public YellowfinTunaEntity(EntityType<? extends YellowfinTunaEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new LookControl(this);
@@ -202,7 +202,7 @@ public class BluefinTuna extends SchoolingFishEntity implements IAnimatable {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(BluefinTuna.class, TrackedDataHandlerRegistry.INTEGER);
+        MOISTNESS = DataTracker.registerData(YellowfinTunaEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
@@ -235,9 +235,9 @@ public class BluefinTuna extends SchoolingFishEntity implements IAnimatable {
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final BluefinTuna owner;
+        private final YellowfinTunaEntity owner;
 
-        public InWaterPredicate(BluefinTuna owner) {
+        public InWaterPredicate(YellowfinTunaEntity owner) {
             this.owner = owner;
         }
 

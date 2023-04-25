@@ -744,28 +744,16 @@
 				"RightArmg": {
 					"rotation": {
 						"0.0": {
-							"post": {
-								"vector": [0, 50, 0]
-							},
-							"lerp_mode": "catmullrom"
+							"vector": [0, 50, 0]
 						},
 						"0.5": {
-							"post": {
-								"vector": [0, 42.5, 0]
-							},
-							"lerp_mode": "catmullrom"
+							"vector": [0, 42.5, 0]
 						},
 						"1.0": {
-							"post": {
-								"vector": [0, 0, 0]
-							},
-							"lerp_mode": "catmullrom"
+							"vector": [0, 0, 0]
 						},
 						"1.5": {
-							"post": {
-								"vector": [0, 50, 0]
-							},
-							"lerp_mode": "catmullrom"
+							"vector": [0, 50, 0]
 						}
 					}
 				},

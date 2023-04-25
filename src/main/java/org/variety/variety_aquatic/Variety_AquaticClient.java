@@ -9,13 +9,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
-import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.*;
-import org.variety.variety_aquatic.Entities.custom.CuttlefishEntity;
-import software.bernie.example.client.renderer.tile.HabitatTileRenderer;
-import software.bernie.example.registry.BlockRegistry;
-import software.bernie.example.registry.TileRegistry;
 
 public class Variety_AquaticClient implements ClientModInitializer {
     @Override
@@ -27,7 +22,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.HERMITCRAB, HermitcrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.JELLYFISH, JellyfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.MOONJELLY, MoonJellyRenderer::new);
-        EntityRendererRegistry.register(ModEntities.BLUEFIN, BlueFinTunaRenderer::new);
+        EntityRendererRegistry.register(ModEntities.YELLOWFIN, YellowFinTunaRenderer::new);
         EntityRendererRegistry.register(ModEntities.CUTTLEFISH, CuttlefishRenderer::new);
         EntityRendererRegistry.register(ModEntities.OPAH, OpahRenderer::new);
         EntityRendererRegistry.register(ModEntities.LIONFISH, LionfishRenderer::new);

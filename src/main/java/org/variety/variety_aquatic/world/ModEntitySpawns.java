@@ -20,7 +20,7 @@ public class ModEntitySpawns {
     private static int herbitcrabspawnweight = AqConfig.INSTANCE.getNumberProperty("hermitcrab.spawnweight");
     private static int whalesharkspawnweight = AqConfig.INSTANCE.getNumberProperty("whaleshark.spawnweight");
     private static int moonjellyspawnweight = AqConfig.INSTANCE.getNumberProperty("moonjelly.spawnweight");
-    private static int bluefinspawnweight = AqConfig.INSTANCE.getNumberProperty("bluefin.spawnweight");
+    private static int yellowfinspawnweight = AqConfig.INSTANCE.getNumberProperty("yellowfin.spawnweight");
     private static int cuttlefishspawnweight = AqConfig.INSTANCE.getNumberProperty("cuttlefish.spawnweight");
     private static int opahspawnweight = AqConfig.INSTANCE.getNumberProperty("opah.spawnweight");
     private static int lionfishspawnweight = AqConfig.INSTANCE.getNumberProperty("lionfish.spawnweight");
@@ -47,7 +47,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.OPAH, opahspawnweight, 1, 1);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.BLUEFIN, bluefinspawnweight, 1, 2);
+                ModEntities.YELLOWFIN, yellowfinspawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.CUTTLEFISH, cuttlefishspawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
@@ -69,7 +69,7 @@ public class ModEntitySpawns {
         SpawnRestriction.register(
                 ModEntities.SUNFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
-                ModEntities.BLUEFIN, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+                ModEntities.YELLOWFIN, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
                 ModEntities.CUTTLEFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
 

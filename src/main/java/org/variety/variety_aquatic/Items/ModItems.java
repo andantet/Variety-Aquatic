@@ -24,11 +24,11 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item WHALESHARK_EGG = registerItem("whaleshark_egg",
-            new SpawnEggItem(ModEntities.WHALESHARK,0x22b341, 0x19732e,
+            new SpawnEggItem(ModEntities.WHALESHARK,0x424c6e, 0xffffff,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
-    public static final Item BLUEFIN_EGG = registerItem("bluefin_egg",
-            new SpawnEggItem(ModEntities.BLUEFIN,0x22b341, 0x19732e,
+    public static final Item YELLOWFIN_EGG = registerItem("yellowfin_egg",
+            new SpawnEggItem(ModEntities.YELLOWFIN,0x00396d, 0xffc825,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
@@ -52,14 +52,14 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item CUTTLEFISH_EGG = registerItem("cuttlefish_egg",
-            new SpawnEggItem(ModEntities.CUTTLEFISH,0x22b341, 0x19732e,
+            new SpawnEggItem(ModEntities.CUTTLEFISH,0x391f21, 0xf6ca9f,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item CUTTLEFISH_BUCKET = registerItem("cuttlefish_bucket",
             new EntityBucketItem(ModEntities.CUTTLEFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 
     public static final Item OPAH_EGG = registerItem("opah_egg",
-            new SpawnEggItem(ModEntities.OPAH,0x22b341, 0x19732e,
+            new SpawnEggItem(ModEntities.OPAH,0x687596, 0x9e2a38,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
@@ -67,7 +67,7 @@ public class ModItems {
             new SpawnEggItem(ModEntities.GIANTSQUID,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
-            new SpawnEggItem(ModEntities.LIONFISH,0x22b341, 0x19732e,
+            new SpawnEggItem(ModEntities.LIONFISH,0xf6ca9f, 0xe07438,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item LIONFISH_BUCKET = registerItem("lionfish_bucket",

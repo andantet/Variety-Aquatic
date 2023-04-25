@@ -10,10 +10,12 @@ import org.variety.variety_aquatic.Entities.custom.GiantsquidEntity;
 import org.variety.variety_aquatic.Entities.custom.WhaleSharkEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
 
 public class GiantsquidRenderer extends GeoEntityRenderer<GiantsquidEntity> {
     public GiantsquidRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new GiantsquidModel());
+        this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
         this.shadowRadius = 0.4f;
     }
 

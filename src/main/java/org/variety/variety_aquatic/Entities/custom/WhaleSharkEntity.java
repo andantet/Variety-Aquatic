@@ -211,6 +211,7 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
     }
 
 
+
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(event.isMoving()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("WhaleSharkSwim", true));
