@@ -340,15 +340,11 @@ public class HermitcrabEntity extends TameableEntity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("HermitCrabWalk", true));
             return PlayState.CONTINUE;
         }
-        if(this.isDead()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
-        }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
 
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
 
 

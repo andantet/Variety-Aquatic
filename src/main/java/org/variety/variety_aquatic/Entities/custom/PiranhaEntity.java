@@ -22,8 +22,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -38,17 +40,21 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable {
+public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, Angerable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
+    private static final UniformIntProvider ANGER_TIME_RANGE;
+
+    private int angerTime;
+    private UUID targetUuid;
 
 
     private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
-    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("whaleshark.attackfish");
     private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
     private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
     private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
@@ -83,18 +89,44 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
+        this.writeAngerToNbt(nbt);
     }
+
+    public void chooseRandomAngerTime() {
+        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
+    }
+
+
+    public void setAngerTime(int ticks) {
+        this.angerTime = ticks;
+    }
+
+    public int getAngerTime() {
+        return this.angerTime;
+    }
+
+    public void setAngryAt(@Nullable UUID uuid) {
+        this.targetUuid = uuid;
+    }
+
+    public UUID getAngryAt() {
+        return this.targetUuid;
+    }
+
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.PIRANHA_BUCKET);
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
+        this.readAngerFromNbt(this.world, nbt);
+
     }
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 3f));
+        this.goalSelector.add(2,new PiranhaEntity.AttackGoal());
+        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
@@ -106,7 +138,7 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
     }
@@ -172,6 +204,29 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable {
         }
     }
 
+
+    private class AttackGoal extends MeleeAttackGoal {
+        public AttackGoal() {
+            super(PiranhaEntity.this, 1.25D, true);
+        }
+
+        protected void attack(LivingEntity target, double squaredDistance) {
+            double d = this.getSquaredMaxAttackDistance(target);
+            if (squaredDistance <= d && this.isCooledDown()) {
+                this.resetCooldown();
+                this.mob.tryAttack(target);
+            }
+        }
+
+        public void stop() {
+            super.stop();
+        }
+
+        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+            return 4.0F + entity.getWidth();
+        }
+    }
+
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
     }
@@ -215,6 +270,7 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable {
 
     static {
         MOISTNESS = DataTracker.registerData(PiranhaEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 

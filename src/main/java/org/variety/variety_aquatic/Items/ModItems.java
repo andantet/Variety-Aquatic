@@ -65,8 +65,8 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
-    public static final Item GIANTSQUID_EGG = registerItem("giantsquid_egg",
-            new SpawnEggItem(ModEntities.GIANTSQUID,0x22b341, 0x19732e,
+    public static final Item GIANTSQUID_EGG = registerItem("giantglowingsquid_egg",
+            new SpawnEggItem(ModEntities.GIANTGLOWINGSQUID,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
             new SpawnEggItem(ModEntities.LIONFISH,0xf6ca9f, 0xe07438,
@@ -77,7 +77,7 @@ public class ModItems {
 
     public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
             new Item(new FabricItemSettings().group(ItemGroup.FOOD)
-                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 600, 0), 0.8F).meat().build())));
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 600, 0), 0.8F).meat().build())));
 
 
     public static final Item LIONFISH_COOKED = registerItem("lionfish_cooked",
