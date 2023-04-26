@@ -31,6 +31,8 @@ public class ModEntitySpawns {
     private static int piranhaspawnweight = AqConfig.INSTANCE.getNumberProperty("piranha.spawnweight");
     private static int spermwhalespawnweight = AqConfig.INSTANCE.getNumberProperty("spermwhale.spawnweight");
 
+    private static int tetraspawnweight = AqConfig.INSTANCE.getNumberProperty("tetra.spawnweight");
+    private static int bettaspawnweight = AqConfig.INSTANCE.getNumberProperty("betta.spawnweight");
 
 
 
@@ -44,7 +46,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.CLOWNFISH, clownfishspawnweight, 1, 2);
         SpawnRestriction.register(
-                ModEntities.SPERMWHALE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+                ModEntities.LEVIATHAN, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.WHALESHARK, whalesharkspawnweight, 1, 2);
@@ -67,10 +69,15 @@ public class ModEntitySpawns {
                 ModEntities.MOONJELLY, moonjellyspawnweight, 1, 1);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.SPERMWHALE, spermwhalespawnweight, 1, 1);
+                ModEntities.LEVIATHAN, spermwhalespawnweight, 1, 1);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
                 ModEntities.PIRANHA, piranhaspawnweight, 3, 5);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
+                ModEntities.BETTA, bettaspawnweight, 3, 5);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
+                ModEntities.TETRA, tetraspawnweight, 3, 5);
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.CREATURE,
                 ModEntities.HERMITCRAB, herbitcrabspawnweight, 1, 2);
 
@@ -78,6 +85,9 @@ public class ModEntitySpawns {
                 ModEntities.SHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
                 ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+        SpawnRestriction.register(
+                ModEntities.TETRA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+
         SpawnRestriction.register(
                 ModEntities.WHALESHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(

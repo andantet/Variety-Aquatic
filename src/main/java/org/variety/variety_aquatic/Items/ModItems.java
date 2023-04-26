@@ -24,13 +24,22 @@ public class ModItems {
     public static final Item SHARK_EGG = registerItem("shark_egg",
             new SpawnEggItem(ModEntities.SHARK,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item LEVIATHAN_EGG = registerItem("leviathan_egg",
+            new SpawnEggItem(ModEntities.LEVIATHAN,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item WHALESHARK_EGG = registerItem("whaleshark_egg",
             new SpawnEggItem(ModEntities.WHALESHARK,0x424c6e, 0xffffff,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item BETTA_EGG = registerItem("betta_egg",
+            new SpawnEggItem(ModEntities.WHALESHARK,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item YELLOWFIN_EGG = registerItem("yellowfin_egg",
             new SpawnEggItem(ModEntities.YELLOWFIN,0x00396d, 0xffc825,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item STINGRAY_EGG = registerItem("stingray_egg",
+            new SpawnEggItem(ModEntities.SPOTTEDSTINGRAY,0xed7614, 0x0069aa,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
     public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
@@ -89,7 +98,9 @@ public class ModItems {
     public static final Item PIRANHA_EGG = registerItem("piranha_egg",
             new SpawnEggItem(ModEntities.PIRANHA,0x5e6989, 0x864e3b,
                     new FabricItemSettings().group(ItemGroup.MISC)));
-
+    public static final Item RAW_PIRANHA = registerItem("raw_piranha",
+            new Item(new FabricItemSettings().group(ItemGroup.FOOD)
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
     public static final Item PIRANHA_BUCKET = registerItem("piranha_bucket",
             new EntityBucketItem(ModEntities.PIRANHA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
 

@@ -12,6 +12,8 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.boss.BossBar;
+import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -22,15 +24,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.AqConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -44,21 +47,23 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class SpermwhaleEntity extends FishEntity implements IAnimatable {
+public class LeviathanEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
+    private final ServerBossBar bossBar;
     private static double health = AqConfig.INSTANCE.getDoubleProperty("clownfish.health");
     private static double speed = AqConfig.INSTANCE.getDoubleProperty("clownfish.speed");;
 
-    public SpermwhaleEntity(EntityType<? extends SpermwhaleEntity> entityType, World world) {
+    public LeviathanEntity(EntityType<? extends LeviathanEntity> entityType, World world) {
         super(entityType, world);
+        this.bossBar = (ServerBossBar)(new ServerBossBar(this.getDisplayName(), BossBar.Color.PURPLE, BossBar.Style.PROGRESS)).setDarkenSky(true);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new LookControl(this);
 
     }
     @Nullable
-    public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData SpermwhaleEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -87,7 +92,15 @@ public class SpermwhaleEntity extends FishEntity implements IAnimatable {
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
+        if (this.hasCustomName()) {
+            this.bossBar.setName(this.getDisplayName());
+        }
     }
+    public void setCustomName(@Nullable Text name) {
+        super.setCustomName(name);
+        this.bossBar.setName(this.getDisplayName());
+    }
+
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
@@ -102,10 +115,13 @@ public class SpermwhaleEntity extends FishEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
     }
+
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
-
+    protected void mobTick() {
+        this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
+    }
     public int getMaxAir() {
         return 4800;
     }
@@ -163,6 +179,15 @@ public class SpermwhaleEntity extends FishEntity implements IAnimatable {
             }
         }
     }
+    public void onStartedTrackingBy(ServerPlayerEntity player) {
+        super.onStartedTrackingBy(player);
+        this.bossBar.addPlayer(player);
+    }
+
+    public void onStoppedTrackingBy(ServerPlayerEntity player) {
+        super.onStoppedTrackingBy(player);
+        this.bossBar.removePlayer(player);
+    }
 
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSound.DEEP_GROWL;
@@ -206,7 +231,7 @@ public class SpermwhaleEntity extends FishEntity implements IAnimatable {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(SpermwhaleEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        MOISTNESS = DataTracker.registerData(LeviathanEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
@@ -234,9 +259,9 @@ public class SpermwhaleEntity extends FishEntity implements IAnimatable {
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final SpermwhaleEntity owner;
+        private final LeviathanEntity owner;
 
-        public InWaterPredicate(SpermwhaleEntity owner) {
+        public InWaterPredicate(LeviathanEntity owner) {
             this.owner = owner;
         }
 

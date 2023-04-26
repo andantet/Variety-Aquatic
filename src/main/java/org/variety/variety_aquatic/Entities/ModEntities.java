@@ -16,9 +16,9 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "shark"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SharkEntity::new)
                     .dimensions(EntityDimensions.fixed(1.3f, 1.6f)).build());
-    public static final EntityType<SpermwhaleEntity> SPERMWHALE = Registry.register(
-            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "spermwhale"),
-            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SpermwhaleEntity::new)
+    public static final EntityType<LeviathanEntity> LEVIATHAN = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "leviathan"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, LeviathanEntity::new)
                     .dimensions(EntityDimensions.fixed(4f, 3f)).build());
     public static final EntityType<WhaleSharkEntity> WHALESHARK = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "whaleshark"),
@@ -37,6 +37,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "jellyfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, JellyfishEntity::new)
                     .dimensions(EntityDimensions.fixed(1f, 1.2f)).build());
+    public static final EntityType<BettaEntity> BETTA = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "betta"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BettaEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.6f, 0.4f)).build());
 
     public static final EntityType<MoonJellyEntity> MOONJELLY = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "moonjelly"),
@@ -78,4 +82,9 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "piranha"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, PiranhaEntity::new)
                     .dimensions(EntityDimensions.fixed(0.9f, 0.7f)).build());
+
+    public static final EntityType<TetraEntity> TETRA = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tetra"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, TetraEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 }

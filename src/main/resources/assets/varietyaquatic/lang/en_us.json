@@ -11,11 +11,14 @@
   "entity.varietyaquatic.lionfish": "Lionfish",
   "entity.varietyaquatic.clownfish": "Clownfish",
   "entity.varietyaquatic.giantsquid": "Giant Squid",
+  "entity.varietyaquatic.leviathan": "Leviathan",
+
 
 
   "block.varietyaquatic.anemone_block": "Anemone",
 
-
+  "item.varietyaquatic.leviathan_egg": "Leviathan Spawn Egg",
+  "item.varietyaquatic.stringray_egg": "Stingray Spawn Egg",
   "item.varietyaquatic.shark_egg": "Shark Spawn Egg",
   "item.varietyaquatic.opah_egg": "Opah Spawn Egg",
   "item.varietyaquatic.lionfish_egg": "Lionfish Spawn Egg",

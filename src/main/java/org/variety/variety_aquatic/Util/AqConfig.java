@@ -42,12 +42,12 @@ public class AqConfig {
     }
 
 
-    private final File file = new File("./config/TexMods/Aquatic.config");
+    private final File file = new File("./config/VarietyAquatic/Aquatic.config");
 
     private void load() {
         loaded = true;
         try {
-            Files.createDirectories(Paths.get("./config/TexMods/"));
+            Files.createDirectories(Paths.get("./config/VarietyAquatic/"));
 
             if (file.exists() && file.length() != 0) {
                 var reader = new FileReader(file);
@@ -103,6 +103,8 @@ public class AqConfig {
                     aqprop.setProperty("spottedstingray.spawnweight", "50");
                     aqprop.setProperty("piranha.spawnweight", "50");
                     aqprop.setProperty("spermwhale.spawnweight", "50");
+                    aqprop.setProperty("tetra.spawnweight", "50");
+                    aqprop.setProperty("betta.spawnweight", "50");
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
                 }
@@ -153,6 +155,9 @@ public class AqConfig {
                 aqprop.setProperty("spottedstingray.spawnweight", "50");
                 aqprop.setProperty("piranha.spawnweight", "50");
                 aqprop.setProperty("spermwhale.spawnweight", "50");
+                aqprop.setProperty("tetra.spawnweight", "50");
+                aqprop.setProperty("betta.spawnweight", "50");
+
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }
