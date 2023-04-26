@@ -32,9 +32,23 @@ public class ModItems {
             new SpawnEggItem(ModEntities.WHALESHARK,0x424c6e, 0xffffff,
                     new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item BETTA_EGG = registerItem("betta_egg",
-            new SpawnEggItem(ModEntities.WHALESHARK,0x22b341, 0x19732e,
+            new SpawnEggItem(ModEntities.BETTA,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
+
+    public static final Item TETRA_EGG = registerItem("tetra_egg",
+            new SpawnEggItem(ModEntities.TETRA,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item TETRA_BUCKET = registerItem("tetra_bucket",
+            new EntityBucketItem(ModEntities.TETRA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
+    public static final Item BETTA_BUCKET = registerItem("betta_bucket",
+            new EntityBucketItem(ModEntities.BETTA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ItemGroup.MISC)));
+    public static final Item RAW_BETTA = registerItem("raw_betta",
+            new Item(new FabricItemSettings().group(ItemGroup.FOOD)
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+    public static final Item RAW_TETRA= registerItem("raw_tetra",
+            new Item(new FabricItemSettings().group(ItemGroup.FOOD)
+                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
     public static final Item YELLOWFIN_EGG = registerItem("yellowfin_egg",
             new SpawnEggItem(ModEntities.YELLOWFIN,0x00396d, 0xffc825,
                     new FabricItemSettings().group(ItemGroup.MISC)));
@@ -74,7 +88,7 @@ public class ModItems {
                     new FabricItemSettings().group(ItemGroup.MISC)));
 
 
-    public static final Item GIANTSQUID_EGG = registerItem("giantglowingsquid_egg",
+    public static final Item GIANTGLOWINGSQUID_EGG = registerItem("giantglowingsquid_egg",
             new SpawnEggItem(ModEntities.GIANTGLOWINGSQUID,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",

@@ -73,9 +73,9 @@ public class ModEntitySpawns {
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
                 ModEntities.PIRANHA, piranhaspawnweight, 3, 5);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE,BiomeKeys.MANGROVE_SWAMP),SpawnGroup.WATER_CREATURE,
                 ModEntities.BETTA, bettaspawnweight, 3, 5);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE),SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE,BiomeKeys.MANGROVE_SWAMP),SpawnGroup.WATER_CREATURE,
                 ModEntities.TETRA, tetraspawnweight, 3, 5);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.CREATURE,

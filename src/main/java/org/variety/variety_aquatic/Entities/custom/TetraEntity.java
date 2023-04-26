@@ -83,7 +83,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
     }
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CLOWNFISH_BUCKET);
+        return new ItemStack(ModItems.TETRA_BUCKET);
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));

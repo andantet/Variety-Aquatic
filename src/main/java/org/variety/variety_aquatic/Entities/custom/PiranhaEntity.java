@@ -96,6 +96,9 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
 
+    public int getMaxGroupSize() {
+        return 5;
+    }
 
     public void setAngerTime(int ticks) {
         this.angerTime = ticks;

@@ -27,6 +27,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
+import org.variety.variety_aquatic.Items.ModItems;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -35,10 +36,12 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BettaEntity extends SchoolingFishEntity implements IAnimatable {
+public class BettaEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
+    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
 
-    public BettaEntity(EntityType<? extends SchoolingFishEntity> entityType, World world) {
+
+    public BettaEntity(EntityType<? extends FishEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -48,7 +51,7 @@ public class BettaEntity extends SchoolingFishEntity implements IAnimatable {
         this.goalSelector.add(2, new EscapeDangerGoal(this, 3f));
 
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
+        this.goalSelector.add(1, new SwimAroundGoal(this, 10, 1));
     }
 
 
@@ -73,11 +76,17 @@ public class BettaEntity extends SchoolingFishEntity implements IAnimatable {
                 0, this::predicate));
     }
 
+    public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putInt("BucketVariantTag", this.getTypeVariant());
+    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getTypeVariant());
     }
+
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -95,8 +104,14 @@ public class BettaEntity extends SchoolingFishEntity implements IAnimatable {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
                                  SpawnReason spawnReason, @Nullable EntityData entityData,
                                  @Nullable NbtCompound entityNbt) {
-        BettaVariant variant = Util.getRandom(BettaVariant.values(), this.random);
-        setVariant(variant);
+
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains("BucketVariantTag", 3)) {
+            setVariant(BettaVariant.byId(entityNbt.getInt("BucketVariantTag")));
+        }
+        else {
+            BettaVariant variant = Util.getRandom(BettaVariant.values(), this.random);
+            setVariant(variant);
+        }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
@@ -137,7 +152,7 @@ public class BettaEntity extends SchoolingFishEntity implements IAnimatable {
     }
     @Override
     public ItemStack getBucketItem() {
-        return null;
+        return new ItemStack(ModItems.BETTA_BUCKET);
     }
 
 
