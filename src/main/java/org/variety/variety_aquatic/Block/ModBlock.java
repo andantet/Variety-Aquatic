@@ -3,35 +3,35 @@ package org.variety.variety_aquatic.Block;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.block.WallTorchBlock;
+import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.TallBlockItem;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.text.HoverEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Block.Custom.AnemoneBlock;
 import org.variety.variety_aquatic.Block.Custom.AnglerTorchBlock;
 import org.variety.variety_aquatic.Block.Custom.WallAnglerTorchBlock;
+import org.variety.variety_aquatic.Items.ModItemgroup;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModBlock {
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone_block",
             new AnemoneBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
-                    .strength(4f).requiresTool().nonOpaque()), ItemGroup.MISC);
-    public static final Block ANGLER_TORCH_GROUND = registerBlock("angler_torch_ground",
+                    .strength(4f).requiresTool().nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+    public static final Block ANGLER_TORCH= registerBlock("angler_torch_ground",
             new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE),null);
     public static final Block WALL_ANGLER_TORCH = registerBlock("wall_angler_torch",
             new WallAnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
-            }).sounds(BlockSoundGroup.WOOD).dropsLike(ANGLER_TORCH_GROUND), ParticleTypes.BUBBLE),null);
+            }).sounds(BlockSoundGroup.WOOD).dropsLike(ModBlock.ANGLER_TORCH), ParticleTypes.BUBBLE),null);
 
 
 
