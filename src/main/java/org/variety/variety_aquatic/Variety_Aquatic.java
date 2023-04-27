@@ -10,6 +10,7 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.world.Feature.AnemoneFeature;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib3.GeckoLib;
 
@@ -43,6 +44,5 @@ public class Variety_Aquatic implements ModInitializer {
         FabricDefaultAttributeRegistry.register(ModEntities.TETRA, TetraEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.BETTA, BettaEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.ANGLERFISH, AnglerFishEntity.setAttributes());
-
     }
 }

@@ -105,6 +105,21 @@ public class AqConfig {
                     aqprop.setProperty("spermwhale.spawnweight", "50");
                     aqprop.setProperty("tetra.spawnweight", "50");
                     aqprop.setProperty("betta.spawnweight", "50");
+                    aqprop.setProperty("anglerfish.health", "10.0");
+                    aqprop.setProperty("anglerfish.knockback", "0.1");
+                    aqprop.setProperty("anglerfish.follow", "10.0");
+                    aqprop.setProperty("anglerfish.speed", "1.8");
+                    aqprop.setProperty("leviathan.health", "60.0");
+                    aqprop.setProperty("leviathan.speed", "1.5");
+                    aqprop.setProperty("piranha.damage", "2.0");
+                    aqprop.setProperty("piranha.health", "10.0");
+                    aqprop.setProperty("piranha.knockback", "0.1");
+                    aqprop.setProperty("piranha.follow", "10.0");
+                    aqprop.setProperty("piranha.speed", "1.8");
+
+
+
+
                     aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                     writer.close();
                 }
@@ -157,6 +172,17 @@ public class AqConfig {
                 aqprop.setProperty("spermwhale.spawnweight", "50");
                 aqprop.setProperty("tetra.spawnweight", "50");
                 aqprop.setProperty("betta.spawnweight", "50");
+                aqprop.setProperty("anglerfish.health", "10.0");
+                aqprop.setProperty("anglerfish.knockback", "0.1");
+                aqprop.setProperty("anglerfish.follow", "10.0");
+                aqprop.setProperty("anglerfish.speed", "1.8");
+                aqprop.setProperty("leviathan.health", "60.0");
+                aqprop.setProperty("leviathan.speed", "1.5");
+                aqprop.setProperty("piranha.damage", "2.0");
+                aqprop.setProperty("piranha.health", "10.0");
+                aqprop.setProperty("piranha.knockback", "0.1");
+                aqprop.setProperty("piranha.follow", "10.0");
+                aqprop.setProperty("piranha.speed", "1.8");
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

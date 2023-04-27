@@ -52,8 +52,8 @@ public class LeviathanEntity extends FishEntity implements IAnimatable {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
     private final ServerBossBar bossBar;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("clownfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("clownfish.speed");;
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("leviathan.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("leviathan.speed");;
 
     public LeviathanEntity(EntityType<? extends LeviathanEntity> entityType, World world) {
         super(entityType, world);

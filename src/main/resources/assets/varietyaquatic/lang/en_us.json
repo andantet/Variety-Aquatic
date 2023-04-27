@@ -5,13 +5,19 @@
   "entity.varietyaquatic.hermitcrab": "Hermit Crab",
   "entity.varietyaquatic.whaleshark": "Whale Shark",
   "entity.varietyaquatic.moonjelly": "Moon Jellyfish",
-  "entity.varietyaquatic.yellowfin": "Yellow fin Tuna",
+  "entity.varietyaquatic.yellowfin": "Yellowfin Tuna",
   "entity.varietyaquatic.opah": "Opah",
   "entity.varietyaquatic.cuttlefish": "Cuttlefish",
+  "entity.varietyaquatic.spottedstingray": "Stingray",
+  "entity.varietyaquatic.piranha": "Piranha",
   "entity.varietyaquatic.lionfish": "Lionfish",
   "entity.varietyaquatic.clownfish": "Clownfish",
-  "entity.varietyaquatic.giantsquid": "Giant Squid",
+  "entity.varietyaquatic.giantsquid": "Giant Glowsquid",
   "entity.varietyaquatic.leviathan": "Leviathan",
+  "entity.varietyaquatic.tetra": "Neon Tetra",
+
+  "entity.varietyaquatic.anglerfish": "Anglerfish",
+  "entity.varietyaquatic.betta": "Betta",
 
 
 
@@ -31,38 +37,32 @@
   "item.varietyaquatic.opah_egg": "Opah Spawn Egg",
   "item.varietyaquatic.lionfish_egg": "Lionfish Spawn Egg",
   "item.varietyaquatic.clownfish_egg": "Clownfish Spawn Egg",
-  "item.varietyaquatic.yellowfin_egg": "Yellow fin tuna Spawn Egg",
+  "item.varietyaquatic.yellowfin_egg": "Yellowfin Tuna Spawn Egg",
   "item.varietyaquatic.whaleshark_egg": "Whale Shark Spawn Egg",
-  "item.varietyaquatic.moonjelly_egg": "Moon Jelly Spawn Egg",
+  "item.varietyaquatic.moonjelly_egg": "Moon Jellyfish Spawn Egg",
   "item.varietyaquatic.sunfish_egg": "Sunfish Spawn Egg",
   "item.varietyaquatic.cuttlefish_egg": "Cuttlefish Spawn Egg",
   "item.varietyaquatic.hermitcrab_egg": "Hermit Crab Spawn Egg",
   "item.varietyaquatic.jellyfish_egg": "Jellyfish Spawn Egg",
-  "item.varietyaquatic.giantsquid_egg": "Giant Squid Spawn Egg",
+  "item.varietyaquatic.giantsquid_egg": "Giant Glowsquid Spawn Egg",
 
 
   "item.varietyaquatic.raw_lionfish": "Raw Lionfish",
   "item.varietyaquatic.lionfish_cooked": "Cooked Lionfish",
 
-  "item.varietyaquatic.raw_piranha": "Raw Piranha",
+  "item.varietyaquatic.raw_piranha": "Piranha",
   "item.varietyaquatic.piranha_bucket": "Piranha Bucket",
   "item.varietyaquatic.betta_bucket": "Betta Bucket",
-  "item.varietyaquatic.tetra_egg": "Tetra Egg",
+  "item.varietyaquatic.tetra_egg": "Neon Tetra Egg",
 
-  "item.varietyaquatic.giantglowingsquid_egg": "Giant glowing Squid Egg",
-
-  "item.varietyaquatic.raw_betta": "Raw Betta",
-
-
+  "item.varietyaquatic.giantglowingsquid_egg": "Giant Glowsquid Squid Egg",
+  "item.varietyaquatic.raw_betta": "Betta",
   "item.varietyaquatic.moonjelly_bucket": "Moonjelly Bucket",
   "item.varietyaquatic.clownfish_bucket": "Clownfish Bucket",
   "item.varietyaquatic.jellyfish_bucket": "Jellyfish Bucket",
   "item.varietyaquatic.cuttlefish_bucket": "Cuttlefish Bucket",
-  "item.varietyaquatic.lionfishfish_bucket": "Lionfish Bucket"
+  "item.varietyaquatic.lionfishfish_bucket": "Lionfish Bucket",
 
-
-
-
-
+  "itemGroup.varietyaquatic.variety_aquatic": "Variety Aquatic"
 
 }

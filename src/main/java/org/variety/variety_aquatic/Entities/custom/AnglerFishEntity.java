@@ -54,11 +54,10 @@ public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerab
     private UUID targetUuid;
 
 
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
-    private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("whaleshark.knockback");
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("anglerfish.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("anglerfish.speed");
+    private static double follow = AqConfig.INSTANCE.getDoubleProperty("anglerfish.follow");
+    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("anglerfish.knockback");
 
     public AnglerFishEntity(EntityType<? extends AnglerFishEntity> entityType, World world) {
         super(entityType, world);

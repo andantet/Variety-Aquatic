@@ -10,7 +10,6 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.Heightmap.Type;
 import net.minecraft.world.gen.CountConfig;
-import net.minecraft.world.gen.ProbabilityConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import org.variety.variety_aquatic.Block.ModBlock;

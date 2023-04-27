@@ -54,11 +54,11 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     private UUID targetUuid;
 
 
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
-    private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("whaleshark.knockback");
+    private static double health = AqConfig.INSTANCE.getDoubleProperty("piranha.health");
+    private static double speed = AqConfig.INSTANCE.getDoubleProperty("piranha.speed");
+    private static double follow = AqConfig.INSTANCE.getDoubleProperty("piranha.follow");
+    private static double damage = AqConfig.INSTANCE.getDoubleProperty("piranha.damage");
+    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("piranha.knockback");
 
     public PiranhaEntity(EntityType<? extends PiranhaEntity> entityType, World world) {
         super(entityType, world);

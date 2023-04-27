@@ -44,12 +44,11 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
-    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("whaleshark.attackfish");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
-    private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("whaleshark.knockback");
+    private static double health = 40;
+    private static double speed = 1.3;
+    private static double follow = 10;
+    private static double damage = 3;
+    private static double knockback = 1;
 
     public GiantsquidEntity(EntityType<? extends GiantsquidEntity> entityType, World world) {
         super(entityType, world);
@@ -92,9 +91,6 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.goalSelector.add(6, new SwimAroundGoal(this, 0.50, 2));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-        if (doattack==true) {
-            this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));
-        }
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
     }
 
