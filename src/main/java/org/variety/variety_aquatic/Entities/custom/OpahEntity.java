@@ -170,7 +170,8 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isTouchingWater() ? SoundEvents.ENTITY_DOLPHIN_AMBIENT_WATER : SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return SoundEvents.ENTITY_COD_AMBIENT;
+
     }
 
     protected SoundEvent getSplashSound() {

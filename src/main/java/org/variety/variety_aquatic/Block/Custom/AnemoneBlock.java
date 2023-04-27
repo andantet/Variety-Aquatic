@@ -1,9 +1,12 @@
-package org.variety.variety_aquatic.Block;
+package org.variety.variety_aquatic.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -13,10 +16,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Block.ModTileEntity;
 
-public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider {
+public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider,FluidFillable {
 
     public static final DirectionProperty FACING = Properties.FACING;
     protected static final VoxelShape COLLISION_SHAPE;
@@ -25,7 +30,16 @@ public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider
     public AnemoneBlock(Settings settings) {
         super(settings);
     }
+    public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+        return false;
+    }
 
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+        return false;
+    }
+    public FluidState getFluidState(BlockState state) {
+        return Fluids.WATER.getStill(false);
+    }
 
     /*
      * Hides the normal block and only shows the block entity created below
@@ -82,7 +96,7 @@ public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         for (BlockPos testPos : BlockPos.iterate(pos,
                 pos.offset((Direction) state.get(FACING).rotateYClockwise(), 2))) {
-            if (!testPos.equals(pos) && !world.getBlockState(testPos).isAir())
+            if (!testPos.equals(pos) && world.getBlockState(testPos).isAir())
                 return false;
         }
         return true;

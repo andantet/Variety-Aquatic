@@ -241,7 +241,7 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isTouchingWater() ? SoundEvents.ENTITY_DOLPHIN_AMBIENT_WATER : SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return SoundEvents.ENTITY_SALMON_AMBIENT;
     }
 
     protected SoundEvent getSplashSound() {

@@ -39,6 +39,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getTranslucent());
+
 
 
     }

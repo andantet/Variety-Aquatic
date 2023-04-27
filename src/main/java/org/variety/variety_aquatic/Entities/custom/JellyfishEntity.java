@@ -89,7 +89,7 @@ public class JellyfishEntity extends FishEntity implements IAnimatable {
 
     }
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.JELLYFISH_BUCKET);
+        return null;
     }
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.5F;

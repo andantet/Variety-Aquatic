@@ -242,7 +242,7 @@ public class MoonJellyEntity extends FishEntity implements IAnimatable {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MOONJELLY_BUCKET);
+        return null;
     }
     public void onPlayerCollision(PlayerEntity player) {
         if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {

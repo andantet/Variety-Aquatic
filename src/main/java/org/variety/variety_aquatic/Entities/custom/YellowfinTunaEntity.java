@@ -57,7 +57,7 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
 
     }
     @Nullable
-    public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData YellowfinTunaEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -159,7 +159,9 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
             }
         }
     }
-
+    public int getMaxGroupSize() {
+        return 4;
+    }
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
     }
@@ -171,7 +173,8 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isTouchingWater() ? SoundEvents.ENTITY_DOLPHIN_AMBIENT_WATER : SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return SoundEvents.ENTITY_COD_AMBIENT;
+
     }
 
     protected SoundEvent getSplashSound() {

@@ -157,7 +157,6 @@ public class AqConfig {
                 aqprop.setProperty("spermwhale.spawnweight", "50");
                 aqprop.setProperty("tetra.spawnweight", "50");
                 aqprop.setProperty("betta.spawnweight", "50");
-
                 aqprop.store(writer, "Configuration file for aquatic from Aqmods");
                 writer.close();
             }

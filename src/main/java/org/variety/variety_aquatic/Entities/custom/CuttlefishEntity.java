@@ -173,7 +173,7 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return this.isTouchingWater() ? SoundEvents.ENTITY_DOLPHIN_AMBIENT_WATER : SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+        return SoundEvents.ENTITY_COD_AMBIENT;
     }
 
     protected SoundEvent getSplashSound() {
@@ -233,7 +233,7 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CUTTLEFISH_BUCKET);
+        return null;
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {

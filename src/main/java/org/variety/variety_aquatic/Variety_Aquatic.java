@@ -27,13 +27,12 @@ public class Variety_Aquatic implements ModInitializer {
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.WHALESHARK, WhaleSharkEntity.setAttributes());
-
         FabricDefaultAttributeRegistry.register(ModEntities.SUNFISH, SunfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.HERMITCRAB, HermitcrabEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.JELLYFISH, JellyfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.MOONJELLY, MoonJellyEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.YELLOWFIN, MoonJellyEntity.setAttributes());
-        FabricDefaultAttributeRegistry.register(ModEntities.CUTTLEFISH, MoonJellyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.YELLOWFIN, YellowfinTunaEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CUTTLEFISH, CuttlefishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.OPAH, OpahEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.LIONFISH, LionfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
@@ -43,7 +42,5 @@ public class Variety_Aquatic implements ModInitializer {
         FabricDefaultAttributeRegistry.register(ModEntities.LEVIATHAN, LeviathanEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TETRA, TetraEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.BETTA, BettaEntity.setAttributes());
-
-
     }
 }
