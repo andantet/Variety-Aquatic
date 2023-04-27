@@ -87,4 +87,9 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tetra"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, TetraEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
+
+    public static final EntityType<AnglerFishEntity> ANGLERFISH = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "anglerfish"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, AnglerFishEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 }

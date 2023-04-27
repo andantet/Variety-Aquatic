@@ -24,14 +24,14 @@ public class ModBlock {
     public static final Block ANEMONE_BLOCK = registerBlock("anemone_block",
             new AnemoneBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).requiresTool().nonOpaque()), ItemGroup.MISC);
-    public static final Block ANGLER_TORCH = registerBlock("angler_torch",
+    public static final Block ANGLER_TORCH_GROUND = registerBlock("angler_torch_ground",
             new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE),null);
     public static final Block WALL_ANGLER_TORCH = registerBlock("wall_angler_torch",
             new WallAnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
-            }).sounds(BlockSoundGroup.WOOD).dropsLike(ANGLER_TORCH), ParticleTypes.BUBBLE),null);
+            }).sounds(BlockSoundGroup.WOOD).dropsLike(ANGLER_TORCH_GROUND), ParticleTypes.BUBBLE),null);
 
 
 

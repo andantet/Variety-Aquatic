@@ -34,12 +34,15 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.TETRA, TetraRenderer::new);
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, ClownfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.BETTA, BettaRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANGLERFISH, AnglerFishRenderer::new);
+
 
 
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
-        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getTranslucent());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH_GROUND, RenderLayer.getCutout());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
 
 
 

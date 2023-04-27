@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "varietyaquatic:blocks/angler_torch"
+    "layer0": "varietyaquatic:item/anglerfish_bulb"
   }
 }

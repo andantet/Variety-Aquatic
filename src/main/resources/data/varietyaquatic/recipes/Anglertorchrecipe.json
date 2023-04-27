@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "varietyaquatic:angler_bulb"
+    }
+  },
+  "result": {
+    "item": "varietyaquatic:angler_torch_ground",
+    "count": 4
+  }
+}

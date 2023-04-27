@@ -64,6 +64,9 @@ public class ModItems {
     public static final Item MOONJELLY_EGG = registerItem("moonjelly_egg",
             new SpawnEggItem(ModEntities.MOONJELLY,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
+
+    public static final Item ANGLER_BULB = registerItem("angler_bulb",
+            new Item(new FabricItemSettings().group(ItemGroup.MISC)));
     public static final Item CLOWNFISH_EGG = registerItem("clownfish_egg",
             new SpawnEggItem(ModEntities.CLOWNFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ItemGroup.MISC)));
@@ -80,9 +83,12 @@ public class ModItems {
     public static final Item CUTTLEFISH_EGG = registerItem("cuttlefish_egg",
             new SpawnEggItem(ModEntities.CUTTLEFISH,0x391f21, 0xf6ca9f,
                     new FabricItemSettings().group(ItemGroup.MISC)));
-    public static final Item ANGLERTORCH_ITEM = registerItem("anglertorch",
-            new WallStandingBlockItem(ModBlock.ANGLER_TORCH, ModBlock.WALL_ANGLER_TORCH, (new Item.Settings()).group(ItemGroup.DECORATIONS)));
 
+    public static final Item ANGLER_EGG = registerItem("angler_egg",
+            new SpawnEggItem(ModEntities.ANGLERFISH,0x3d3939, 0x89dfff,
+                    new FabricItemSettings().group(ItemGroup.MISC)));
+    public static final Item ANGLERTORCH_ITEM = registerItem("anglertorch_item",
+            new WallStandingBlockItem(ModBlock.ANGLER_TORCH_GROUND, ModBlock.WALL_ANGLER_TORCH, (new Item.Settings()).group(ItemGroup.DECORATIONS)));
 
     public static final Item OPAH_EGG = registerItem("opah_egg",
             new SpawnEggItem(ModEntities.OPAH,0x687596, 0x9e2a38,

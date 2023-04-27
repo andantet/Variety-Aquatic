@@ -42,5 +42,7 @@ public class Variety_Aquatic implements ModInitializer {
         FabricDefaultAttributeRegistry.register(ModEntities.LEVIATHAN, LeviathanEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TETRA, TetraEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.BETTA, BettaEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.ANGLERFISH, AnglerFishEntity.setAttributes());
+
     }
 }

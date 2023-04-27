@@ -45,7 +45,7 @@ public class AnglerTorchBlock extends Block implements FluidFillable {
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (world.getBlockState(pos).isAir()) {
+        if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
             return false;
         }
         return sideCoversSmallSquare(world, pos.down(), Direction.UP);

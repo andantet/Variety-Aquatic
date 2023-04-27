@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class WallAnglerTorchBlock extends AnglerTorchBlock implements FluidFillable{
+public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillable{
     public static final DirectionProperty FACING;
     protected static final float field_31285 = 2.5F;
     private static final Map<Direction, VoxelShape> BOUNDING_SHAPES;
@@ -60,7 +60,7 @@ public class WallAnglerTorchBlock extends AnglerTorchBlock implements FluidFilla
     }
 
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (world.getBlockState(pos).isAir()) {
+        if (!world.getBlockState(pos).isOf(Blocks.WATER)) {
             return false;
         }
         Direction direction = (Direction)state.get(FACING);
