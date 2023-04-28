@@ -7,7 +7,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ModifiableWorld;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.CountConfig;
 import net.minecraft.world.gen.feature.*;
