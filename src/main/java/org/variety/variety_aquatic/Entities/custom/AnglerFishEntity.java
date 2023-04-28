@@ -31,7 +31,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -54,10 +54,10 @@ public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerab
     private UUID targetUuid;
 
 
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("anglerfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("anglerfish.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("anglerfish.follow");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("anglerfish.knockback");
+    private static double health = NewConfig.anglerfish_health;
+    private static double speed = NewConfig.anglerfish_speed;
+    private static double follow = NewConfig.anglerfish_follow;
+    private static double knockback = NewConfig.anglerfish_knockback;
 
     public AnglerFishEntity(EntityType<? extends AnglerFishEntity> entityType, World world) {
         super(entityType, world);

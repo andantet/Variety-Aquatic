@@ -31,7 +31,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -54,11 +54,11 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     private UUID targetUuid;
 
 
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("piranha.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("piranha.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("piranha.follow");
-    private static double damage = AqConfig.INSTANCE.getDoubleProperty("piranha.damage");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("piranha.knockback");
+    private static double health = NewConfig.piranha_health;
+    private static double speed = NewConfig.piranha_speed;
+    private static double follow = NewConfig.piranha_follow;
+    private static double damage = NewConfig.piranha_damage;
+    private static double knockback = NewConfig.piranha_knockback;
 
     public PiranhaEntity(EntityType<? extends PiranhaEntity> entityType, World world) {
         super(entityType, world);

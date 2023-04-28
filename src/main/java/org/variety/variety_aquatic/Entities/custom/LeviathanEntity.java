@@ -35,7 +35,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Sound.ModSound;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -52,8 +52,8 @@ public class LeviathanEntity extends FishEntity implements IAnimatable {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
     private final ServerBossBar bossBar;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("leviathan.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("leviathan.speed");;
+    private static double health = NewConfig.leviathan_health;
+    private static double speed = NewConfig.leviathan_speed;
 
     public LeviathanEntity(EntityType<? extends LeviathanEntity> entityType, World world) {
         super(entityType, world);

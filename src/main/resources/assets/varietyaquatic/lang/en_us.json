@@ -63,6 +63,117 @@
   "item.varietyaquatic.cuttlefish_bucket": "Cuttlefish Bucket",
   "item.varietyaquatic.lionfishfish_bucket": "Lionfish Bucket",
 
-  "itemGroup.varietyaquatic.variety_aquatic": "Variety Aquatic"
+  "itemGroup.varietyaquatic.variety_aquatic": "Variety Aquatic",
+
+  "varietyaquatic.midnightconfig.jellyfish_spawnweight": "Jellyfish Spawnweight",
+  "varietyaquatic.midnightconfig.hermitcrab_spawnweight": "Hermitcrab Spawnweight",
+  "varietyaquatic.midnightconfig.sunfish_heath": "Sunfish Health",
+  "varietyaquatic.midnightconfig.sunfish_speed": "Sunfish Speed",
+  "varietyaquatic.midnightconfig.sunfish_spawnweight": "Sunfish Spawnweight",
+  "varietyaquatic.midnightconfig.shark_health": "Shark Health",
+  "varietyaquatic.midnightconfig.shark_spawnweight": "Shark Spawnweight",
+  "varietyaquatic.midnightconfig.shark_attack_fish": "Shark Attack Fish",
+  "varietyaquatic.midnightconfig.shark_speed": "Shark Speed",
+  "varietyaquatic.midnightconfig.shark_attack_speed": "Shark Attack Speed",
+  "varietyaquatic.midnightconfig.shark_follow": "Shark Follow Range",
+  "varietyaquatic.midnightconfig.shark_damage": "Shark Damage",
+  "varietyaquatic.midnightconfig.shark_knockback": "Shark Knockback",
+  "varietyaquatic.midnightconfig.whaleshark_spawnweight": "Whaleshark Spawnweight",
+  "varietyaquatic.midnightconfig.whaleshark_health": "Whaleshark Health",
+  "varietyaquatic.midnightconfig.whaleshark_attack_fish": "Whaleshark Attack Fish",
+  "varietyaquatic.midnightconfig.whaleshark_speed": "Whaleshark Speed",
+  "varietyaquatic.midnightconfig.whaleshark_attack_speed": "Whaleshark Attack Speed",
+  "varietyaquatic.midnightconfig.whaleshark_follow": "Whaleshark Follow Range",
+  "varietyaquatic.midnightconfig.whaleshark_damage": "Whaleshark Damage",
+  "varietyaquatic.midnightconfig.whaleshark_knockback": "Whaleshark_knockback",
+  "varietyaquatic.midnightconfig.moonjelly_spawnweight": "Moonjelly Spawnweight",
+  "varietyaquatic.midnightconfig.yellowfin_health": "Yellowfin Tuna Health",
+  "varietyaquatic.midnightconfig.yellowfin_speed": "Yellowfin Tuna Speed",
+  "varietyaquatic.midnightconfig.yellowfin_spawnweight": "Yellowfin Spawnweight",
+  "varietyaquatic.midnightconfig.cuttlefish_health": "Cuttlefish Health",
+  "varietyaquatic.midnightconfig.cuttlefish_speed": "Cuttlefish Speed",
+  "varietyaquatic.midnightconfig.cuttlefish_spawnweight": "Cuttlefish Spawnweight",
+  "varietyaquatic.midnightconfig.opah_health": "Opah Health",
+  "varietyaquatic.midnightconfig.opah_speed": "Opah Speed",
+  "varietyaquatic.midnightconfig.opah_spawnweight": "Opah Spawnweight",
+  "varietyaquatic.midnightconfig.lionfish_health": "Lionfish Health",
+  "varietyaquatic.midnightconfig.lionfish_speed": "Lionfish Speed",
+  "varietyaquatic.midnightconfig.lionfish_spawnweight": "Lionfish Spawnweight",
+  "varietyaquatic.midnightconfig.clownfish_health": "Clownfish Health",
+  "varietyaquatic.midnightconfig.clownfish_speed": "Clownfish Speed",
+  "varietyaquatic.midnightconfig.clownfish_spawnweight": "Clownfish Spawnweight",
+  "varietyaquatic.midnightconfig.spottedstingray_health": "Stingray Health",
+  "varietyaquatic.midnightconfig.spottedstingray_speed": "Stingray Speed",
+  "varietyaquatic.midnightconfig.spottedstingray_spawnweight": "Stingray Spawnweight",
+  "varietyaquatic.midnightconfig.piranha_spawnweight": "Piranha Spawnweight",
+  "varietyaquatic.midnightconfig.spermwhale_spawnweight": "Leviathan Spawnweight",
+  "varietyaquatic.midnightconfig.tetra_spawnweight": "Tetra Spawnweight",
+  "varietyaquatic.midnightconfig.betta_spawnweight": "Betta Spawnweight",
+  "varietyaquatic.midnightconfig.anglerfish_health": "Angerfish Health",
+  "varietyaquatic.midnightconfig.anglerfish_knockback": "Angerfish Knockback",
+  "varietyaquatic.midnightconfig.anglerfish_follow": "Angerfish Follow",
+  "varietyaquatic.midnightconfig.anglerfish_speed": "Angerfish Speed",
+  "varietyaquatic.midnightconfig.leviathan_health": "Leviathan Health",
+  "varietyaquatic.midnightconfig.leviathan_speed": "Leviathan Speed",
+  "varietyaquatic.midnightconfig.piranha_damage": "Piranha Damage",
+  "varietyaquatic.midnightconfig.piranha_health": "Piranha Health",
+  "varietyaquatic.midnightconfig.piranha_knockback": "Piranha Knockback",
+  "varietyaquatic.midnightconfig.piranha_follow": "Piranha Follow Range",
+  "varietyaquatic.midnightconfig.piranha_speed": "Piranha Speed",
+  "varietyaquatic.midnightconfig.piranha_speed": "Piranha Speed",
+  "varietyaquatic.midnightconfig.title": "Variety Aquatic Config"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

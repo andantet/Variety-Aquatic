@@ -8,7 +8,15 @@ group = project.maven_group
 
 repositories {
     maven { url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
-    // Add repositories to retrieve artifacts from in here.
+
+    maven {
+        name "Modmenu"
+        url "https://maven.terraformersmc.com/"
+    }
+    maven {
+        url "https://api.modrinth.com/maven"
+    }
+        // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
@@ -21,6 +29,8 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.18'
+    modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modImplementation ( "maven.modrinth:midnightlib:${project.midnightlib_version}")
         // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     }

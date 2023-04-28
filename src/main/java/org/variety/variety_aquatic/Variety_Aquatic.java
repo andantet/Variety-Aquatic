@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Util.NewConfig;
 import org.variety.variety_aquatic.world.Feature.AnemoneFeature;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib3.GeckoLib;
@@ -20,6 +22,8 @@ public class Variety_Aquatic implements ModInitializer {
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
+        MidnightConfig.init(MOD_ID, NewConfig.class);
+
         ModItems.registerModItems();
         ModSound.initializeSounds();
         ModBlock.registerModBlocks();

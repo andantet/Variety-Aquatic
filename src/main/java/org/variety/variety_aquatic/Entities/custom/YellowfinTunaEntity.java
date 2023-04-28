@@ -30,8 +30,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Util.AqConfig;
 
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -47,8 +47,8 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("yellowfin.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("yellowfin.speed");;
+    private static double health = NewConfig.yellowfin_health;
+    private static double speed =  NewConfig.yellowfin_speed;
 
     public YellowfinTunaEntity(EntityType<? extends YellowfinTunaEntity> entityType, World world) {
         super(entityType, world);

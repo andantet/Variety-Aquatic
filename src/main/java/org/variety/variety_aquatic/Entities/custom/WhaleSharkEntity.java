@@ -28,7 +28,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Sound.ModSound;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -36,7 +36,6 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.classic.Mod;
 
 import java.util.function.Predicate;
 
@@ -45,12 +44,12 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("whaleshark.health");
-    private static boolean doattack = AqConfig.INSTANCE.getBooleanProperty("whaleshark.attackfish");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("whaleshark.speed");
-    private static double follow = AqConfig.INSTANCE.getDoubleProperty("whaleshark.follow");
-    private static double damage = AqConfig.INSTANCE.getDoubleProperty("whaleshark.damage");
-    private static double knockback = AqConfig.INSTANCE.getDoubleProperty("whaleshark.knockback");
+    private static double health =  NewConfig.whaleshark_health;
+    private static boolean doattack =  NewConfig.whaleshark_attack_fish;
+    private static double speed =  NewConfig.whaleshark_speed;
+    private static double follow =  NewConfig.whaleshark_follow;
+    private static double damage =  NewConfig.whaleshark_damage;
+    private static double knockback =  NewConfig.whaleshark_knockback;
 
     public WhaleSharkEntity(EntityType<? extends WhaleSharkEntity> entityType, World world) {
         super(entityType, world);

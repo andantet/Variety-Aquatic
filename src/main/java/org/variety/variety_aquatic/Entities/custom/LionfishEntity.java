@@ -22,7 +22,6 @@ import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleTypes;
@@ -36,7 +35,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -53,8 +52,8 @@ public class LionfishEntity extends FishEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("lionfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("lionfish.speed");;
+    private static double health = NewConfig.lionfish_health;
+    private static double speed = NewConfig.lionfish_speed;
 
     public LionfishEntity(EntityType<? extends LionfishEntity> entityType, World world) {
         super(entityType, world);

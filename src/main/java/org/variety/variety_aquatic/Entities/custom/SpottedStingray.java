@@ -28,7 +28,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Util.AqConfig;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -45,8 +45,8 @@ public class SpottedStingray extends WaterCreatureEntity implements IAnimatable 
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("spottedstingray.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("spottedstingray.speed");;
+    private static double health = NewConfig.spottedstingray_health;
+    private static double speed =  NewConfig.spottedstingray_speed;
 
     public SpottedStingray(EntityType<? extends SpottedStingray> entityType, World world) {
         super(entityType, world);

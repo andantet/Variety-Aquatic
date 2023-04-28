@@ -2,14 +2,19 @@
   "schemaVersion": 1,
   "id": "varietyaquatic",
   "version": "${version}",
-  "name": "variety_aquatic",
-  "description": "",
-  "authors": [],
+
+  "name": "Variety Aquatic",
+  "description": "A mod that's rewriting the Aquatic Biomes.",
+  "authors": [
+    "Texbobcat",
+    "MysticKoko"
+  ],
   "contact": {
-    "repo": "https://github.com/Colin Vaughn/Variety_Aquatic"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/variety-aquatic",
+    "issues": "https://discord.gg/JFhBCtQ2f9"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/Variety_Aquatic/icon.png",
+  "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -17,6 +22,9 @@
     ],
     "main": [
       "org.variety.variety_aquatic.Variety_Aquatic"
+    ],
+    "modmenu": [
+      "org.variety.variety_aquatic.integration.ModMenu"
     ]
   },
   "depends": {
@@ -24,5 +32,12 @@
     "fabric": "*",
     "fabric-api": ">=0.60.0+1.19.2",
     "minecraft": "1.19.2"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/7N9J5njNNa"
+      }
+    }
   }
 }

@@ -17,7 +17,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -32,7 +31,6 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Util.AqConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -48,8 +46,8 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("clownfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("clownfish.speed");;
+    private static double health =  2;
+    private static double speed = 1.8;
 
     public TetraEntity(EntityType<? extends TetraEntity> entityType, World world) {
         super(entityType, world);

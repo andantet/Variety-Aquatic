@@ -30,12 +30,10 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Util.AqConfig;
 
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -49,8 +47,8 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("cuttlefish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("cuttlefish.speed");;
+    private static double health = NewConfig.cuttlefish_health;
+    private static double speed = NewConfig.cuttlefish_speed;
 
     public CuttlefishEntity(EntityType<? extends CuttlefishEntity> entityType, World world) {
         super(entityType, world);

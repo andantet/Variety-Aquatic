@@ -1,6 +1,5 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
@@ -15,9 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -29,8 +26,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Util.AqConfig;
 
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -47,8 +44,8 @@ public class SunfishEntity extends WaterCreatureEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = AqConfig.INSTANCE.getDoubleProperty("sunfish.health");
-    private static double speed = AqConfig.INSTANCE.getDoubleProperty("sunfish.speed");;
+    private static double health =  NewConfig.sunfish_heath;
+    private static double speed =  NewConfig.sunfish_speed;
 
     public SunfishEntity(EntityType<? extends SunfishEntity> entityType, World world) {
         super(entityType, world);
