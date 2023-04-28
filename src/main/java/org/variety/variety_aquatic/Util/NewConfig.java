@@ -48,7 +48,7 @@ public class NewConfig extends MidnightConfig {
     @Entry(min=0,max=100) public static int spermwhale_spawnweight = 50;
     @Entry(min=0,max=100) public static int tetra_spawnweight = 50;
     @Entry(min=0,max=100) public static int betta_spawnweight = 50;
-    @Entry public static int anglerfish_health = 10;
+    @Entry public static int anglerfish_health = 6;
     @Entry public static double anglerfish_knockback = 0.1;
     @Entry public static double anglerfish_follow= 10;
     @Entry public static double anglerfish_speed = 1.8;

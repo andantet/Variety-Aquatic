@@ -29,6 +29,9 @@ public class ModItems {
     public static final Item SHARK_EGG = registerItem("shark_egg",
             new SpawnEggItem(ModEntities.SHARK,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+    public static final Item SEAHORSE_EGG = registerItem("seahorse_egg",
+            new SpawnEggItem(ModEntities.SEAHORSE,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
     public static final Item LEVIATHAN_EGG = registerItem("leviathan_egg",
             new SpawnEggItem(ModEntities.LEVIATHAN,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
@@ -48,6 +51,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.TETRA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC)));
     public static final Item BETTA_BUCKET = registerItem("betta_bucket",
             new EntityBucketItem(ModEntities.BETTA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC)));
+    public static final Item SEAHORSE_BUCKET = registerItem("seahorse_bucket",
+            new EntityBucketItem(ModEntities.SEAHORSE, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC)));
     public static final Item RAW_BETTA = registerItem("raw_betta",
             new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)
                     .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));

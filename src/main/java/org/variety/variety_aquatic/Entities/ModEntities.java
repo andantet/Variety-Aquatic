@@ -41,6 +41,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "betta"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BettaEntity::new)
                     .dimensions(EntityDimensions.fixed(0.6f, 0.4f)).build());
+    public static final EntityType<SeahorseEntity> SEAHORSE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "seahorse"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SeahorseEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.6f, 0.4f)).build());
 
     public static final EntityType<MoonJellyEntity> MOONJELLY = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "moonjelly"),
@@ -51,6 +55,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "hermitcrab"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HermitcrabEntity::new)
                     .dimensions(EntityDimensions.fixed(1f, 0.8f)).build());
+
     public static final EntityType<CuttlefishEntity> CUTTLEFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "cuttlefish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CuttlefishEntity::new)
