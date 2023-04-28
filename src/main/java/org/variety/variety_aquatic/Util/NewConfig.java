@@ -52,6 +52,7 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double anglerfish_knockback = 0.1;
     @Entry public static double anglerfish_follow= 10;
     @Entry public static double anglerfish_speed = 1.8;
+    @Entry(min=0,max=100) public static int anglerfish_spawnweight = 50;
     @Entry public static int leviathan_health = 60;
     @Entry public static double leviathan_speed = 1.5;
     @Entry public static double piranha_damage = 2.0;
@@ -59,4 +60,7 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double piranha_knockback = 0.1;
     @Entry public static double piranha_follow = 10;
     @Entry public static double piranha_speed = 1.8;
+    @Entry(min=0,max=100) public static int seahorse_spawnweight = 50;
+
+
 }
