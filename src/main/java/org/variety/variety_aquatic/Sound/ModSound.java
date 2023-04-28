@@ -16,6 +16,7 @@ public class ModSound {
     public static SoundEvent GIANTSQUID_HURT = registerSound("giantsquid_hurt");
     public static SoundEvent SPERMWHALE_DEATH = registerSound("spermwhale_death");
 
+    public static SoundEvent CRAB_RAVE = registerSound("crab_rave");
 
 
 

@@ -15,6 +15,7 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 import static org.variety.variety_aquatic.Block.ModBlock.WALL_ANGLER_TORCH;
@@ -130,6 +131,9 @@ public class ModItems {
     public static final Item PIRANHA_BUCKET = registerItem("piranha_bucket",
             new EntityBucketItem(ModEntities.PIRANHA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC)));
 
+    public static final Item CRAB_RAVE_MUSIC_DISC = registerItem("crab_rave_music_disc",
+            new ModMusicDiskItem(7, ModSound.CRAB_RAVE,
+                    new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC).maxCount(1),30));
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
     }

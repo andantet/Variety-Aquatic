@@ -40,5 +40,11 @@
     "sounds": [
       "varietyaquatic:spermwhale_death"
     ]
+  },
+  "crab_rave": {
+    "subtitle": "varietyaquatic.crab_rave",
+    "sounds": [
+      "varietyaquatic:crab_rave"
+    ]
   }
 }
