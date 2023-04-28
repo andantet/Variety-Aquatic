@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
@@ -22,13 +23,18 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BiomeTags;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.TimeHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.NewConfig;
@@ -80,7 +86,9 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     public void setMoistness(int moistness) {
         this.dataTracker.set(MOISTNESS, moistness);
     }
-
+    public static boolean canPirahaSpawn(EntityType<PiranhaEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER)|| WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
+    }
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
@@ -134,7 +142,7 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
+        this.goalSelector.add(2, new SwimAroundGoal(this, 10, 5));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

@@ -44,7 +44,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerable{
+public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -115,7 +115,6 @@ public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerab
         return this.targetUuid;
     }
 
-    @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.PIRANHA_BUCKET);
     }
@@ -265,7 +264,6 @@ public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerab
 
     }
 
-    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
     }

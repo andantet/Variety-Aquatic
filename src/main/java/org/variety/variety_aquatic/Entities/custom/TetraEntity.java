@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
@@ -24,11 +25,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.FluidTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -46,7 +51,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health =  2;
+    private static double health = 2;
     private static double speed = 1.8;
 
     public TetraEntity(EntityType<? extends TetraEntity> entityType, World world) {
@@ -55,6 +60,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
         this.lookControl = new LookControl(this);
 
     }
+
     @Nullable
     public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
@@ -79,10 +85,12 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
     }
+
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.TETRA_BUCKET);
     }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
     }
@@ -100,6 +108,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
     }
+
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
@@ -154,14 +163,16 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
                 float g = MathHelper.sin(this.getYaw() * 0.017453292F) * 0.6F;
                 float h = 0.0F - this.random.nextFloat() * 0.7F;
 
-                for(int i = 0; i < 2; ++i) {
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
+                for (int i = 0; i < 2; ++i) {
+                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double) h + (double) f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double) h + (double) g, 0.0D, 0.0D, 0.0D);
+                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double) h - (double) f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double) h - (double) g, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
     }
-
+    public static boolean canTetraSpawn(EntityType<TetraEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER) || WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
+}
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
     }

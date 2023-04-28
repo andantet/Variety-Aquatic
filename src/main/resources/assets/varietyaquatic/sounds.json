@@ -42,9 +42,11 @@
     ]
   },
   "crab_rave": {
-    "subtitle": "varietyaquatic.crab_rave",
     "sounds": [
-      "varietyaquatic:crab_rave"
+      {
+        "name": "varietyaquatic:crab_rave",
+        "stream": true
+      }
     ]
   }
 }
