@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
@@ -23,12 +24,15 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.TimeHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.NewConfig;
@@ -44,7 +48,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
+public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -207,6 +211,10 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
                 }
             }
         }
+    }
+
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);
     }
 
 

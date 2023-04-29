@@ -121,7 +121,7 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
 
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
+        this.goalSelector.add(2, new SwimAroundGoal(this, 2, 10));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

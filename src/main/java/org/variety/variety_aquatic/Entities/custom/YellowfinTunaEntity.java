@@ -53,6 +53,8 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
+    private boolean commonSpawn = true;
+
     private static double health = NewConfig.yellowfin_health;
     private static double speed =  NewConfig.yellowfin_speed;
 
@@ -92,13 +94,12 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     }
 
     protected void initGoals() {
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new LookAroundGoal(this));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+
         this.goalSelector.add(5, new TunaJumpGoal(this, 10));
     }
-
+    public boolean spawnsTooManyForEachTry(int count) {
+        return !this.commonSpawn;
+    }
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
@@ -107,6 +108,7 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
+
 
     public int getMaxAir() {
         return 4800;
@@ -197,9 +199,9 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
         if (this.canMoveVoluntarily() && this.isTouchingWater()) {
             this.updateVelocity(this.getMovementSpeed(), movementInput);
             this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
+            this.setVelocity(this.getVelocity().multiply(0.9));
             if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
+                this.setVelocity(this.getVelocity().add(0.0, -0.005, 0.0));
             }
         } else {
             super.travel(movementInput);

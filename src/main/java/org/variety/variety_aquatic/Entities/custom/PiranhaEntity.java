@@ -86,8 +86,8 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     public void setMoistness(int moistness) {
         this.dataTracker.set(MOISTNESS, moistness);
     }
-    public static boolean canPirahaSpawn(EntityType<PiranhaEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER)|| WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) && world.getBlockState(pos).isOf(Blocks.WATER);
     }
     protected void initDataTracker() {
         super.initDataTracker();
@@ -135,11 +135,6 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     }
 
     protected void initGoals() {
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 12));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.goalSelector.add(2,new PiranhaEntity.AttackGoal());
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));

@@ -9,10 +9,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.HermitcrabEntity;
-import org.variety.variety_aquatic.Entities.custom.PiranhaEntity;
-import org.variety.variety_aquatic.Entities.custom.TetraEntity;
-import org.variety.variety_aquatic.Entities.custom.YellowfinTunaEntity;
+import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Util.NewConfig;
 
 
@@ -56,7 +53,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE,BiomeKeys.SPARSE_JUNGLE,BiomeKeys.MANGROVE_SWAMP),SpawnGroup.WATER_CREATURE,
                 ModEntities.TETRA, NewConfig.tetra_spawnweight, 3, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.ANGLERFISH, NewConfig.anglerfish_spawnweight, 1, 1);
+                ModEntities.ANGLERFISH, NewConfig.anglerfish_spawnweight, 1, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
                 ModEntities.SEAHORSE, NewConfig.seahorse_spawnweight, 3, 5);
 
@@ -66,16 +63,18 @@ public class ModEntitySpawns {
         SpawnRestriction.register(
                 ModEntities.SHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
-                ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+                ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
         SpawnRestriction.register(
-                ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PiranhaEntity::canPirahaSpawn);
+                ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PiranhaEntity::canSpawn);
         SpawnRestriction.register(
                 ModEntities.CLOWNFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
-                ModEntities.TETRA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TetraEntity::canTetraSpawn);
+                ModEntities.TETRA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TetraEntity::canSpawn);
 
         SpawnRestriction.register(
                 ModEntities.SEAHORSE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+        SpawnRestriction.register(
+                ModEntities.BETTA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BettaEntity::canSpawn);
 
         SpawnRestriction.register(
                 ModEntities.WHALESHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);

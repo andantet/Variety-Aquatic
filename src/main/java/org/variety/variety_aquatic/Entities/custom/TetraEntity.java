@@ -25,6 +25,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BiomeTags;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -95,13 +96,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
         this.setMoistness(nbt.getInt("Moistness"));
     }
 
-    protected void initGoals() {
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
 
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-    }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
@@ -170,9 +165,9 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
             }
         }
     }
-    public static boolean canTetraSpawn(EntityType<TetraEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER) || WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
-}
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) && world.getBlockState(pos).isOf(Blocks.WATER);
+    }
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
     }
