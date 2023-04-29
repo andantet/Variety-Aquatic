@@ -10,6 +10,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -22,97 +23,63 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
+import org.variety.variety_aquatic.Entities.ModEntities;
 
-public class AnemoneBlock extends BlockWithEntity implements BlockEntityProvider,FluidFillable {
-
-    public static final DirectionProperty FACING = Properties.FACING;
-    protected static final VoxelShape COLLISION_SHAPE;
-
+public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Waterloggable {
+    private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    private static final VoxelShape SHAPE = Block.createCuboidShape(5, 0, 5, 11, 9, 11);
 
     public AnemoneBlock(Settings settings) {
         super(settings);
-    }
-    public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
-        return false;
+        setDefaultState(getDefaultState().with(WATERLOGGED, true));
     }
 
-    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        return false;
-    }
-    public FluidState getFluidState(BlockState state) {
-        return Fluids.WATER.getStill(false);
-    }
-
-    /*
-     * Hides the normal block and only shows the block entity created below
-     */
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.ENTITYBLOCK_ANIMATED;
-    }
-
-    /*
-     * Adds that our block is faceable
-     */
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
-    /*
-     * Sets the correct facing, needed to flip this block on the 180, should have
-     * done in the model in BB but eh
-     */
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return this.getDefaultState().with(FACING, context.getPlayerFacing().rotateYClockwise().rotateYClockwise());
-    }
-
-    /*
-     * Creates the block entity that we have playing our animations and rendering
-     * the block
-     */
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return ModTileEntity.ANEMONE.instantiate(pos, state);
-    }
-
-    /*
-     * Sets the correct shape depending on your facing
-     */
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Direction direction = (Direction) state.get(FACING);
-        switch (direction) {
-            default:
-                return Block.createCuboidShape(0, 0, 0, 16, 16, 16);
-        }
+        return SHAPE;
     }
 
-    /*
-     * Tests for air 1 block out from the facing pos to ensure it's air so the block
-     * doesn't place into another block
-     */
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        for (BlockPos testPos : BlockPos.iterate(pos,
-                pos.offset((Direction) state.get(FACING).rotateYClockwise(), 2))) {
-            if (!testPos.equals(pos) && world.getBlockState(testPos).isAir())
-                return false;
-        }
-        return true;
-    }
-
-
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return COLLISION_SHAPE;
+    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
+        return !floor.getCollisionShape(world, pos).getFace(Direction.UP).isEmpty() || floor.isSideSolidFullSquare(world, pos, Direction.UP);
     }
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         entity.damage(DamageSource.CACTUS, 1.0F);
     }
 
-    static {
-        COLLISION_SHAPE = Block.createCuboidShape(1.0, 0.0, 1.0, 15.0, 15.0, 15.0);
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED)) {
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        if(!canPlaceAt(state, world, pos)) {
+            return Blocks.AIR.getDefaultState();
+        }
+
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Nullable
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return getDefaultState().with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).isOf(Fluids.WATER));
+    }
+
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new AnemoneTileEntity(pos, state);
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(WATERLOGGED);
     }
 }

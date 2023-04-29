@@ -1,12 +1,11 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -21,9 +20,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
 import org.variety.variety_aquatic.Items.ModItems;
@@ -46,11 +47,11 @@ public class SeahorseEntity extends FishEntity implements IAnimatable {
 
 
     protected void initGoals() {
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.8f));
+        this.goalSelector.add(1, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
+        goalSelector.add(1, new MoveToKelpGoal(this));
     }
 
 
@@ -154,7 +155,23 @@ public class SeahorseEntity extends FishEntity implements IAnimatable {
         return new ItemStack(ModItems.SEAHORSE_BUCKET);
     }
 
+    static class MoveToKelpGoal extends MoveToTargetPosGoal {
 
+        public MoveToKelpGoal(SeahorseEntity mob) {
+            super(mob, 1f, 6,6);
+        }
+
+        @Override
+        public double getDesiredDistanceToTarget() {
+            return 0d;
+        }
+
+        @Override
+        protected boolean isTargetPos(WorldView world, BlockPos pos) {
+            BlockState state = world.getBlockState(pos.up());
+            return state.isOf(Blocks.KELP) || state.isOf(Blocks.KELP_PLANT);
+        }
+    }
     @Override
     public AnimationFactory getFactory() {
         return factory;

@@ -14,7 +14,7 @@
     "issues": "https://discord.gg/JFhBCtQ2f9"
   },
   "license": "All-Rights-Reserved",
-  "icon": "icon.png",
+  "icon": "assets/varietyaquatic/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
@@ -27,6 +27,9 @@
       "org.variety.variety_aquatic.integration.ModMenu"
     ]
   },
+  "mixins": [
+    "varietyaquatic.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.14.9",
     "fabric": "*",

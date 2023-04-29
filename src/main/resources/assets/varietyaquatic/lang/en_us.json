@@ -21,7 +21,9 @@
 
 
 
-  "block.varietyaquatic.anemone_block": "Anemone",
+  "block.varietyaquatic.anemone": "Anemone",
+  "block.varietyaquatic.sea_urchin_block": "Urchin",
+
   "item.varietyaquatic.raw_tetra": "Raw Tetra",
   "item.varietyaquatic.tetra_bucket": "Tetra Bucket",
   "item.varietyaquatic.raw_tuna": "Raw Tuna",

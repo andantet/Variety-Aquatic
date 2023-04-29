@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -45,6 +46,8 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
 
     public HermitcrabEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+        setPathfindingPenalty(PathNodeType.WATER, 0);
+        getNavigation().setCanSwim(false);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
