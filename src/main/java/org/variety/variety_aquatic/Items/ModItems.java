@@ -113,13 +113,21 @@ public class ModItems {
 
     public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
             new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)
-                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 600, 0), 0.8F).meat().build())));
+                    .food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 600, 0), 0.8F).meat().build())));
 
 
     public static final Item LIONFISH_COOKED = registerItem("lionfish_cooked",
             new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)
-                    .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+                    .food(new FoodComponent.Builder().hunger(6).saturationModifier(0.8f).build())));
 
+    public static final Item RAW_TUNA = registerItem("raw_tuna",
+            new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)
+                    .food(new FoodComponent.Builder().hunger(2).saturationModifier(0.1F).statusEffect(new StatusEffectInstance(StatusEffects.POISON, 600, 0), 0.05F).meat().build())));
+
+
+    public static final Item COOKED_TUNA = registerItem("cooked_tuna",
+            new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)
+                    .food(new FoodComponent.Builder().hunger(6).saturationModifier(0.8f).build())));
 
 
     public static final Item PIRANHA_EGG = registerItem("piranha_egg",

@@ -9,10 +9,12 @@ import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.LeviathanEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
 
 public class SpermwhaleRenderer extends GeoEntityRenderer<LeviathanEntity> {
     public SpermwhaleRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new SpermwhaleModel());
+        this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
         this.shadowRadius = 0.4f;
     }
 

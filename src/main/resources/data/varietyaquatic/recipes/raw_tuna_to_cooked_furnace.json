@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "varietyaquatic:raw_tuna"
+  },
+  "result": "varietyaquatic:cooked_tuna",
+  "experience": 0.3,
+  "cookingtime": 200,
+  "group": "tuna"
+
+}

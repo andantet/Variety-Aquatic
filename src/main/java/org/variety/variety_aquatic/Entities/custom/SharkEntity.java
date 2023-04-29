@@ -101,10 +101,12 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
     }
 
     protected void initGoals() {
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
         this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
+        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.2f));
+        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
+        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(6, new SwimAroundGoal(this, 0.50, 2));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
         if (doattack==true) {
             this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));

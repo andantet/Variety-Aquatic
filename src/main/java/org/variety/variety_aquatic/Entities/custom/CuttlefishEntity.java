@@ -16,12 +16,16 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
@@ -41,9 +45,13 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.function.Predicate;
 
+import static net.minecraft.command.argument.StatusEffectArgumentType.statusEffect;
+
 
 public class CuttlefishEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
+    public float tiltAngle;
+    public float prevTiltAngle;
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -75,7 +83,30 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
     }
+    protected SoundEvent getSquirtSound() {
+        return SoundEvents.ENTITY_SQUID_SQUIRT;
+    }
+    private Vec3d applyBodyRotations(Vec3d shootVector) {
+        Vec3d vec3d = shootVector.rotateX(this.prevTiltAngle * 0.017453292F);
+        vec3d = vec3d.rotateY(-this.prevBodyYaw * 0.017453292F);
+        return vec3d;
+    }
 
+    private void squirt() {
+        this.playSound(this.getSquirtSound(), this.getSoundVolume(), this.getSoundPitch());
+        Vec3d vec3d = this.applyBodyRotations(new Vec3d(0.0, -1.0, 0.0)).add(this.getX(), this.getY(), this.getZ());
+
+        for(int i = 0; i < 30; ++i) {
+            Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double)this.random.nextFloat() * 0.6 - 0.3, -1.0, (double)this.random.nextFloat() * 0.6 - 0.3));
+            Vec3d vec3d3 = vec3d2.multiply(0.3 + (double)(this.random.nextFloat() * 2.0F));
+            ((ServerWorld)this.world).spawnParticles(this.getInkParticle(), vec3d.x+0.5, vec3d.y + 0.5, vec3d.z , 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
+        }
+
+    }
+
+    protected ParticleEffect getInkParticle() {
+        return ParticleTypes.SQUID_INK;
+    }
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
@@ -87,7 +118,7 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 3f));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
 
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 2));
@@ -122,6 +153,18 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         return 1;
     }
 
+    public boolean damage(DamageSource source, float amount) {
+        if (super.damage(source, amount) && this.getAttacker() != null) {
+            if (!this.world.isClient) {
+                this.squirt();
+                this.getAttacker().addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 40, 0),attackingPlayer);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
     public void tick() {
         super.tick();
         if (this.isAiDisabled()) {
@@ -180,6 +223,10 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
 
     protected SoundEvent getSwimSound() {
         return SoundEvents.ENTITY_DOLPHIN_SWIM;
+    }
+    public void tickMovement() {
+        super.tickMovement();
+        this.prevTiltAngle = this.tiltAngle;
     }
 
     public void travel(Vec3d movementInput) {
