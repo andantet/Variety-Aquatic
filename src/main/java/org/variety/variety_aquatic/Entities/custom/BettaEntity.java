@@ -63,7 +63,7 @@ public class BettaEntity extends FishEntity implements IAnimatable {
     }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return (world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) ||world.getBiome(pos.down()).matchesKey(BiomeKeys.JUNGLE))&& world.getBlockState(pos).isOf(Blocks.WATER);
+        return (world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) ||world.getBiome(pos.down()).matchesKey(BiomeKeys.MANGROVE_SWAMP))&& world.getBlockState(pos).isOf(Blocks.WATER);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

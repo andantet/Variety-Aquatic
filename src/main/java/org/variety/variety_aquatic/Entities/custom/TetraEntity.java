@@ -33,6 +33,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.custom.AI.TunaJumpGoal;
 import org.variety.variety_aquatic.Items.ModItems;
@@ -170,7 +171,7 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
         }
     }
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) && world.getBlockState(pos).isOf(Blocks.WATER);
+        return (world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) ||world.getBiome(pos.down()).matchesKey(BiomeKeys.MANGROVE_SWAMP))&& world.getBlockState(pos).isOf(Blocks.WATER);
     }
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
