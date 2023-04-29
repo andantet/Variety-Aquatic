@@ -45,7 +45,6 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double spottedstingray_speed = 1.8;
     @Entry(min=0,max=100) public static int spottedstingray_spawnweight = 50;
     @Entry(min=0,max=100) public static int piranha_spawnweight = 50;
-    @Entry(min=0,max=100) public static int spermwhale_spawnweight = 50;
     @Entry(min=0,max=100) public static int tetra_spawnweight = 50;
     @Entry(min=0,max=100) public static int betta_spawnweight = 50;
     @Entry public static int anglerfish_health = 6;
@@ -55,6 +54,8 @@ public class NewConfig extends MidnightConfig {
     @Entry(min=0,max=100) public static int anglerfish_spawnweight = 50;
     @Entry public static int leviathan_health = 60;
     @Entry public static double leviathan_speed = 1.5;
+    @Entry(min=0,max=100) public static int giantsquid_spawnweight = 10;
+
     @Entry public static double piranha_damage = 2.0;
     @Entry public static int piranha_health = 10;
     @Entry public static double piranha_knockback = 0.1;

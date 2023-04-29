@@ -43,6 +43,8 @@ public class ModEntitySpawns {
                 ModEntities.JELLYFISH, NewConfig.jellyfish_spawnweight, 2, 4);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.MOONJELLY, NewConfig.moonjelly_spawnweight, 1, 1);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_FROZEN_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.GIANTGLOWINGSQUID, NewConfig.giantsquid_spawnweight, 1, 1);
 
 
 
@@ -62,6 +64,8 @@ public class ModEntitySpawns {
 
         SpawnRestriction.register(
                 ModEntities.SHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
+        SpawnRestriction.register(
+                ModEntities.GIANTGLOWINGSQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GiantsquidEntity::canMobSpawn);
         SpawnRestriction.register(
                 ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
         SpawnRestriction.register(
