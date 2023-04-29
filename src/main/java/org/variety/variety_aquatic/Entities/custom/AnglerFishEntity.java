@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
@@ -48,7 +49,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerable{
+public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -66,7 +67,7 @@ public class AnglerFishEntity extends FishEntity implements IAnimatable, Angerab
     public AnglerFishEntity(EntityType<? extends AnglerFishEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new LookControl(this);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
 
     }
     @Nullable

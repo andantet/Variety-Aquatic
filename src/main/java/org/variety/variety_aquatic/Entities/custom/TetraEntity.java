@@ -5,10 +5,8 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
-import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -36,6 +34,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Entities.custom.AI.TunaJumpGoal;
 import org.variety.variety_aquatic.Items.ModItems;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -58,12 +57,12 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
     public TetraEntity(EntityType<? extends TetraEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new LookControl(this);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
 
     }
 
     @Nullable
-    public EntityData SunfishEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -81,7 +80,12 @@ public class TetraEntity extends SchoolingFishEntity implements IAnimatable {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
     }
-
+    protected void initGoals() {
+        this.goalSelector.add(0, new BreatheAirGoal(this));
+        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(4, new LookAroundGoal(this));
+    }
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());

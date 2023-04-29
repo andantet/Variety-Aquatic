@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -30,6 +31,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
 import org.variety.variety_aquatic.Items.ModItems;
@@ -60,7 +63,7 @@ public class BettaEntity extends FishEntity implements IAnimatable {
     }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) && world.getBlockState(pos).isOf(Blocks.WATER);
+        return (world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) ||world.getBiome(pos.down()).matchesKey(BiomeKeys.JUNGLE))&& world.getBlockState(pos).isOf(Blocks.WATER);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

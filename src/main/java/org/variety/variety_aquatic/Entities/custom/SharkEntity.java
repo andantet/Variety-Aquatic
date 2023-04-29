@@ -4,6 +4,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
@@ -43,7 +44,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static final TrackedData<Integer> SHARKHUNGER = null;
+    private static final TrackedData<Integer> SHARKHUNGER;
 
     private static double health = NewConfig.shark_health;
     private static boolean doattack = NewConfig.shark_attack_fish;
@@ -55,7 +56,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
     public SharkEntity(EntityType<? extends SharkEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new LookControl(this);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
     }
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -222,6 +223,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
 
     static {
         MOISTNESS = DataTracker.registerData(SharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        SHARKHUNGER = DataTracker.registerData(SharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 

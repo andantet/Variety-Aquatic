@@ -27,7 +27,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.WHALESHARK, NewConfig.whaleshark_spawnweight, 1, 2);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.SUNFISH, NewConfig.sunfish_spawnweight, 1, 2);
+                ModEntities.SUNFISH, NewConfig.sunfish_spawnweight, 1, 3);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.OPAH, NewConfig.opah_spawnweight, 1, 1);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN,BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_OCEAN), SpawnGroup.WATER_CREATURE,
@@ -54,7 +54,7 @@ public class ModEntitySpawns {
                 ModEntities.TETRA, NewConfig.tetra_spawnweight, 3, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.ANGLERFISH, NewConfig.anglerfish_spawnweight, 1, 5);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
                 ModEntities.SEAHORSE, NewConfig.seahorse_spawnweight, 3, 5);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.CREATURE,

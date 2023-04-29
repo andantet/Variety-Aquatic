@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
@@ -53,7 +54,6 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private boolean commonSpawn = true;
 
     private static double health = NewConfig.yellowfin_health;
     private static double speed =  NewConfig.yellowfin_speed;
@@ -61,11 +61,11 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     public YellowfinTunaEntity(EntityType<? extends YellowfinTunaEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new LookControl(this);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
 
     }
     @Nullable
-    public EntityData YellowfinTunaEntity(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
         this.setPitch(0.0F);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -94,12 +94,14 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     }
 
     protected void initGoals() {
-
+        this.goalSelector.add(0, new BreatheAirGoal(this));
+        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(5, new TunaJumpGoal(this, 10));
     }
-    public boolean spawnsTooManyForEachTry(int count) {
-        return !this.commonSpawn;
-    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)

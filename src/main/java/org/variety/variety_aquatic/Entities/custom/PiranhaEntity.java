@@ -5,6 +5,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.LookControl;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
@@ -69,7 +70,7 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
     public PiranhaEntity(EntityType<? extends PiranhaEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new LookControl(this);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
 
     }
     @Nullable
@@ -136,6 +137,12 @@ public class PiranhaEntity extends SchoolingFishEntity implements IAnimatable, A
 
     protected void initGoals() {
         this.goalSelector.add(2,new PiranhaEntity.AttackGoal());
+        this.goalSelector.add(0, new BreatheAirGoal(this));
+        this.goalSelector.add(3,new MeleeAttackGoal(this,1,true));
+        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(4, new LookAroundGoal(this));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
