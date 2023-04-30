@@ -51,7 +51,7 @@ public class HermitcrabEntity extends Animal implements IAnimatable {
     }
     public static AttributeSupplier setAttributes() {
         return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20)
+                .add(Attributes.MAX_HEALTH, 10)
                 .add(Attributes.MOVEMENT_SPEED, 1).build();
     }
     protected void registerGoals() {

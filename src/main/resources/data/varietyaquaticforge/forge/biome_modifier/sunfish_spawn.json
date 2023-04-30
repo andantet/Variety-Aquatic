@@ -1,0 +1,19 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:ocean",
+    "minecraft:warm_ocean",
+    "minecraft:lukewarm_ocean",
+    "minecraft:deep_lukewarm_ocean",
+    "minecraft:deep_ocean"
+
+
+
+  ],
+  "spawners": {
+    "type": "varietyaquatic:sunfish",
+    "weight": 50,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}

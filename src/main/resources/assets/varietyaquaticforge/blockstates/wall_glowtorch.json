@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east": { "model": "varietyaquaticforge:block/wall_glowtorch" },
+    "facing=south": { "model": "varietyaquaticforge:block/wall_glowtorch", "y": 90 },
+    "facing=west": { "model": "varietyaquaticforge:block/wall_glowtorch", "y": 180 },
+    "facing=north": { "model": "varietyaquaticforge:block/wall_glowtorch", "y": 270 }
+  }
+}

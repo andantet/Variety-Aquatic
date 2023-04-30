@@ -1,0 +1,52 @@
+{
+  "whale_ambient": {
+    "subtitle": "varietyaquaticforge.whale_ambient",
+    "sounds": [
+      "varietyaquaticforge:whale_ambient"
+    ]
+  },
+  "deep_growl": {
+    "subtitle": "varietyaquaticforge.deep_growl",
+    "sounds": [
+      "varietyaquaticforge:deep_growl"
+    ]
+  },
+  "whale_death": {
+    "subtitle": "varietyaquaticforge.whale_death",
+    "sounds": [
+      "varietyaquaticforge:whale_death"
+    ]
+  },
+  "whale_hurt": {
+    "subtitle": "varietyaquaticforge.whale_hurt",
+    "sounds": [
+      "varietyaquaticforge:whale_hurt"
+    ]
+  },
+  "giantsquid_ambient": {
+    "subtitle": "varietyaquaticforge.giantsquid_ambient",
+    "sounds": [
+      "varietyaquaticforge:giantsquid_ambient"
+    ]
+  },
+  "giantsquid_hurt": {
+    "subtitle": "varietyaquaticforge.giantsquid_hurt",
+    "sounds": [
+      "varietyaquaticforge:giantsquid_hurt"
+    ]
+  },
+  "spermwhale_death": {
+    "subtitle": "varietyaquaticforge.spermwhale_death",
+    "sounds": [
+      "varietyaquaticforge:spermwhale_death"
+    ]
+  },
+  "crab_rave": {
+    "sounds": [
+      {
+        "name": "varietyaquaticforge:crab_rave",
+        "stream": true
+      }
+    ]
+  }
+}

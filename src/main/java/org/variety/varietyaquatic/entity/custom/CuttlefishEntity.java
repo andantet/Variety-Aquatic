@@ -47,6 +47,7 @@ public class CuttlefishEntity extends WaterAnimal implements IAnimatable {
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
+
     public boolean canBreatheUnderwater() {
         return true;
     }
@@ -80,8 +81,8 @@ public class CuttlefishEntity extends WaterAnimal implements IAnimatable {
     }
     public static AttributeSupplier setAttributes() {
         return WaterAnimal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20)
-                .add(Attributes.MOVEMENT_SPEED, 2)
+                .add(Attributes.MAX_HEALTH, 5)
+                .add(Attributes.MOVEMENT_SPEED, 1.7)
                 .add(Attributes.ATTACK_DAMAGE,5)
                 .add(Attributes.ATTACK_KNOCKBACK,0.1)
                 .add(Attributes.FOLLOW_RANGE, 5).build();

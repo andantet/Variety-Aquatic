@@ -22,6 +22,18 @@ public class ModEvents {
             event.put(ModEntityTypes.YELLOWFIN.get(), YellowFinTuna.setAttributes());
             event.put(ModEntityTypes.TETRA.get(), TetraEntity.setAttributes());
             event.put(ModEntityTypes.HERMITCRAB.get(), HermitcrabEntity.setAttributes());
+            event.put(ModEntityTypes.CRAB.get(), CrabEntity.setAttributes());
+            event.put(ModEntityTypes.LIONFISH.get(), LionfishEntity.setAttributes());
+            event.put(ModEntityTypes.JELLYFISH.get(), Jellyfish.setAttributes());
+            event.put(ModEntityTypes.MOONJELLY.get(), MoonJelly.setAttributes());
+            event.put(ModEntityTypes.OPAH.get(), OpahEntity.setAttributes());
+            event.put(ModEntityTypes.PIRANHA.get(), Piranha.setAttributes());
+            event.put(ModEntityTypes.SEAHORSE.get(), Piranha.setAttributes());
+            event.put(ModEntityTypes.STINGRAY.get(), SpottedStingrayEntity.setAttributes());
+            event.put(ModEntityTypes.WHALESHARK.get(), WhaleSharkEntity.setAttributes());
+
+
+
 
 
 

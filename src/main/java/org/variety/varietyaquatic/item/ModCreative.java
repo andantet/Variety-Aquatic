@@ -7,7 +7,7 @@ public class ModCreative {
     public static final CreativeModeTab VARIETY_AQUATIC_TAB = new CreativeModeTab("variety_aquatic") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.SHARK_SPAWN_EGG.get());
+            return new ItemStack(ModItems.SHARK_EGG.get());
         }
     };
 }

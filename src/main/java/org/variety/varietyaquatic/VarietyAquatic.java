@@ -12,12 +12,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.variety.varietyaquatic.Block.ModBlock;
+import org.variety.varietyaquatic.ModSound.ModSound;
 import org.variety.varietyaquatic.entity.ModEntityTypes;
 import org.variety.varietyaquatic.entity.client.*;
-import org.variety.varietyaquatic.entity.custom.AnglerfishEntity;
-import org.variety.varietyaquatic.entity.custom.BettaEntity;
-import org.variety.varietyaquatic.entity.custom.TetraEntity;
-import org.variety.varietyaquatic.entity.custom.YellowFinTuna;
+import org.variety.varietyaquatic.entity.custom.*;
 import org.variety.varietyaquatic.item.ModItems;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -25,6 +24,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import software.bernie.geckolib3.GeckoLib;
 
 import org.slf4j.Logger;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(VarietyAquatic.MODID)
@@ -37,6 +37,8 @@ public class VarietyAquatic {
             IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+        ModBlock.register(modEventBus);
+        ModSound.register(modEventBus);
 
 
         ModEntityTypes.register(modEventBus);
@@ -75,6 +77,11 @@ public class VarietyAquatic {
                     WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
         });
         event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.CRAB.get(),
+                    SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    CrabEntity::checkcrabspawn);
+        });
+        event.enqueueWork(() -> {
             SpawnPlacements.register(ModEntityTypes.CUTTLEFISH.get(),
                     SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
@@ -94,6 +101,39 @@ public class VarietyAquatic {
                     SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                     Animal::checkAnimalSpawnRules);
         });
+
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.MOONJELLY.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        });
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.JELLYFISH.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        });
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.OPAH.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        });
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.PIRANHA.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    Piranha::checkPiranhaspawn);
+        });
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.SEAHORSE.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        });
+        event.enqueueWork(() -> {
+            SpawnPlacements.register(ModEntityTypes.WHALESHARK.get(),
+                    SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                    WaterAnimal::checkSurfaceWaterAnimalSpawnRules);
+        });
+
+
     }
 
 
@@ -112,6 +152,16 @@ public class VarietyAquatic {
             EntityRenderers.register(ModEntityTypes.YELLOWFIN.get(), TunaRenderer::new);
             EntityRenderers.register(ModEntityTypes.TETRA.get(), TetraRenderer::new);
             EntityRenderers.register(ModEntityTypes.HERMITCRAB.get(), HermitcrabRenderer::new);
+            EntityRenderers.register(ModEntityTypes.CRAB.get(), CrabRenderer::new);
+            EntityRenderers.register(ModEntityTypes.LIONFISH.get(), LionfishRenderer::new);
+            EntityRenderers.register(ModEntityTypes.JELLYFISH.get(), JellyfishRenderer::new);
+            EntityRenderers.register(ModEntityTypes.MOONJELLY.get(), MoonjellyRenderer::new);
+            EntityRenderers.register(ModEntityTypes.OPAH.get(), OpahRenderer::new);
+            EntityRenderers.register(ModEntityTypes.PIRANHA.get(), PiranhaRenderer::new);
+            EntityRenderers.register(ModEntityTypes.SEAHORSE.get(), SeahorseRenderer::new);
+            EntityRenderers.register(ModEntityTypes.STINGRAY.get(), StingrayRenderer::new);
+            EntityRenderers.register(ModEntityTypes.WHALESHARK.get(), WhalesharkRenderer::new);
+
 
 
 
