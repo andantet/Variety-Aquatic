@@ -61,6 +61,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "hermitcrab"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, HermitcrabEntity::new)
                     .dimensions(EntityDimensions.fixed(1f, 0.8f)).trackRangeBlocks(50).build());
+    public static final EntityType<CrabEntity> CRAB = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "crab"),
+            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, CrabEntity::new)
+                    .dimensions(EntityDimensions.fixed(1f, 0.8f)).trackRangeBlocks(50).build());
 
     public static final EntityType<CuttlefishEntity> CUTTLEFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "cuttlefish"),
