@@ -8,28 +8,30 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.variety.varietyaquatic.VarietyAquatic;
-import org.variety.varietyaquatic.entity.custom.SharkEntity;
-import org.variety.varietyaquatic.entity.custom.SunfishEntity;
+import org.variety.varietyaquatic.entity.custom.CuttlefishEntity;
+import org.variety.varietyaquatic.entity.custom.YellowFinTuna;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class SharkRenderer extends GeoEntityRenderer<SharkEntity> {
-    public SharkRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new SharkModel());
+
+public class TunaRenderer extends GeoEntityRenderer<YellowFinTuna> {
+    public TunaRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new TunaModel());
+
         this.shadowRadius = 0.3f;
     }
 
 
     @Override
-    public ResourceLocation getTextureLocation(SharkEntity instance) {
-        return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/shark_texture.png");
+    public ResourceLocation getTextureLocation(YellowFinTuna instance) {
+        return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/yellowfintuna_texture.png");
     }
 
     @Override
-    public RenderType getRenderType(SharkEntity animatable, float partialTicks, PoseStack stack,
+    public RenderType getRenderType(YellowFinTuna animatable, float partialTicks, PoseStack stack,
                                     @Nullable MultiBufferSource renderTypeBuffer,
                                     @Nullable VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(1.1f, 1.1f, 1.1f);
+        stack.scale(1.2f, 1.2f, 1.2f);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }

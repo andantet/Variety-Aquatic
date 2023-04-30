@@ -1,6 +1,14 @@
 {
   "entity.varietyaquaticforge.sunfish": "Sunfish",
-  "entity.varietyaquaticforge.shark": "shark",
+  "entity.varietyaquaticforge.shark": "Shark",
+  "entity.varietyaquaticforge.anglerfish": "Anglerfish",
+  "entity.varietyaquaticforge.clownfish": "Clownfish",
+  "entity.varietyaquaticforge.bettafish": "Bettafish",
+
   "item.varietyaquaticforge.shark_spawn_egg":"Shark Spawn Egg",
-  "item.varietyaquaticforge.sunfish_spawn_egg":"Sunfish Spawn Egg"
+  "item.varietyaquaticforge.anglerfish_spawn_egg":"Anglerfish Spawn Egg",
+  "item.varietyaquaticforge.sunfish_spawn_egg":"Sunfish Spawn Egg",
+  "item.varietyaquaticforge.bettafish_spawn_egg":"Bettafish Spawn Egg",
+  "item.varietyaquaticforge.clownfish_spawn_egg":"Sunfish Spawn Egg"
+
 }

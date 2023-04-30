@@ -8,28 +8,31 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.variety.varietyaquatic.VarietyAquatic;
-import org.variety.varietyaquatic.entity.custom.SharkEntity;
-import org.variety.varietyaquatic.entity.custom.SunfishEntity;
+import org.variety.varietyaquatic.entity.custom.AnglerfishEntity;
+import org.variety.varietyaquatic.entity.custom.ClownfishEntity;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
 
-public class SharkRenderer extends GeoEntityRenderer<SharkEntity> {
-    public SharkRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new SharkModel());
+
+public class ClownfishRenderer extends GeoEntityRenderer<ClownfishEntity> {
+    public ClownfishRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new ClownfishModel());
+
         this.shadowRadius = 0.3f;
     }
 
 
     @Override
-    public ResourceLocation getTextureLocation(SharkEntity instance) {
-        return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/shark_texture.png");
+    public ResourceLocation getTextureLocation(ClownfishEntity instance) {
+        return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/clownfish_texture.png");
     }
 
     @Override
-    public RenderType getRenderType(SharkEntity animatable, float partialTicks, PoseStack stack,
+    public RenderType getRenderType(ClownfishEntity animatable, float partialTicks, PoseStack stack,
                                     @Nullable MultiBufferSource renderTypeBuffer,
                                     @Nullable VertexConsumer vertexBuilder, int packedLightIn,
                                     ResourceLocation textureLocation) {
-        stack.scale(1.1f, 1.1f, 1.1f);
+        stack.scale(1.3f, 1.3f, 1.3f);
         return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
     }
 }
