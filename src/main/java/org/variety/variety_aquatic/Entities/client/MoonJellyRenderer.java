@@ -16,6 +16,7 @@ public class MoonJellyRenderer extends GeoEntityRenderer<MoonJellyEntity> {
     public MoonJellyRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new MoonJellyModel());
         this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
+
         this.shadowRadius = 0.4f;
     }
 
