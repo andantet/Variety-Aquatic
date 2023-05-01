@@ -13,6 +13,7 @@ import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
 
 public class WhaleSharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     public WhaleSharkRenderer(EntityRendererFactory.Context ctx) {
+
         super(ctx, new WhaleSharkModel());
         this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
         this.shadowRadius = 0.4f;
