@@ -28,20 +28,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import org.variety.varietyaquatic.ModSound.ModSound;
-import org.variety.varietyaquatic.Utils.AqConfig;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
-public class WhaleSharkEntity extends WaterAnimal implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class WhaleSharkEntity extends WaterAnimal implements GeoEntity {
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(WhaleSharkEntity.class, EntityDataSerializers.INT);
@@ -121,7 +118,7 @@ public class WhaleSharkEntity extends WaterAnimal implements IAnimatable {
     }
 
     public boolean doHurtTarget(Entity p_28319_) {
-        boolean flag = p_28319_.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+        boolean flag = p_28319_.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
         if (flag) {
             this.doEnchantDamageEffects(this, p_28319_);
             this.playSound(SoundEvents.DOLPHIN_ATTACK, 1.0F, 1.0F);
@@ -166,7 +163,7 @@ public class WhaleSharkEntity extends WaterAnimal implements IAnimatable {
             } else {
                 this.setMoisntessLevel(this.getMoistnessLevel() - 1);
                 if (this.getMoistnessLevel() <= 0) {
-                    this.hurt(DamageSource.DRY_OUT, 1.0F);
+                    this.hurt(this.damageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -250,35 +247,22 @@ public class WhaleSharkEntity extends WaterAnimal implements IAnimatable {
 
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
+    private PlayState predicate(AnimationState tAnimationState) {
+        if(this.isSwimming()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("WhaleSharkSwim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-        return PlayState.CONTINUE;
-    }
-    private PlayState attackPredicate(AnimationEvent event) {
-        if(this.swinging && event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
-            this.swinging = false;
-        }
 
-        return PlayState.CONTINUE;
-    }
+        return PlayState.STOP;    }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-        data.addAnimationController(new AnimationController(this, "attackController",
-                0, this::attackPredicate));
-    }
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
 
+    }
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

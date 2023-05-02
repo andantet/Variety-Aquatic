@@ -33,18 +33,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
-public class MoonJelly extends WaterAnimal implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+
+public class MoonJelly extends WaterAnimal implements GeoEntity {
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private float tx;
     private float ty;
     private float tz;
@@ -74,7 +73,7 @@ public class MoonJelly extends WaterAnimal implements IAnimatable {
     protected void handleAirSupply(int p_28326_) {
     }
     public void playerTouch(Player pEntity) {
-        if (pEntity instanceof ServerPlayer && pEntity.hurt(DamageSource.mobAttack(this), (float)(1 + 0))) {
+        if (pEntity instanceof ServerPlayer && 1 > 0 && pEntity.hurt(this.damageSources().mobAttack(this), (float)(1 + 1))) {
             if (!this.isSilent()) {
                 ((ServerPlayer)pEntity).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
             }
@@ -188,8 +187,8 @@ public class MoonJelly extends WaterAnimal implements IAnimatable {
             LivingEntity livingentity = MoonJelly.this.getLastHurtByMob();
             if (livingentity != null) {
                 Vec3 vec3 = new Vec3(MoonJelly.this.getX() - livingentity.getX(), MoonJelly.this.getY() - livingentity.getY(), MoonJelly.this.getZ() - livingentity.getZ());
-                BlockState blockstate = MoonJelly.this.level.getBlockState(new BlockPos(MoonJelly.this.getX() + vec3.x, MoonJelly.this.getY() + vec3.y, MoonJelly.this.getZ() + vec3.z));
-                FluidState fluidstate = MoonJelly.this.level.getFluidState(new BlockPos(MoonJelly.this.getX() + vec3.x, MoonJelly.this.getY() + vec3.y, MoonJelly.this.getZ() + vec3.z));
+                BlockState blockstate = MoonJelly.this.level.getBlockState(BlockPos.containing(MoonJelly.this.getX() + vec3.x, MoonJelly.this.getY() + vec3.y, MoonJelly.this.getZ() + vec3.z));
+                FluidState fluidstate = MoonJelly.this.level.getFluidState(BlockPos.containing(MoonJelly.this.getX() + vec3.x, MoonJelly.this.getY() + vec3.y, MoonJelly.this.getZ() + vec3.z));
                 if (fluidstate.is(FluidTags.WATER) || blockstate.isAir()) {
                     double d0 = vec3.length();
                     if (d0 > 0.0D) {
@@ -269,7 +268,7 @@ public class MoonJelly extends WaterAnimal implements IAnimatable {
             } else {
                 this.setMoisntessLevel(this.getMoistnessLevel() - 1);
                 if (this.getMoistnessLevel() <= 0) {
-                    this.hurt(DamageSource.DRY_OUT, 1.0F);
+                    this.hurt(this.damageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -359,24 +358,23 @@ public class MoonJelly extends WaterAnimal implements IAnimatable {
 
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("Swim", true));
+    private PlayState predicate(AnimationState tAnimationState) {
+        if (this.isSwimming()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("Swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
         return PlayState.STOP;
     }
-
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
 
     }
 
+
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

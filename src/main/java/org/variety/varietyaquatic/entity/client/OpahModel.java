@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.LionfishEntity;
 import org.variety.varietyaquatic.entity.custom.OpahEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class OpahModel extends AnimatedGeoModel<OpahEntity> {
+public class OpahModel extends GeoModel<OpahEntity> {
     @Override
     public ResourceLocation getModelResource(OpahEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/opah.geo.json");

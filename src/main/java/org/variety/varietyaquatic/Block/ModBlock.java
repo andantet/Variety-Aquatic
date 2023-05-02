@@ -29,16 +29,15 @@ public class ModBlock {
     public static final RegistryObject<WallGlowtorchBlock> WALL_GLOWTORCH = BLOCKS.register("wall_glowtorch", () -> new WallGlowtorchBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.0F).lightLevel(state -> 14).sound(SoundType.MOSS), ParticleTypes.BUBBLE));
 
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
+    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn, tab);
+        registerBlockItem(name, toReturn);
         return toReturn;
     }
 
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block,
-                                                                            CreativeModeTab tab) {
+    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(),
-                new Item.Properties().tab(tab)));
+                new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus) {

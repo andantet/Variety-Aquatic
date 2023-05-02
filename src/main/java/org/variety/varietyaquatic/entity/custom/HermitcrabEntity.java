@@ -27,20 +27,20 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class HermitcrabEntity extends Animal implements IAnimatable {
+public class HermitcrabEntity extends Animal implements GeoEntity {
     private static final EntityDataAccessor<BlockPos> HOME_POS = SynchedEntityData.defineId(HermitcrabEntity.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<BlockPos> TRAVEL_POS = SynchedEntityData.defineId(HermitcrabEntity.class, EntityDataSerializers.BLOCK_POS);
     private static final EntityDataAccessor<Boolean> GOING_HOME = SynchedEntityData.defineId(HermitcrabEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> TRAVELLING = SynchedEntityData.defineId(HermitcrabEntity.class, EntityDataSerializers.BOOLEAN);
-    private AnimationFactory factory = new AnimationFactory(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public HermitcrabEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -228,7 +228,7 @@ public class HermitcrabEntity extends Animal implements IAnimatable {
                     vec31 = DefaultRandomPos.getPosTowards(this.hermit, 8, 7, vec3, (double)((float)Math.PI / 2F));
                 }
 
-                if (vec31 != null && !flag && !this.hermit.level.getBlockState(new BlockPos(vec31)).is(Blocks.WATER)) {
+                if (vec31 != null && !flag && !this.hermit.level.getBlockState(BlockPos.containing(vec31)).is(Blocks.WATER)) {
                     vec31 = DefaultRandomPos.getPosTowards(this.hermit, 16, 5, vec3, (double)((float)Math.PI / 2F));
                 }
 
@@ -349,7 +349,7 @@ public class HermitcrabEntity extends Animal implements IAnimatable {
                 l = 0;
             }
 
-            BlockPos blockpos = new BlockPos((double)k + this.hermit.getX(), (double)l + this.hermit.getY(), (double)i1 + this.hermit.getZ());
+            BlockPos blockpos = new BlockPos(k + (int)this.hermit.getX(), l + (int)this.hermit.getY(), i1 + (int)this.hermit.getZ());
             this.hermit.setTravelPos(blockpos);
             this.hermit.setTravelling(true);
             this.stuck = false;
@@ -406,25 +406,24 @@ public class HermitcrabEntity extends Animal implements IAnimatable {
 
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("HermitCrabWalk", true));
+    private PlayState predicate(AnimationState tAnimationState) {
+        if(this.isSwimming()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("HermitCrabWalk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
+
 
         return PlayState.STOP;
     }
 
-
-
     @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
+
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

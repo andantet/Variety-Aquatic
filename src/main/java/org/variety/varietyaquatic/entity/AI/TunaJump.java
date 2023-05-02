@@ -100,7 +100,7 @@ public class TunaJump extends JumpGoal {
 
         Vec3 vec3 = this.tuna.getDeltaMovement();
         if (vec3.y * vec3.y < (double)0.03F && this.tuna.getXRot() != 0.0F) {
-            this.tuna.setXRot(Mth.rotlerp(this.tuna.getXRot(), 0.0F, 0.2F));
+            this.tuna.setXRot(Mth.rotLerp(0.2F, this.tuna.getXRot(), 0.0F));
         } else if (vec3.length() > (double)1.0E-5F) {
             double d0 = vec3.horizontalDistance();
             double d1 = Math.atan2(-vec3.y, d0) * (double)(180F / (float)Math.PI);

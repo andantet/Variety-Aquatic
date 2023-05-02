@@ -6,11 +6,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
 import org.variety.varietyaquatic.VarietyAquatic;
-import org.variety.varietyaquatic.entity.custom.CrabEntity;
 import org.variety.varietyaquatic.entity.custom.LionfishEntity;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 
 public class LionfishRenderer extends GeoEntityRenderer<LionfishEntity> {
@@ -27,11 +25,10 @@ public class LionfishRenderer extends GeoEntityRenderer<LionfishEntity> {
     }
 
     @Override
-    public RenderType getRenderType(LionfishEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.2f, 1.2f, 1.2f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    public void render(LionfishEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1.2f, 1.2f, 1.2f);
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

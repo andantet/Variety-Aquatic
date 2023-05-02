@@ -26,16 +26,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class OpahEntity extends WaterAnimal implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+
+
+public class OpahEntity extends WaterAnimal implements GeoEntity {
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(OpahEntity.class, EntityDataSerializers.INT);
     public static final int TOTAL_AIR_SUPPLY = 4800;
@@ -108,7 +112,7 @@ public class OpahEntity extends WaterAnimal implements IAnimatable {
     }
 
     public boolean doHurtTarget(Entity p_28319_) {
-        boolean flag = p_28319_.hurt(DamageSource.mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+        boolean flag = p_28319_.hurt(this.damageSources().mobAttack(this), (float)((int)this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
         if (flag) {
             this.doEnchantDamageEffects(this, p_28319_);
             this.playSound(SoundEvents.DOLPHIN_ATTACK, 1.0F, 1.0F);
@@ -153,7 +157,7 @@ public class OpahEntity extends WaterAnimal implements IAnimatable {
             } else {
                 this.setMoisntessLevel(this.getMoistnessLevel() - 1);
                 if (this.getMoistnessLevel() <= 0) {
-                    this.hurt(DamageSource.DRY_OUT, 1.0F);
+                    this.hurt(this.damageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -244,22 +248,25 @@ public class OpahEntity extends WaterAnimal implements IAnimatable {
     }
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("OpahSwimming", true));
+    private PlayState predicate(AnimationState tAnimationState) {
+        if (this.isSwimming()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("OpahSwimming", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
     }
+
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
 
     }
 
+
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
+
 }

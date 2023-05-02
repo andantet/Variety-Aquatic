@@ -13,8 +13,8 @@ import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.Varient.BettaVariant;
 import org.variety.varietyaquatic.entity.custom.AnglerfishEntity;
 import org.variety.varietyaquatic.entity.custom.BettaEntity;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
-import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+
 
 import java.util.Map;
 
@@ -53,11 +53,10 @@ public class BettaRenderer extends GeoEntityRenderer<BettaEntity> {
     }
 
     @Override
-    public RenderType getRenderType(BettaEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.3f, 1.3f, 1.3f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    public void render(BettaEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1.3f, 1.3f, 1.3f);
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

@@ -13,8 +13,9 @@ import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.Varient.BettaVariant;
 import org.variety.varietyaquatic.entity.Varient.SeahorseVariant;
 import org.variety.varietyaquatic.entity.custom.BettaEntity;
+import org.variety.varietyaquatic.entity.custom.MoonJelly;
 import org.variety.varietyaquatic.entity.custom.SeahorseEntity;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
@@ -49,11 +50,10 @@ public class SeahorseRenderer extends GeoEntityRenderer<SeahorseEntity> {
     }
 
     @Override
-    public RenderType getRenderType(SeahorseEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.2f, 1.2f, 1.2f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    public void render(SeahorseEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1.2f, 1.2f, 1.2f);
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

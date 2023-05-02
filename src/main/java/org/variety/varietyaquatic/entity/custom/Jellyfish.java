@@ -35,18 +35,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import org.variety.varietyaquatic.Utils.AqConfig;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-
-public class Jellyfish extends WaterAnimal implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class Jellyfish extends WaterAnimal implements GeoEntity {
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private float tx;
     private float ty;
     private float tz;
@@ -75,13 +75,14 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
 
     protected void handleAirSupply(int p_28326_) {
     }
+
     public void playerTouch(Player pEntity) {
-        if (pEntity instanceof ServerPlayer && pEntity.hurt(DamageSource.mobAttack(this), (float)(1 + 0))) {
+        if (pEntity instanceof ServerPlayer && 1 > 0 && pEntity.hurt(this.damageSources().mobAttack(this), (float)(1 + 1))) {
             if (!this.isSilent()) {
-                ((ServerPlayer)pEntity).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
+                ((ServerPlayer) pEntity).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
             }
 
-            pEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60 , 0), this);
+            pEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
         }
 
     }
@@ -124,7 +125,6 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
     protected PathNavigation createNavigation(Level p_28362_) {
         return new WaterBoundPathNavigation(this, p_28362_);
     }
-
 
 
     public int getMaxAirSupply() {
@@ -190,8 +190,8 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
             LivingEntity livingentity = Jellyfish.this.getLastHurtByMob();
             if (livingentity != null) {
                 Vec3 vec3 = new Vec3(Jellyfish.this.getX() - livingentity.getX(), Jellyfish.this.getY() - livingentity.getY(), Jellyfish.this.getZ() - livingentity.getZ());
-                BlockState blockstate = Jellyfish.this.level.getBlockState(new BlockPos(Jellyfish.this.getX() + vec3.x, Jellyfish.this.getY() + vec3.y, Jellyfish.this.getZ() + vec3.z));
-                FluidState fluidstate = Jellyfish.this.level.getFluidState(new BlockPos(Jellyfish.this.getX() + vec3.x, Jellyfish.this.getY() + vec3.y, Jellyfish.this.getZ() + vec3.z));
+                BlockState blockstate = Jellyfish.this.level.getBlockState(BlockPos.containing(Jellyfish.this.getX() + vec3.x, Jellyfish.this.getY() + vec3.y, Jellyfish.this.getZ() + vec3.z));
+                FluidState fluidstate = Jellyfish.this.level.getFluidState(BlockPos.containing(Jellyfish.this.getX() + vec3.x, Jellyfish.this.getY() + vec3.y, Jellyfish.this.getZ() + vec3.z));
                 if (fluidstate.is(FluidTags.WATER) || blockstate.isAir()) {
                     double d0 = vec3.length();
                     if (d0 > 0.0D) {
@@ -210,7 +210,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
                         vec3 = vec3.subtract(0.0D, vec3.y, 0.0D);
                     }
 
-                    Jellyfish.this.setMovementVector((float)vec3.x / 20.0F, (float)vec3.y / 20.0F, (float)vec3.z / 20.0F);
+                    Jellyfish.this.setMovementVector((float) vec3.x / 20.0F, (float) vec3.y / 20.0F, (float) vec3.z / 20.0F);
                 }
 
                 if (this.fleeTicks % 10 == 5) {
@@ -220,6 +220,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
             }
         }
     }
+
     public void setMovementVector(float pTx, float pTy, float pTz) {
         this.tx = pTx;
         this.ty = pTy;
@@ -229,6 +230,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
     public boolean hasMovementVector() {
         return this.tx != 0.0F || this.ty != 0.0F || this.tz != 0.0F;
     }
+
     class JellyfishRandomMovementGoal extends Goal {
         private final Jellyfish jellyfish;
 
@@ -252,7 +254,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
             if (i > 100) {
                 this.jellyfish.setMovementVector(0.0F, 0.0F, 0.0F);
             } else if (this.jellyfish.getRandom().nextInt(reducedTickDelay(50)) == 0 || !this.jellyfish.wasTouchingWater || !this.jellyfish.hasMovementVector()) {
-                float f = this.jellyfish.getRandom().nextFloat() * ((float)Math.PI * 2F);
+                float f = this.jellyfish.getRandom().nextFloat() * ((float) Math.PI * 2F);
                 float f1 = Mth.cos(f) * 0.2F;
                 float f2 = -0.1F + this.jellyfish.getRandom().nextFloat() * 0.2F;
                 float f3 = Mth.sin(f) * 0.2F;
@@ -261,6 +263,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
 
         }
     }
+
     public void tick() {
         super.tick();
         if (this.isNoAi()) {
@@ -271,7 +274,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
             } else {
                 this.setMoisntessLevel(this.getMoistnessLevel() - 1);
                 if (this.getMoistnessLevel() <= 0) {
-                    this.hurt(DamageSource.DRY_OUT, 1.0F);
+                    this.hurt(this.damageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -290,9 +293,9 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
                 float f1 = Mth.sin(this.getYRot() * 0.017453292F) * 0.6F;
                 float f2 = 0.0F - this.random.nextFloat() * 0.7F;
 
-                for(int i = 0; i < 2; ++i) {
-                    this.level.addParticle(ParticleTypes.DOLPHIN, this.getX() - vec3.x * (double)f2 + (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 + (double)f1, 0.0D, 0.0D, 0.0D);
-                    this.level.addParticle(ParticleTypes.DOLPHIN, this.getX() - vec3.x * (double)f2 - (double)f, this.getY() - vec3.y, this.getZ() - vec3.z * (double)f2 - (double)f1, 0.0D, 0.0D, 0.0D);
+                for (int i = 0; i < 2; ++i) {
+                    this.level.addParticle(ParticleTypes.DOLPHIN, this.getX() - vec3.x * (double) f2 + (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 + (double) f1, 0.0D, 0.0D, 0.0D);
+                    this.level.addParticle(ParticleTypes.DOLPHIN, this.getX() - vec3.x * (double) f2 - (double) f, this.getY() - vec3.y, this.getZ() - vec3.z * (double) f2 - (double) f1, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
@@ -309,7 +312,7 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
     }
 
     private void addParticlesAroundSelf(ParticleOptions p_28338_) {
-        for(int i = 0; i < 7; ++i) {
+        for (int i = 0; i < 7; ++i) {
             double d0 = this.random.nextGaussian() * 0.01D;
             double d1 = this.random.nextGaussian() * 0.01D;
             double d2 = this.random.nextGaussian() * 0.01D;
@@ -360,29 +363,24 @@ public class Jellyfish extends WaterAnimal implements IAnimatable {
     }
 
 
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-
+    private PlayState predicate(AnimationState tAnimationState) {
         if (this.isDeadOrDying()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
-
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
-
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
 
     }
 
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 }

@@ -3,9 +3,9 @@ package org.variety.varietyaquatic.entity.client;
 import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.SunfishEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class SunFishModel extends AnimatedGeoModel<SunfishEntity> {
+public class SunFishModel extends GeoModel<SunfishEntity> {
     @Override
     public ResourceLocation getModelResource(SunfishEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/sunfish.geo.json");

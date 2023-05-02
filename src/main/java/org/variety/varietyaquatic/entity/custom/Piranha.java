@@ -24,19 +24,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
 
-public class Piranha extends AbstractSchoolingFish implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class Piranha extends AbstractSchoolingFish implements GeoEntity {
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(Piranha.class, EntityDataSerializers.INT);
 
 
@@ -119,34 +117,32 @@ public class Piranha extends AbstractSchoolingFish implements IAnimatable {
     }
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
+    private PlayState predicate(AnimationState tAnimationState) {
+        if(this.isSwimming()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-        return PlayState.STOP;
-    }
-    private PlayState attackPredicate(AnimationEvent event) {
-        if(this.swinging && event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", false));
-            this.swinging = false;
+        if(this.isAttackable()){
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("bite", Animation.LoopType.LOOP));
+
+            return PlayState.CONTINUE;
         }
 
-        return PlayState.CONTINUE;
+
+        return PlayState.STOP;
     }
+
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-        data.addAnimationController(new AnimationController(this, "attackController",
-                0, this::attackPredicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
 
     }
+
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
+
 
     @Override
     public ItemStack getBucketItemStack() {

@@ -3,10 +3,9 @@ package org.variety.varietyaquatic.entity.client;
 import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.CrabEntity;
-import org.variety.varietyaquatic.entity.custom.YellowFinTuna;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class CrabModel extends AnimatedGeoModel<CrabEntity> {
+public class CrabModel extends GeoModel<CrabEntity> {
     @Override
     public ResourceLocation getModelResource(CrabEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/crab.geo.json");

@@ -8,9 +8,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.variety.varietyaquatic.VarietyAquatic;
+import org.variety.varietyaquatic.entity.custom.ClownfishEntity;
 import org.variety.varietyaquatic.entity.custom.CrabEntity;
 import org.variety.varietyaquatic.entity.custom.YellowFinTuna;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 
 public class CrabRenderer extends GeoEntityRenderer<CrabEntity> {
@@ -27,11 +28,10 @@ public class CrabRenderer extends GeoEntityRenderer<CrabEntity> {
     }
 
     @Override
-    public RenderType getRenderType(CrabEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.6f, 1.6f, 1.6f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    public void render(CrabEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1.6f, 1.6f, 1.6f);
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

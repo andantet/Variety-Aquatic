@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.LionfishEntity;
 import org.variety.varietyaquatic.entity.custom.Piranha;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class PiranhaModel extends AnimatedGeoModel<Piranha> {
+public class PiranhaModel extends GeoModel<Piranha> {
     @Override
     public ResourceLocation getModelResource(Piranha object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/piranha.geo.json");

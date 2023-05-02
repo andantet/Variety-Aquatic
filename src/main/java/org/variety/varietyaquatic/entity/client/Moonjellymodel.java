@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.Jellyfish;
 import org.variety.varietyaquatic.entity.custom.MoonJelly;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class Moonjellymodel extends AnimatedGeoModel<MoonJelly> {
+public class Moonjellymodel extends GeoModel<MoonJelly> {
     @Override
     public ResourceLocation getModelResource(MoonJelly object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/moonjelly.geo.json");

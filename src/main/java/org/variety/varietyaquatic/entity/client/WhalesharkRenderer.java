@@ -10,13 +10,13 @@ import org.jetbrains.annotations.Nullable;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.SharkEntity;
 import org.variety.varietyaquatic.entity.custom.WhaleSharkEntity;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
-import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 public class WhalesharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     public WhalesharkRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new WhalesharkModel());
-        this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderType::entityTranslucentEmissive));
+        addRenderLayer(new AutoGlowingGeoLayer<>(this));
 
         this.shadowRadius = 0.3f;
     }
@@ -28,11 +28,10 @@ public class WhalesharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     }
 
     @Override
-    public RenderType getRenderType(WhaleSharkEntity animatable, float partialTicks, PoseStack stack,
-                                    @Nullable MultiBufferSource renderTypeBuffer,
-                                    @Nullable VertexConsumer vertexBuilder, int packedLightIn,
-                                    ResourceLocation textureLocation) {
-        stack.scale(1.1f, 1.1f, 1.1f);
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+    public void render(WhaleSharkEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        poseStack.scale(1.2f, 1.2f, 1.2f);
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

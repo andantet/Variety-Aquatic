@@ -7,6 +7,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -17,13 +18,14 @@ import org.variety.varietyaquatic.ModSound.ModSound;
 import org.variety.varietyaquatic.entity.ModEntityTypes;
 import org.variety.varietyaquatic.entity.client.*;
 import org.variety.varietyaquatic.entity.custom.*;
+import org.variety.varietyaquatic.item.ModCreative;
 import org.variety.varietyaquatic.item.ModItems;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 
-import software.bernie.geckolib3.GeckoLib;
 
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -48,8 +50,47 @@ public class VarietyAquatic {
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
-    }
+        modEventBus.addListener(this::addCreative);
 
+    }
+    private void addCreative(CreativeModeTabEvent.BuildContents event) {
+        if(event.getTab() == ModCreative.VarietyAquaticTab) {
+            event.accept(ModItems.GLOWTORCH_ITEM);
+            event.accept(ModItems.SHARK_EGG);
+            event.accept(ModItems.ANGLER_BULB);
+            event.accept(ModItems.ANGLER_EGG);
+            event.accept(ModItems.BETTA_EGG);
+            event.accept(ModItems.CLOWNFISH_EGG);
+            event.accept(ModItems.COOKED_TUNA);
+            event.accept(ModItems.CRAB_EGG);
+            event.accept(ModItems.CRAB_RAVE_MUSIC_DISC);
+            event.accept(ModItems.HERMITCRAB_EGG);
+            event.accept(ModItems.JELLYFISH_EGG);
+            event.accept(ModItems.LIONFISH_COOKED);
+            event.accept(ModItems.LIONFISH_EGG);
+            event.accept(ModItems.MOONJELLY_EGG);
+            event.accept(ModItems.OPAH_EGG);
+            event.accept(ModItems.PIRANHA_EGG);
+            event.accept(ModItems.RAW_BETTA);
+            event.accept(ModItems.RAW_LIONFISH);
+            event.accept(ModItems.RAW_PIRANHA);
+            event.accept(ModItems.RAW_TETRA);
+            event.accept(ModItems.RAW_TUNA);
+            event.accept(ModItems.SEAHORSE_EGG);
+            event.accept(ModItems.STINGRAY_EGG);
+            event.accept(ModItems.SUNFISH_EGG);
+            event.accept(ModItems.TETRA_EGG);
+            event.accept(ModItems.WHALESHARK_EGG);
+
+
+
+
+
+
+
+        }
+
+    }
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             SpawnPlacements.register(ModEntityTypes.SUNFISH.get(),

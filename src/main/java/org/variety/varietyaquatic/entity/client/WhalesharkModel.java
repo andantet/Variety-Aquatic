@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.SharkEntity;
 import org.variety.varietyaquatic.entity.custom.WhaleSharkEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class WhalesharkModel extends AnimatedGeoModel<WhaleSharkEntity> {
+public class WhalesharkModel extends GeoModel<WhaleSharkEntity> {
     @Override
     public ResourceLocation getModelResource(WhaleSharkEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/whaleshark.geo.json");

@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.AnglerfishEntity;
 import org.variety.varietyaquatic.entity.custom.BettaEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class BettaModel extends AnimatedGeoModel<BettaEntity> {
+public class BettaModel extends GeoModel<BettaEntity> {
     @Override
     public ResourceLocation getModelResource(BettaEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/betta.geo.json");

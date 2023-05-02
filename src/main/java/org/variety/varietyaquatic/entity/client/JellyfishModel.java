@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.Jellyfish;
 import org.variety.varietyaquatic.entity.custom.LionfishEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class JellyfishModel extends AnimatedGeoModel<Jellyfish> {
+public class JellyfishModel extends GeoModel<Jellyfish> {
     @Override
     public ResourceLocation getModelResource(Jellyfish object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/jellyfish.geo.json");

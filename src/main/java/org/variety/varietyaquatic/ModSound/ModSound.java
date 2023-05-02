@@ -32,7 +32,8 @@ public class ModSound {
 
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        return SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(VarietyAquatic.MODID, name)));
+        ResourceLocation id = new ResourceLocation(VarietyAquatic.MODID, name);
+        return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 
     public static void register(IEventBus eventBus) {

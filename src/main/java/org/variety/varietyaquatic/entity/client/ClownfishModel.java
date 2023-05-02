@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.AnglerfishEntity;
 import org.variety.varietyaquatic.entity.custom.ClownfishEntity;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class ClownfishModel extends AnimatedGeoModel<ClownfishEntity> {
+public class ClownfishModel extends GeoModel<ClownfishEntity> {
     @Override
     public ResourceLocation getModelResource(ClownfishEntity object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/clownfish.geo.json");

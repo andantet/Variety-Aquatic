@@ -23,18 +23,17 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.variety.varietyaquatic.item.ModItems;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
 
-public class CrabEntity extends Animal implements IAnimatable {
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-    AnimationFactory afactory = new AnimationFactory(this);
+public class CrabEntity extends Animal implements GeoEntity {
+
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private boolean songPlaying;
     private static final Ingredient TEMPT_INGREDIENT = Ingredient.of(Items.COD, Items.SALMON, Items.CHICKEN, Items.RABBIT);
@@ -160,34 +159,34 @@ public class CrabEntity extends Animal implements IAnimatable {
         return null;
     }
 
+
+
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "animations", 0, this::animations));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
+
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return afactory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
-    private PlayState animations(AnimationEvent<CrabEntity> event) {
-        AnimationController contr = event.getController();
-
-        if (this.songSource == null || !this.songSource.closerThan(this.getOnPos(), 15.0) || !this.level.getBlockState(this.songSource).is(Blocks.JUKEBOX)) {
+    private PlayState predicate(AnimationState tAnimationState) {
+        if(tAnimationState.isMoving()) {
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (this.songSource == null || !this.songSource.closerToCenterThan(this.position(), 5.0) || !this.level.getBlockState(this.songSource).is(Blocks.JUKEBOX)) {
             this.songPlaying = false;
             this.songSource = null;
         }
         if (isSongPlaying()) {
-            contr.setAnimation(new AnimationBuilder().addAnimation("dance",true));
-            return PlayState.CONTINUE;
-        }
-        if(event.isMoving()){
-            contr.setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            tAnimationState.getController().setAnimation(RawAnimation.begin().then("dance", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
         return PlayState.STOP;
-
     }
 
     public static boolean checkcrabspawn(EntityType<? extends Animal> pType, ServerLevelAccessor pLevel, MobSpawnType pSpawnType, BlockPos pPos, RandomSource pRandom) {

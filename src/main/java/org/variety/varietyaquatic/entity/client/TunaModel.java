@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import org.variety.varietyaquatic.VarietyAquatic;
 import org.variety.varietyaquatic.entity.custom.CuttlefishEntity;
 import org.variety.varietyaquatic.entity.custom.YellowFinTuna;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class TunaModel extends AnimatedGeoModel<YellowFinTuna> {
+public class TunaModel extends GeoModel<YellowFinTuna> {
     @Override
     public ResourceLocation getModelResource(YellowFinTuna object) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/yellowfintuna.geo.json");
