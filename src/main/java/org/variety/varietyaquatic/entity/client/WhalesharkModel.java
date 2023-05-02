@@ -8,12 +8,12 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class WhalesharkModel extends GeoModel<WhaleSharkEntity> {
     @Override
-    public ResourceLocation getModelResource(WhaleSharkEntity object) {
+    public ResourceLocation getModelResource(WhaleSharkEntity animatable) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/whaleshark.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(WhaleSharkEntity object) {
+    public ResourceLocation getTextureResource(WhaleSharkEntity animatable) {
         return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/whaleshark_texture.png");
     }
 

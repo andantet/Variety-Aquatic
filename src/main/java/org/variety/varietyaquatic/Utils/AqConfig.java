@@ -45,7 +45,7 @@ public class AqConfig {
                 file.createNewFile();
                 aqprop.setProperty("config.version","1");
                 aqprop.setProperty("shark.health","30.0");
-                aqprop.setProperty("shark.speed","2.5");
+                aqprop.setProperty("shark.speed","2.0");
                 aqprop.setProperty("shark.attack_speed","4.0");
                 aqprop.setProperty("shark.follow","32.0");
                 aqprop.setProperty("shark.damage","8.0");

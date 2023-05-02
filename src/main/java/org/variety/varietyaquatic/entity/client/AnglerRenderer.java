@@ -19,7 +19,6 @@ public class AnglerRenderer extends GeoEntityRenderer<AnglerfishEntity> {
     public AnglerRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new AnglerModel());
 
-        addRenderLayer(new AutoGlowingGeoLayer<>(this));
         this.shadowRadius = 0.3f;
     }
 

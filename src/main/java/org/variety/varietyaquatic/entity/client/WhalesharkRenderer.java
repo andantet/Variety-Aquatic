@@ -16,7 +16,6 @@ import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 public class WhalesharkRenderer extends GeoEntityRenderer<WhaleSharkEntity> {
     public WhalesharkRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new WhalesharkModel());
-        addRenderLayer(new AutoGlowingGeoLayer<>(this));
 
         this.shadowRadius = 0.3f;
     }

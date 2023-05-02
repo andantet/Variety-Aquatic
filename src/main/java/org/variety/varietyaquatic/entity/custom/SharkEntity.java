@@ -103,7 +103,6 @@ public class SharkEntity extends WaterAnimal implements GeoEntity {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2000000476837158D, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WaterAnimal.class, 10, true, true, null));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Animal.class, 10, true, true, null));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, true, null));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 0.50, 2));

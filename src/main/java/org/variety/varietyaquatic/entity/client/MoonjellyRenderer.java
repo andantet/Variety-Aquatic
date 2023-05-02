@@ -17,7 +17,6 @@ import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 public class MoonjellyRenderer extends GeoEntityRenderer<MoonJelly> {
     public MoonjellyRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new Moonjellymodel());
-        addRenderLayer(new AutoGlowingGeoLayer<>(this));
         this.shadowRadius = 0.3f;
     }
 

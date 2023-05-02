@@ -125,7 +125,7 @@ public class YellowFinTuna extends AbstractSchoolingFish implements GeoEntity {
         }
 
 
-        return PlayState.STOP;    }
+        return PlayState.CONTINUE;    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
