@@ -58,6 +58,10 @@ public class ModEntitySpawns {
                 ModEntities.TETRA, NewConfig.tetra_spawnweight, 3, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.ANGLERFISH, NewConfig.anglerfish_spawnweight, 1, 5);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.OARFISH, NewConfig.oarfish_spawnweight, 1, 1);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.VAMPIRESQUID, NewConfig.vampiresquid_spawnweight, 1, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
                 ModEntities.SEAHORSE, NewConfig.seahorse_spawnweight, 3, 5);
 
@@ -70,6 +74,10 @@ public class ModEntitySpawns {
                 ModEntities.GIANTGLOWINGSQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GiantsquidEntity::canMobSpawn);
         SpawnRestriction.register(
                 ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
+        SpawnRestriction.register(
+                ModEntities.OARFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, OarfishEntity::canSpawn);
+        SpawnRestriction.register(
+                ModEntities.VAMPIRESQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
         SpawnRestriction.register(
                 ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PiranhaEntity::canSpawn);
         SpawnRestriction.register(

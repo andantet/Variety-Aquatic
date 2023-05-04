@@ -99,6 +99,10 @@ public class ModItems {
     public static final Item OPAH_EGG = registerItem("opah_egg",
             new SpawnEggItem(ModEntities.OPAH,0x687596, 0x9e2a38,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+    public static final Item VAMPIRESQUID_EGG = registerItem("vapiresquid_egg",
+            new SpawnEggItem(ModEntities.VAMPIRESQUID,0x687596, 0x9e2a38,
+                    new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+
 
 
     public static final Item GIANTGLOWINGSQUID_EGG = registerItem("giantglowingsquid_egg",

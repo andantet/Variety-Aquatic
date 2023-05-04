@@ -80,6 +80,7 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 0.8d));
         this.goalSelector.add(1, new SitGoal(this));
+        this.goalSelector.add(0, new FollowOwnerGoal(this, 1.0D, 10.0F, 5.0F, true));
 
         this.goalSelector.add(1, new GoToWaterGoal(this, 0.8, 12));
         this.goalSelector.add(2, new WanderAroundPointOfInterestGoal(this, 0.75f, false));
@@ -174,6 +175,11 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
             contr.setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return PlayState.CONTINUE;
         }
+        if(this.isSitting()){
+            contr.setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            return PlayState.CONTINUE;
+
+        }
 
             return PlayState.STOP;
 
@@ -250,7 +256,12 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
     }
 
     public boolean canBeLeashedBy(PlayerEntity player) {
-        return false;
+        if(isTamed()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

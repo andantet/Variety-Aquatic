@@ -5,13 +5,10 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 
-import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.Heightmap;
 import org.variety.variety_aquatic.Entities.custom.*;
+import org.variety.variety_aquatic.Entities.custom.OarfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModEntities {
@@ -55,7 +52,11 @@ public class ModEntities {
     public static final EntityType<MoonJellyEntity> MOONJELLY = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "moonjelly"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, MoonJellyEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 1.2f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(1f, 0.6f)).trackRangeBlocks(50).build());
+    public static final EntityType<FlashlightfishEntity> FLASHLIGHTFISH = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "flashlightfish"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, FlashlightfishEntity::new)
+                    .dimensions(EntityDimensions.fixed(1f, 0.6f)).trackRangeBlocks(50).build());
 
     public static final EntityType<HermitcrabEntity> HERMITCRAB = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "hermitcrab"),
@@ -97,7 +98,18 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "piranha"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, PiranhaEntity::new)
                     .dimensions(EntityDimensions.fixed(0.9f, 0.7f)).trackRangeBlocks(50).build());
-
+    public static final EntityType<VampireSquidEntity> VAMPIRESQUID = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "vampiresquid"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, VampireSquidEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.2f, 1.2f)).trackRangeBlocks(50).build());
+    public static final EntityType<OarfishEntity> OARFISH = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "oarfish"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, OarfishEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.5f, 1.0f)).trackRangeBlocks(50).build());
+    public static final EntityType<BarreleyeEntity> BARRELEE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "barreleye"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BarreleyeEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.0f, 0.5f)).trackRangeBlocks(50).build());
     public static final EntityType<TetraEntity> TETRA = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tetra"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, TetraEntity::new)
