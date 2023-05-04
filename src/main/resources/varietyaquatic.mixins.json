@@ -2,12 +2,16 @@
   "required": true,
   "minVersion": "0.8",
   "package": "org.variety.variety_aquatic.Mixin",
+  "plugin": "org.variety.variety_aquatic.AquaticMixinHanlder",
+
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "CoralFeatureMixin"
 
   ],
   "client": [
+    "FluidRendererMixin",
+    "SodiumFluidRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

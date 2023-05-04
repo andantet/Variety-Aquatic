@@ -27,7 +27,7 @@ public class ModBlock {
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
             new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
-                    .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+                    .strength(4f).nonOpaque().breakInstantly()), ModItemgroup.VARIETY_AQUATIC);
     public static final Block ANGLER_TORCH= registerBlock("angler_torch_ground",
             new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;

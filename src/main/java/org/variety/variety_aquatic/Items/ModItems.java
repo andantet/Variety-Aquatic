@@ -107,6 +107,10 @@ public class ModItems {
     public static final Item LIONFISH_EGG = registerItem("lionfish_egg",
             new SpawnEggItem(ModEntities.LIONFISH,0xf6ca9f, 0xe07438,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+    public static final Item CRAB_EGG = registerItem("crab_egg",
+            new SpawnEggItem(ModEntities.CRAB,0xf6ca9f, 0xe07438,
+                    new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+
 
     public static final Item LIONFISH_BUCKET = registerItem("lionfish_bucket",
             new EntityBucketItem(ModEntities.LIONFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC)));

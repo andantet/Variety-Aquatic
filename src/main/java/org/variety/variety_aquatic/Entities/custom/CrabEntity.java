@@ -15,12 +15,15 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -49,7 +52,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 
 
-public class CrabEntity extends AnimalEntity implements IAnimatable {
+public class CrabEntity extends TameableEntity implements IAnimatable {
 
     AnimationFactory afactory = new AnimationFactory(this);
 
@@ -59,7 +62,7 @@ public class CrabEntity extends AnimalEntity implements IAnimatable {
     @Nullable
     private BlockPos songSource;
 
-    public CrabEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+    public CrabEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.setPathfindingPenalty(PathNodeType.WATER, 0);
     }
@@ -75,8 +78,12 @@ public class CrabEntity extends AnimalEntity implements IAnimatable {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25d));
-        this.goalSelector.add(1, new GoToWaterGoal(this, 1, 12));
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 0.8d));
+        this.goalSelector.add(1, new SitGoal(this));
+
+        this.goalSelector.add(1, new GoToWaterGoal(this, 0.8, 12));
+        this.goalSelector.add(2, new WanderAroundPointOfInterestGoal(this, 0.75f, false));
+
         this.goalSelector.add(2, new AnimalMateGoal(this, 1));
         this.goalSelector.add(0, new TemptGoal(this, 1.0D, LOVINGFOOD, false));        this.goalSelector.add(4, new FollowParentGoal(this, 1.1d));
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 1));
@@ -107,19 +114,6 @@ public class CrabEntity extends AnimalEntity implements IAnimatable {
     }
 
 
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(0.01f, movementInput.multiply(50));
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9d));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0, -0.005d, 0));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
-    }
 
 
     @Override
@@ -157,9 +151,9 @@ public class CrabEntity extends AnimalEntity implements IAnimatable {
         return SoundEvents.ENTITY_COD_DEATH;
     }
     public static DefaultAttributeContainer.Builder setAttributes() {
-        return WaterCreatureEntity.createMobAttributes()
+        return TameableEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 4)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5);
     }
     public ItemStack getBucketItem() {
         return null;
@@ -185,6 +179,85 @@ public class CrabEntity extends AnimalEntity implements IAnimatable {
 
     }
 
+
+    private static final TrackedData<Boolean> SITTING =
+            DataTracker.registerData(CrabEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getStackInHand(hand);
+        Item item = itemstack.getItem();
+
+        Item itemForTaming = Items.APPLE;
+
+        if (item == itemForTaming && !isTamed()) {
+            if (this.world.isClient()) {
+                return ActionResult.CONSUME;
+            } else {
+                if (!player.getAbilities().creativeMode) {
+                    itemstack.decrement(1);
+                }
+
+                if (!this.world.isClient()) {
+                    super.setOwner(player);
+                    this.navigation.recalculatePath();
+                    this.setTarget(null);
+                    this.world.sendEntityStatus(this, (byte)7);
+                    setSit(true);
+                }
+
+                return ActionResult.SUCCESS;
+            }
+        }
+
+        if(isTamed() && !this.world.isClient() && hand == Hand.MAIN_HAND) {
+            setSit(!isSitting());
+            return ActionResult.SUCCESS;
+        }
+
+        if (itemstack.getItem() == itemForTaming) {
+            return ActionResult.PASS;
+        }
+
+        return super.interactMob(player, hand);
+    }
+
+    public void setSit(boolean sitting) {
+        this.dataTracker.set(SITTING, sitting);
+        super.setSitting(sitting);
+    }
+
+    public boolean isSitting() {
+        return this.dataTracker.get(SITTING);
+    }
+
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("isSitting", this.dataTracker.get(SITTING));
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.dataTracker.set(SITTING, nbt.getBoolean("isSitting"));
+    }
+
+    @Override
+    public AbstractTeam getScoreboardTeam() {
+        return super.getScoreboardTeam();
+    }
+
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
+    }
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(SITTING, false);
+    }
     static {
         LOVINGFOOD = Ingredient.ofItems(Items.COD, Items.SALMON, ModItems.RAW_BETTA,ModItems.RAW_LIONFISH,ModItems.RAW_PIRANHA,ModItems.RAW_TETRA,ModItems.RAW_TUNA);
     }
