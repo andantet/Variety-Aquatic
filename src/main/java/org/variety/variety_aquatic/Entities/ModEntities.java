@@ -106,6 +106,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "oarfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, OarfishEntity::new)
                     .dimensions(EntityDimensions.fixed(0.5f, 1.0f)).trackRangeBlocks(50).build());
+    public static final EntityType<TornadoEntity> TORNADO = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tornado"),
+            FabricEntityTypeBuilder.create(SpawnGroup.MISC, TornadoEntity::new)
+                    .dimensions(EntityDimensions.fixed(3f, 5f)).trackRangeBlocks(50).build());
     public static final EntityType<BarreleyeEntity> BARRELEE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "barreleye"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BarreleyeEntity::new)
