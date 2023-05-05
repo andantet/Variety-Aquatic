@@ -31,6 +31,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Entities.custom.AI.SquidAttackGoal;
 import org.variety.variety_aquatic.Sound.ModSound;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -67,6 +68,31 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
+    @Override
+    public boolean startRiding(Entity passenger, boolean force) {
+        boolean success = super.startRiding(passenger, force);
+        if (success && passenger instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) passenger;
+            if (player.isSneaking()) {
+                return true;
+            }
+        }
+        return success;
+    }
+
+    @Override
+    public void updatePassengerPosition(Entity passenger) {
+        if (this.hasPassenger(passenger)) {
+            passenger.updatePosition(this.getX(), this.getY(), this.getZ());
+        }
+    }
+
+    @Override
+    public boolean canBeRiddenInWater() {
+        return true;
+    }
+
+
     public int getMoistness() {
         return this.dataTracker.get(MOISTNESS);
     }
@@ -91,14 +117,13 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
+        this.goalSelector.add(1, new SquidAttackGoal(this, 1.2D, false));
         this.goalSelector.add(9, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
         this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -132,6 +157,8 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
     public int getBodyYawSpeed() {
         return 1;
     }
+
+
 
     public void tick() {
         super.tick();
@@ -217,15 +244,16 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         AnimationController contr = event.getController();
-
         if (event.isMoving()) {
-            contr.transitionLengthTicks = 10;
+            contr.transitionLengthTicks = 5;
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
         }
-        contr.transitionLengthTicks = 5;
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-        return PlayState.CONTINUE;
+        else {
+            contr.transitionLengthTicks = 5;
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+            return PlayState.CONTINUE;
+        }
     }
 
     private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
