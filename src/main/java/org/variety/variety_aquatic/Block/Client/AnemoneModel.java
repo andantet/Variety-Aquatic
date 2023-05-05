@@ -1,6 +1,9 @@
 package org.variety.variety_aquatic.Block.Client;
 
 import net.minecraft.util.Identifier;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
@@ -13,11 +16,21 @@ public class AnemoneModel extends AnimatedGeoModel<AnemoneTileEntity> {
 
     @Override
     public Identifier getModelResource(AnemoneTileEntity animatable) {
-        return new Identifier(Variety_Aquatic.MOD_ID, "geo/anemone.geo.json");
+            return new Identifier(Variety_Aquatic.MOD_ID, "geo/anemone.geo.json");
+
     }
 
     @Override
     public Identifier getTextureResource(AnemoneTileEntity entity) {
-        return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
+        Difficulty difficulty = entity.getWorld().getDifficulty();
+        if (difficulty == Difficulty.EASY) {
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
+        } else if (difficulty == Difficulty.NORMAL) {
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
+        } else if (difficulty == Difficulty.HARD) {
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture_hard.png");
+        } else {
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
+        }
     }
 }

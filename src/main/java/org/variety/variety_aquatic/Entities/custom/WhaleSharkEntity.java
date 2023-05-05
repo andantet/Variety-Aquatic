@@ -33,6 +33,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Entities.IDaytimeProvider;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -45,7 +46,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.function.Predicate;
 
-public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable {
+public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable, IDaytimeProvider {
     private AnimationFactory factory = new AnimationFactory(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
@@ -63,7 +64,9 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
         this.lookControl = new YawAdjustingLookControl(this, 10);
 
     }
-
+    public long getTimeOfDay() {
+        return this.world.getTimeOfDay();
+    }
 
 
     @Nullable
