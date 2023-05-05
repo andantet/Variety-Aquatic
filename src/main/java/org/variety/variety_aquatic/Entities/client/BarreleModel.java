@@ -2,7 +2,6 @@ package org.variety.variety_aquatic.Entities.client;
 
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Entities.custom.BarreleyeEntity;
-import org.variety.variety_aquatic.Entities.custom.VampireSquidEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

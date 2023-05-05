@@ -132,7 +132,7 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
 
     protected void initGoals() {
         this.goalSelector.add(2,new OarfishEntity.AttackGoal());
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
+        this.goalSelector.add(3, new EscapeDangerGoal(this, 2.0f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));

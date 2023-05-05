@@ -1,35 +1,42 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.TargetPredicate;
+import net.minecraft.entity.ai.control.AquaticMoveControl;
+import net.minecraft.entity.ai.control.YawAdjustingLookControl;
+import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
+import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.GlowSquidEntity;
-import net.minecraft.entity.passive.SquidEntity;
+import net.minecraft.entity.passive.ChickenEntity;
+import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -39,282 +46,250 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class VampireSquidEntity extends WaterCreatureEntity implements IAnimatable {
-    public float tiltAngle;
-    public float prevTiltAngle;
-    public float rollAngle;
-    public float prevRollAngle;
-    public float thrustTimer;
-    public float prevThrustTimer;
+import java.util.UUID;
+import java.util.function.Predicate;
 
-    private float swimVelocityScale;
-    private float thrustTimerSpeed;
-    private float turningSpeed;
-    private float swimX;
-    private float swimY;
-    private float swimZ;
+
+public class VampireSquidEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
     private AnimationFactory factory = new AnimationFactory(this);
+    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
+    private static final TrackedData<Integer> MOISTNESS;
+    private static final UniformIntProvider ANGER_TIME_RANGE;
 
-    public VampireSquidEntity(EntityType<? extends WaterCreatureEntity> entityType, World world) {
+    private int angerTime;
+    private UUID targetUuid;
+
+
+
+
+    public VampireSquidEntity(EntityType<? extends VampireSquidEntity> entityType, World world) {
         super(entityType, world);
+        this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.lookControl = new YawAdjustingLookControl(this, 10);
+
+    }
+    @Nullable
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.setAir(this.getMaxAir());
+        this.setPitch(0.0F);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
+    public int getMoistness() {
+        return this.dataTracker.get(MOISTNESS);
+    }
+
+    public void setMoistness(int moistness) {
+        this.dataTracker.set(MOISTNESS, moistness);
+    }
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(MOISTNESS, 2400);
+    }
+
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Moistness", this.getMoistness());
+        this.writeAngerToNbt(nbt);
+    }
+
+    public void chooseRandomAngerTime() {
+        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
+    }
+
+    public int getMaxGroupSize() {
+        return 5;
+    }
+
+    public void setAngerTime(int ticks) {
+        this.angerTime = ticks;
+    }
+
+    public int getAngerTime() {
+        return this.angerTime;
+    }
+
+    public void setAngryAt(@Nullable UUID uuid) {
+        this.targetUuid = uuid;
+    }
+
+    public UUID getAngryAt() {
+        return this.targetUuid;
+    }
+
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.PIRANHA_BUCKET);
+    }
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        this.setMoistness(nbt.getInt("Moistness"));
+        this.readAngerFromNbt(this.world, nbt);
+
+    }
 
     protected void initGoals() {
-        this.goalSelector.add(0, new VampireSquidEntity.SwimGoal(this));
-        this.goalSelector.add(1, new VampireSquidEntity.EscapeAttackerGoal());
+        this.goalSelector.add(2,new VampireSquidEntity.AttackGoal());
+        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
+
+        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
+        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
+        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
+        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
     }
 
-
-
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.5F;
-    }
-
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
-    }
-
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_SQUID_HURT;
-    }
-
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SQUID_DEATH;
-    }
-
-    protected SoundEvent getSquirtSound() {
-        return SoundEvents.ENTITY_SQUID_SQUIRT;
-    }
-
-    public boolean canBeLeashedBy(PlayerEntity player) {
-        return !this.isLeashed();
-    }
-
-    protected float getSoundVolume() {
-        return 0.4F;
-    }
-
-    protected Entity.MoveEffect getMoveEffect() {
-        return MoveEffect.EVENTS;
-    }
-
-    public void tickMovement() {
-        super.tickMovement();
-        this.prevTiltAngle = this.tiltAngle;
-        this.prevRollAngle = this.rollAngle;
-        this.prevThrustTimer = this.thrustTimer;
-        this.thrustTimer += this.thrustTimerSpeed;
-        if ((double)this.thrustTimer > 6.283185307179586) {
-            if (this.world.isClient) {
-                this.thrustTimer = 6.2831855F;
-            } else {
-                this.thrustTimer -= 6.2831855F;
-                if (this.random.nextInt(10) == 0) {
-                    this.thrustTimerSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
-                }
-
-                this.world.sendEntityStatus(this, (byte)19);
-            }
-        }
-
-        if (this.isInsideWaterOrBubbleColumn()) {
-            if (this.thrustTimer < 3.1415927F) {
-                float f = this.thrustTimer / 3.1415927F;
-                if ((double)f > 0.75) {
-                    this.swimVelocityScale = 1.0F;
-                    this.turningSpeed = 1.0F;
-                } else {
-                    this.turningSpeed *= 0.8F;
-                }
-            } else {
-                this.swimVelocityScale *= 0.9F;
-                this.turningSpeed *= 0.99F;
-            }
-
-            if (!this.world.isClient) {
-                this.setVelocity((double)(this.swimX * this.swimVelocityScale), (double)(this.swimY * this.swimVelocityScale), (double)(this.swimZ * this.swimVelocityScale));
-            }
-
-            Vec3d vec3d = this.getVelocity();
-            double d = vec3d.horizontalLength();
-            this.bodyYaw += (-((float)MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F - this.bodyYaw) * 0.1F;
-            this.setYaw(this.bodyYaw);
-            this.rollAngle += 3.1415927F * this.turningSpeed * 1.5F;
-            this.tiltAngle += (-((float)MathHelper.atan2(d, vec3d.y)) * 57.295776F - this.tiltAngle) * 0.1F;
-        } else {
-            if (!this.world.isClient) {
-                double e = this.getVelocity().y;
-                if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
-                    e = 0.05 * (double)(this.getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
-                } else if (!this.hasNoGravity()) {
-                    e -= 0.08;
-                }
-
-                this.setVelocity(0.0, e * 0.9800000190734863, 0.0);
-            }
-
-            this.tiltAngle += (-90.0F - this.tiltAngle) * 0.02F;
-        }
-
-    }
-
-    public boolean damage(DamageSource source, float amount) {
-        if (super.damage(source, amount) && this.getAttacker() != null) {
-            if (!this.world.isClient) {
-                this.squirt();
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private Vec3d applyBodyRotations(Vec3d shootVector) {
-        Vec3d vec3d = shootVector.rotateX(this.prevTiltAngle * 0.017453292F);
-        vec3d = vec3d.rotateY(-this.prevBodyYaw * 0.017453292F);
-        return vec3d;
-    }
-
-    private void squirt() {
-        this.playSound(this.getSquirtSound(), this.getSoundVolume(), this.getSoundPitch());
-        Vec3d vec3d = this.applyBodyRotations(new Vec3d(0.0, -1.0, 0.0)).add(this.getX(), this.getY(), this.getZ());
-
-        for(int i = 0; i < 30; ++i) {
-            Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double)this.random.nextFloat() * 0.6 - 0.3, -1.0, (double)this.random.nextFloat() * 0.6 - 0.3));
-            Vec3d vec3d3 = vec3d2.multiply(0.3 + (double)(this.random.nextFloat() * 2.0F));
-            ((ServerWorld)this.world).spawnParticles(this.getInkParticle(), vec3d.x, vec3d.y + 0.5, vec3d.z, 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
-        }
-
-    }
-
-    protected ParticleEffect getInkParticle() {
-        return ParticleTypes.SQUID_INK;
-    }
-
-    public void travel(Vec3d movementInput) {
-        this.move(MovementType.SELF, this.getVelocity());
-    }
-
-    public void handleStatus(byte status) {
-        if (status == 19) {
-            this.thrustTimer = 0.0F;
-        } else {
-            super.handleStatus(status);
-        }
-
-    }
-
-    public void setSwimmingVector(float x, float y, float z) {
-        this.swimX = x;
-        this.swimY = y;
-        this.swimZ = z;
-    }
-
-    public boolean hasSwimmingVector() {
-        return this.swimX != 0.0F || this.swimY != 0.0F || this.swimZ != 0.0F;
-    }
-
-    class SwimGoal extends Goal {
-        private final VampireSquidEntity vampireSquid;
-
-        public SwimGoal(VampireSquidEntity vampireSquid) {
-            this.vampireSquid = vampireSquid;
-        }
-
-        public boolean canStart() {
-            return true;
-        }
-
-        public void tick() {
-            int i = this.vampireSquid.getDespawnCounter();
-            if (i > 100) {
-                this.vampireSquid.setSwimmingVector(0.0F, 0.0F, 0.0F);
-            } else if (this.vampireSquid.getRandom().nextInt(toGoalTicks(50)) == 0 || !this.vampireSquid.touchingWater || !this.vampireSquid.hasSwimmingVector()) {
-                float f = this.vampireSquid.getRandom().nextFloat() * 6.2831855F;
-                float g = MathHelper.cos(f) * 0.2F;
-                float h = -0.1F + this.vampireSquid.getRandom().nextFloat() * 0.2F;
-                float j = MathHelper.sin(f) * 0.2F;
-                this.vampireSquid.setSwimmingVector(g, h, j);
-            }
-
-        }
-    }
-
-    class EscapeAttackerGoal extends Goal {
-        private static final float field_30375 = 3.0F;
-        private static final float field_30376 = 5.0F;
-        private static final float field_30377 = 10.0F;
-        private int timer;
-
-        EscapeAttackerGoal() {
-        }
-
-        public boolean canStart() {
-            LivingEntity livingEntity = VampireSquidEntity.this.getAttacker();
-            if (VampireSquidEntity.this.isTouchingWater() && livingEntity != null) {
-                return VampireSquidEntity.this.squaredDistanceTo(livingEntity) < 100.0;
-            } else {
-                return false;
-            }
-        }
-
-        public void start() {
-            this.timer = 0;
-        }
-
-        public boolean shouldRunEveryTick() {
-            return true;
-        }
-
-        public void tick() {
-            ++this.timer;
-            LivingEntity livingEntity = VampireSquidEntity.this.getAttacker();
-            if (livingEntity != null) {
-                Vec3d vec3d = new Vec3d(VampireSquidEntity.this.getX() - livingEntity.getX(), VampireSquidEntity.this.getY() - livingEntity.getY(), VampireSquidEntity.this.getZ() - livingEntity.getZ());
-                BlockState blockState = VampireSquidEntity.this.world.getBlockState(new BlockPos(VampireSquidEntity.this.getX() + vec3d.x, VampireSquidEntity.this.getY() + vec3d.y, VampireSquidEntity.this.getZ() + vec3d.z));
-                FluidState fluidState = VampireSquidEntity.this.world.getFluidState(new BlockPos(VampireSquidEntity.this.getX() + vec3d.x, VampireSquidEntity.this.getY() + vec3d.y, VampireSquidEntity.this.getZ() + vec3d.z));
-                if (fluidState.isIn(FluidTags.WATER) || blockState.isAir()) {
-                    double d = vec3d.length();
-                    if (d > 0.0) {
-                        vec3d.normalize();
-                        double e = 3.0;
-                        if (d > 5.0) {
-                            e -= (d - 5.0) / 5.0;
-                        }
-
-                        if (e > 0.0) {
-                            vec3d = vec3d.multiply(e);
-                        }
-                    }
-
-                    if (blockState.isAir()) {
-                        vec3d = vec3d.subtract(0.0, vec3d.y, 0.0);
-                    }
-
-                    VampireSquidEntity.this.setSwimmingVector((float)vec3d.x / 20.0F, (float)vec3d.y / 20.0F, (float)vec3d.z / 20.0F);
-                }
-
-                if (this.timer % 10 == 5) {
-                    VampireSquidEntity.this.world.addParticle(ParticleTypes.BUBBLE, VampireSquidEntity.this.getX(), VampireSquidEntity.this.getY(), VampireSquidEntity.this.getZ(), 0.0, 0.0, 0.0);
-                }
-
-            }
-        }
-    }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.vampiresquid_health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.vampiresquid_speed);
     }
+    protected EntityNavigation createNavigation(World world) {
+        return new SwimNavigation(this, world);
+    }
+
+    public int getMaxAir() {
+        return 4800;
+    }
+
+    protected int getNextAirOnLand(int air) {
+        return this.getMaxAir();
+    }
+
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return 0.5F;
+    }
+
+    public int getLookPitchSpeed() {
+        return 1;
+    }
+
+    public int getBodyYawSpeed() {
+        return 1;
+    }
+
+    public void tick() {
+        super.tick();
+        if (this.isAiDisabled()) {
+            this.setAir(this.getMaxAir());
+        } else {
+            if (this.isWet()) {
+                this.setMoistness(2400);
+                this.setAir(4800);
+            } else {
+                this.setMoistness(this.getMoistness() - 1);
+                if (this.getMoistness() <= 0) {
+                    this.damage(DamageSource.DRYOUT, 1.0F);
+                }
+
+                if (this.onGround) {
+                    this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F,
+                            0.5D,
+                            (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F));
+                    this.setYaw(this.random.nextFloat() * 360.0F);
+                    this.onGround = false;
+                    this.velocityDirty = true;
+                }
+            }
+
+            if (this.world.isClient && this.isTouchingWater() && this.isAttacking()) {
+                Vec3d vec3d = this.getRotationVec(0.0F);
+                float f = MathHelper.cos(this.getYaw() * 0.017453292F) * 0.6F;
+                float g = MathHelper.sin(this.getYaw() * 0.017453292F) * 0.6F;
+                float h = 0.0F - this.random.nextFloat() * 0.7F;
+
+                for(int i = 0; i < 2; ++i) {
+                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
+                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
+    }
+
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);
+    }
+
+
+    private class AttackGoal extends MeleeAttackGoal {
+        public AttackGoal() {
+            super(VampireSquidEntity.this, 1.25D, true);
+        }
+
+        protected void attack(LivingEntity target, double squaredDistance) {
+            double d = this.getSquaredMaxAttackDistance(target);
+            if (squaredDistance <= d && this.isCooledDown()) {
+                this.resetCooldown();
+                this.mob.tryAttack(target);
+            }
+        }
+
+        public void stop() {
+            super.stop();
+        }
+
+        protected double getSquaredMaxAttackDistance(LivingEntity entity) {
+            return 4.0F + entity.getWidth();
+        }
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_COD_HURT;
+    }
+
+    @Nullable
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_COD_DEATH;
+    }
+
+    @Nullable
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_SALMON_AMBIENT;
+    }
+
+    protected SoundEvent getSplashSound() {
+        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
+    }
+
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.ENTITY_DOLPHIN_SWIM;
+    }
+
+    public void travel(Vec3d movementInput) {
+        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
+            this.updateVelocity(this.getMovementSpeed(), movementInput);
+            this.move(MovementType.SELF, this.getVelocity());
+            this.setVelocity(this.getVelocity().multiply(0.9D));
+            if (this.getTarget() == null) {
+                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
+            }
+        } else {
+            super.travel(movementInput);
+        }
+
+    }
+
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
+    }
+
+    static {
+        MOISTNESS = DataTracker.registerData(VampireSquidEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
+        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
+    }
+
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if(event.isMoving()){
+        if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("Swim", true));
             return PlayState.CONTINUE;
         }
+
+
         return PlayState.STOP;
     }
 
@@ -326,15 +301,20 @@ public class VampireSquidEntity extends WaterCreatureEntity implements IAnimatab
     }
 
 
-    public static boolean canSpawn(EntityType<? extends LivingEntity> type, ServerWorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return pos.getY() <= world.getSeaLevel() - 33 && world.getBaseLightLevel(pos, 0) == 0 && world.getBlockState(pos).isOf(Blocks.WATER);
-    }
-
-
-
-
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    static class InWaterPredicate implements Predicate<LivingEntity> {
+        private final VampireSquidEntity owner;
+
+        public InWaterPredicate(VampireSquidEntity owner) {
+            this.owner = owner;
+        }
+
+        public boolean test(@Nullable LivingEntity entity) {
+            return entity != null && entity.isTouchingWater();
+        }
     }
 }
