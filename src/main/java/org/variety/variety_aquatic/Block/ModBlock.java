@@ -13,10 +13,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.variety.variety_aquatic.Block.Custom.AnemoneBlock;
-import org.variety.variety_aquatic.Block.Custom.AnglerTorchBlock;
-import org.variety.variety_aquatic.Block.Custom.SeaUrchinBlock;
-import org.variety.variety_aquatic.Block.Custom.WallAnglerTorchBlock;
+import org.variety.variety_aquatic.Block.Custom.*;
 import org.variety.variety_aquatic.Items.ModItemgroup;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
@@ -25,6 +22,10 @@ public class ModBlock {
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
             new AnemoneBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+    public static final Block LEVIATHANTROPHYBLOCK = registerBlock("leviathan",
+            new LeviathanTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+                    .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
             new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque().breakInstantly()), ModItemgroup.VARIETY_AQUATIC);

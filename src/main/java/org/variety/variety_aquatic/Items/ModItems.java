@@ -26,6 +26,9 @@ public class ModItems {
     public static final Item SUNFISH_EGG = registerItem("sunfish_egg",
             new SpawnEggItem(ModEntities.SUNFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
+    public static final Item SQUIDLING_EGG = registerItem("squidling_egg",
+            new SpawnEggItem(ModEntities.SQUIDLING,0x22b341, 0x19732e,
+                    new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
 
     public static final Item SHARK_EGG = registerItem("shark_egg",
             new SpawnEggItem(ModEntities.SHARK,0x22b341, 0x19732e,

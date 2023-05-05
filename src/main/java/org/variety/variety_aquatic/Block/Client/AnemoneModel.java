@@ -22,15 +22,8 @@ public class AnemoneModel extends AnimatedGeoModel<AnemoneTileEntity> {
 
     @Override
     public Identifier getTextureResource(AnemoneTileEntity entity) {
-        Difficulty difficulty = entity.getWorld().getDifficulty();
-        if (difficulty == Difficulty.EASY) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
-        } else if (difficulty == Difficulty.NORMAL) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
-        } else if (difficulty == Difficulty.HARD) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture_hard.png");
-        } else {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
-        }
+
+        return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
+
     }
 }

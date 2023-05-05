@@ -7,10 +7,13 @@ import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
+import org.variety.variety_aquatic.Block.Client.LeviathanRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.*;
+import software.bernie.example.client.renderer.tile.FertilizerTileRenderer;
+import software.bernie.example.registry.TileRegistry;
 
 public class Variety_AquaticClient implements ClientModInitializer {
     @Override
@@ -19,6 +22,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.WHALESHARK, WhaleSharkRenderer::new);
         EntityRendererRegistry.register(ModEntities.TORNADO,TornadoRenderer::new);
         EntityRendererRegistry.register(ModEntities.SUNFISH, SunfishRenderer::new);
+        EntityRendererRegistry.register(ModEntities.SQUIDLING, SquidlingRenderer::new);
+
         EntityRendererRegistry.register(ModEntities.HERMITCRAB, HermitcrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.JELLYFISH, JellyfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.MOONJELLY, MoonJellyRenderer::new);
@@ -47,6 +52,9 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
+        BlockEntityRendererRegistry.register(ModTileEntity.LEVIATHANTROPHY,
+                (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new LeviathanRenderer());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.LEVIATHANTROPHYBLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());

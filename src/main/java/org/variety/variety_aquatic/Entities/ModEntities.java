@@ -28,8 +28,11 @@ public class ModEntities {
     public static final EntityType<GiantsquidEntity> GIANTGLOWINGSQUID = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "giantglowingsquid"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, GiantsquidEntity::new)
-                    .dimensions(EntityDimensions.fixed(3.5f, -6f)).trackRangeBlocks(50).build());
-
+                    .dimensions(EntityDimensions.fixed(3.5f, 3f)).trackRangeBlocks(50).build());
+    public static final EntityType<squidlingEntity> SQUIDLING = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "squidling"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, squidlingEntity::new)
+                    .dimensions(EntityDimensions.fixed(1.2f, 1.2f)).trackRangeBlocks(50).build());
     public static final EntityType<SunfishEntity> SUNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "sunfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SunfishEntity::new)
