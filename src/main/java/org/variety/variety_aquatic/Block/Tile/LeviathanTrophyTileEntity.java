@@ -7,8 +7,6 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.ModTileEntity;
-import software.bernie.example.block.tile.HabitatTileEntity;
-import software.bernie.example.registry.TileRegistry;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -17,8 +15,9 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class LeviathanTileEntity extends BlockEntity implements IAnimatable {
-    private final AnimationFactory factory = new AnimationFactory(this);
+public class LeviathanTrophyTileEntity extends BlockEntity implements IAnimatable {
+    private AnimationFactory factory = new AnimationFactory(this);
+
     @Override
     public NbtCompound toInitialChunkDataNbt() {
         return createNbt();
@@ -29,18 +28,18 @@ public class LeviathanTileEntity extends BlockEntity implements IAnimatable {
     public BlockEntityUpdateS2CPacket toUpdatePacket() {
         return BlockEntityUpdateS2CPacket.create(this);
     }
-    public LeviathanTileEntity(BlockPos pos, BlockState state) {
-        super(ModTileEntity.ANEMONE, pos, state);
+    public LeviathanTrophyTileEntity(BlockPos pos, BlockState state) {
+        super(ModTileEntity.LEVIATHAN, pos, state);
     }
 
-
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        event.getController().setAnimation(new AnimationBuilder().addAnimation("sway", true));
         return PlayState.CONTINUE;
     }
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<LeviathanTileEntity>(this, "controller", 0, this::predicate));
+        data.addAnimationController(new AnimationController<LeviathanTrophyTileEntity>(this, "controller", 0, this::predicate));
     }
 
     @Override

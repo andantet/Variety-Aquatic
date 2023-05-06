@@ -2,24 +2,24 @@ package org.variety.variety_aquatic.Block.Client;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
-import org.variety.variety_aquatic.Block.Tile.LeviathanTileEntity;
+import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class LeviathanTrophyModel extends AnimatedGeoModel<LeviathanTileEntity> {
+public class LeviathanTrophyModel extends AnimatedGeoModel<LeviathanTrophyTileEntity> {
     @Override
-    public Identifier getAnimationResource(LeviathanTileEntity entity) {
+    public Identifier getAnimationResource(LeviathanTrophyTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/leviathantrophy.animation.json");
     }
 
     @Override
-    public Identifier getModelResource(LeviathanTileEntity animatable) {
+    public Identifier getModelResource(LeviathanTrophyTileEntity animatable) {
             return new Identifier(Variety_Aquatic.MOD_ID, "geo/leviathantrophy.geo.json");
 
     }
 
     @Override
-    public Identifier getTextureResource(LeviathanTileEntity entity) {
+    public Identifier getTextureResource(LeviathanTrophyTileEntity entity) {
         Difficulty difficulty = entity.getWorld().getDifficulty();
         if (difficulty == Difficulty.EASY) {
             return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/leviathan_trophy_copper.png");

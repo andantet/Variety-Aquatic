@@ -6,16 +6,16 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
-import org.variety.variety_aquatic.Block.Tile.LeviathanTileEntity;
+import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 
-public class LeviathanRenderer extends GeoBlockRenderer<LeviathanTileEntity> {
-    public LeviathanRenderer() {
+public class LeviathanTrophyRenderer extends GeoBlockRenderer<LeviathanTrophyTileEntity> {
+    public LeviathanTrophyRenderer() {
         super(new LeviathanTrophyModel());
     }
 
     @Override
-    public RenderLayer getRenderType(LeviathanTileEntity animatable, float partialTicks, MatrixStack stack,
+    public RenderLayer getRenderType(LeviathanTrophyTileEntity animatable, float partialTicks, MatrixStack stack,
                                      VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                      Identifier textureLocation) {
         return RenderLayer.getEntityTranslucent(getTextureResource(animatable));

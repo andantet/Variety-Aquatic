@@ -22,9 +22,14 @@ public class ModBlock {
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
             new AnemoneBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
-    public static final Block LEVIATHANTROPHYBLOCK = registerBlock("leviathan",
+    public static final Block LEVIATHAN_TROPHY_BLOCK = registerBlock("leviathan",
             new LeviathanTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+    public static final Block GLOW_BLOCK = registerBlock("glowblock",
+            new GlowingBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+                    .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+
+
 
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
             new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)

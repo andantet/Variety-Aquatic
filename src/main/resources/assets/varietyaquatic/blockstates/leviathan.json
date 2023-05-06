@@ -2,7 +2,7 @@
   "variants": {
     "facing=north": {
       "y": 0,
-      "model": "varietyaquatic:block/leviathan_trophy_copper"
+      "model": "varietyaquatic:block/model"
     },
     "facing=south": {
       "y": 180,
