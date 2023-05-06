@@ -1,16 +1,8 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.mojang.serialization.Dynamic;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.ai.WardenAngerManager;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.SonicBoomTask;
-import net.minecraft.entity.ai.brain.task.UpdateAttackTargetTask;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
-import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -20,17 +12,14 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.ProjectileDamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.*;
-import net.minecraft.entity.passive.FishEntity;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -40,10 +29,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.AI.TunaJumpGoal;
+import org.variety.variety_aquatic.Entities.custom.AI.SonicBoomAttackGoal;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -54,16 +41,13 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.Collections;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 
-public class LeviathanEntity extends HostileEntity implements IAnimatable {
+public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static final TrackedData<Integer> ANGER;
 
     private final ServerBossBar bossBar;
     private static double health = NewConfig.leviathan_health;
@@ -118,16 +102,23 @@ public class LeviathanEntity extends HostileEntity implements IAnimatable {
     protected void initGoals() {
         this.goalSelector.add(0, new BreatheAirGoal(this));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
+        this.goalSelector.add(0, new SonicBoomAttackGoal(this, 2, 20.0F, 20, 5.0F));
+        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new WanderAroundPointOfInterestGoal(this, 1.0, false));
-
         this.goalSelector.add(4, new LookAroundGoal(this));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
+
     }
+
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1)
+
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
     }
 
@@ -207,7 +198,6 @@ public class LeviathanEntity extends HostileEntity implements IAnimatable {
     protected SoundEvent getHurtSound(DamageSource source) {
         return ModSound.DEEP_GROWL;
     }
-    private WardenAngerManager angerManager = new WardenAngerManager(this::isValidTarget, Collections.emptyList());
 
     @Nullable
     protected SoundEvent getDeathSound() {
@@ -240,92 +230,20 @@ public class LeviathanEntity extends HostileEntity implements IAnimatable {
         }
 
     }
-    @Contract("null->false")
-    public boolean isValidTarget(@Nullable Entity entity) {
-        boolean var10000;
-        if (entity instanceof LivingEntity livingEntity) {
-            if (this.world == entity.world && EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(entity) && !this.isTeammate(entity) && livingEntity.getType() != EntityType.ARMOR_STAND && livingEntity.getType() != ModEntities.LEVIATHAN && !livingEntity.isInvulnerable() && !livingEntity.isDead() && this.world.getWorldBorder().contains(livingEntity.getBoundingBox())) {
-                var10000 = true;
-                return var10000;
-            }
-        }
 
-        var10000 = false;
-        return var10000;
-    }
-    public void increaseAngerAt(@Nullable Entity entity) {
-        this.increaseAngerAt(entity, 35, true);
-    }
 
-    @VisibleForTesting
-    public void increaseAngerAt(@Nullable Entity entity, int amount, boolean listening) {
-        if (!this.isAiDisabled() && this.isValidTarget(entity)) {
-            WardenBrain.resetDigCooldown(this);
-            boolean bl = !(this.getBrain().getOptionalMemory(MemoryModuleType.ATTACK_TARGET).orElse((LivingEntity) null) instanceof PlayerEntity);
-            int i = this.angerManager.increaseAngerAt(entity, amount);
-            if (entity instanceof PlayerEntity && bl && Angriness.getForAnger(i).isAngry()) {
-                this.getBrain().forget(MemoryModuleType.ATTACK_TARGET);
-            }
 
-            if (listening) {
-                this.playListeningSound();
-            }
-        }
 
-    }
     public boolean canImmediatelyDespawn(double distanceSquared) {
         return false;
     }
-    public WardenAngerManager getAngerManager() {
-        return this.angerManager;
-    }
-    public boolean damage(DamageSource source, float amount) {
-        boolean bl = super.damage(source, amount);
-        if (!this.world.isClient && !this.isAiDisabled()) {
-            Entity entity = source.getAttacker();
-            this.increaseAngerAt(entity, Angriness.ANGRY.getThreshold() + 20, false);
-            if (this.brain.getOptionalMemory(MemoryModuleType.ATTACK_TARGET).isEmpty() && entity instanceof LivingEntity) {
-                LivingEntity livingEntity = (LivingEntity)entity;
-                if (!(source instanceof ProjectileDamageSource) || this.isInRange(livingEntity, 5.0)) {
-                    this.updateAttackTarget(livingEntity);
-                }
-            }
-        }
 
-        return bl;
-    }
-    public Angriness getAngriness() {
-        return Angriness.getForAnger(this.getAngerAtTarget());
-    }
 
-    private int getAngerAtTarget() {
-        return this.angerManager.getAngerFor(this.getTarget());
-    }
 
-    public void removeSuspect(Entity entity) {
-        this.angerManager.removeSuspect(entity);
-    }
 
-    private void playListeningSound() {
-        if (!this.isInPose(EntityPose.ROARING)) {
-            this.playSound(this.getAngriness().getListeningSound(), 10.0F, this.getSoundPitch());
-        }
 
-    }
-    public boolean tryAttack(Entity target) {
-        this.world.sendEntityStatus(this, (byte)4);
-        this.playSound(SoundEvents.ENTITY_WARDEN_ATTACK_IMPACT, 10.0F, this.getSoundPitch());
-        SonicBoomTask.cooldown(this, 40);
-        return super.tryAttack(target);
-    }
-    public void updateAttackTarget(LivingEntity target) {
-        this.getBrain().forget(MemoryModuleType.ROAR_TARGET);
-        UpdateAttackTargetTask.updateAttackTarget(this, target);
-        SonicBoomTask.cooldown(this, 200);
-    }
+
     static {
-        ANGER = DataTracker.registerData(LeviathanEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
         MOISTNESS = DataTracker.registerData(LeviathanEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }

@@ -44,6 +44,7 @@ public class Variety_Aquatic implements ModInitializer {
         ModTileEntity.registerBlockEntities();
         ModWorldGen.generateWorldGen();
         ParticleFactoryRegistry.getInstance().register(TORNADO_PARTICLE, TornadoParticleFactory::new);
+        FabricDefaultAttributeRegistry.register(ModEntities.SEAANGLE, SeaangleEntity.setAttributes());
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.WHALESHARK, WhaleSharkEntity.setAttributes());

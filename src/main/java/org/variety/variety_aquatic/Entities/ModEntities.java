@@ -41,6 +41,10 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "jellyfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, JellyfishEntity::new)
                     .dimensions(EntityDimensions.fixed(1f, 1.2f)).trackRangeBlocks(50).build());
+    public static final EntityType<SeaangleEntity> SEAANGLE = Registry.register(
+            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "seaangle"),
+            FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SeaangleEntity::new)
+                    .dimensions(EntityDimensions.fixed(1f, 1.2f)).trackRangeBlocks(50).build());
     public static final EntityType<BettaEntity> BETTA = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "betta"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BettaEntity::new)

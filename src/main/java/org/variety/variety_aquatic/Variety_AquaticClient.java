@@ -46,6 +46,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.ANGLERFISH, AnglerFishRenderer::new);
         EntityRendererRegistry.register(ModEntities.SEAHORSE, SeahorseRenderer::new);
         EntityRendererRegistry.register(ModEntities.CRAB, CrabRenderer::new);
+        EntityRendererRegistry.register(ModEntities.SEAANGLE, SeaangleRenderer::new);
 
 
 
