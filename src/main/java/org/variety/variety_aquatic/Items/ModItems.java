@@ -50,7 +50,7 @@ public class ModItems {
             new SpawnEggItem(ModEntities.BETTA,0x581f45, 0xba3569,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
     public static final Item BARRELEYE_EGG = registerItem("barreleye_egg",
-            new SpawnEggItem(ModEntities.BARRELEE,0x543d34, 0x953a3a,
+            new SpawnEggItem(ModEntities.BARRELEE,0x543d34, 0xbaff6a,
                     new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
 
     public static final Item TETRA_EGG = registerItem("tetra_egg",
