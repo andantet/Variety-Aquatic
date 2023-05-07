@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Block.Custom.BeholderBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -26,6 +27,9 @@ import java.util.List;
 
 public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
+
+    // Active state field
+    private BeholderBlock.State activeState = BeholderBlock.State.OFF;
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
@@ -43,7 +47,20 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("High", true));
+        switch (activeState) {
+            case OFF:
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("Off", true));
+                break;
+            case LOW:
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("Low", true));
+                break;
+            case MEDIUM:
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("Medium", true));
+                break;
+            case HIGH:
+                event.getController().setAnimation(new AnimationBuilder().addAnimation("High", true));
+                break;
+        }
         return PlayState.CONTINUE;
     }
 
@@ -56,8 +73,9 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     public AnimationFactory getFactory() {
         return factory;
     }
-    private static void tick(World world, BlockPos pos, BlockState state, BeholderTileEntity blockEntity, BeholderTileEntity bellEffect){
 
+    private static void tick(World world, BlockPos pos, BlockState state, BeholderTileEntity blockEntity, BeholderTileEntity bellEffect) {
+        // Do something
     }
 
     private static void tick(World world, BlockPos pos, BlockState state, BeholderTileEntity blockEntity) {
@@ -72,14 +90,35 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
         tick(world, pos, state, blockEntity);
     }
 
+    // Method to set the active state
+    public void setActiveState(BeholderBlock.State state) {
+        this.activeState = state;
+    }
 
+    // Modified method to apply the glow effect based on the active state
     private void applyGlowEffectToHostileEntities(World world, BlockPos pos) {
-        Box searchArea = new Box(pos.add(-20, -20, -20), pos.add(20, 20, 20));
+        if (activeState == BeholderBlock.State.OFF) {
+            return; // Do nothing if the active state is OFF
+        }
+
+        double radius = 0.0;
+        if (activeState == BeholderBlock.State.LOW) {
+            radius = 10.0;
+        } else if (activeState == BeholderBlock.State.MEDIUM) {
+            radius = 20.0;
+        } else if (activeState == BeholderBlock.State.HIGH) {
+            radius = 40.0;
+        }
+
+        Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius)); // Search area with a radius based on the active state
         List<Entity> entities = world.getEntitiesByClass(Entity.class, searchArea, entity -> entity instanceof HostileEntity);
 
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity) {
-                ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 20, 0));
+                double distance = entity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ()); // Distance between the tile entity and the hostile entity
+                if (distance <= radius * radius) {
+                    ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 20, 0));
+                }
             }
         }
     }

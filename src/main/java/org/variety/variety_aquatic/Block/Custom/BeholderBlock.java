@@ -5,9 +5,13 @@ import net.minecraft.block.entity.BellBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -23,6 +27,17 @@ import java.util.function.Consumer;
 public class BeholderBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     private static final VoxelShape FULL_BLOCK_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
+
+    // Enum class for the states
+    public enum State {
+        OFF,
+        LOW,
+        MEDIUM,
+        HIGH
+    }
+
+    // Current state field
+    private State currentState = State.OFF;
 
     public BeholderBlock(AbstractBlock.Settings settings) {
         super(settings);
@@ -45,17 +60,41 @@ public class BeholderBlock extends BlockWithEntity {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
+    @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        // Update the current state based on the previous state
+        switch (currentState) {
+            case OFF:
+                currentState = State.LOW;
+                break;
+            case LOW:
+                currentState = State.MEDIUM;
+                break;
+            case MEDIUM:
+                currentState = State.HIGH;
+                break;
+            case HIGH:
+                currentState = State.OFF;
+                break;
+            default:
+                currentState = State.OFF; // Set to low as the default state
+                break;
+        }
+        // Set the active state of the block entity
+        ((BeholderTileEntity) world.getBlockEntity(pos)).setActiveState(currentState);
+        return ActionResult.SUCCESS;
+    }
 
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new BeholderTileEntity(pos, state);
     }
+
     @Nullable
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return checkType(type, ModTileEntity.BEHOLDER, world.isClient ? BeholderTileEntity::clientTick : BeholderTileEntity::serverTick);
     }
-
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
