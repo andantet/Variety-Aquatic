@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -23,13 +24,14 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 
 public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
-
-    // Active state field
-    private BeholderBlock.State activeState = BeholderBlock.State.OFF;
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
@@ -47,6 +49,7 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
         switch (activeState) {
             case OFF:
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("Off", true));
@@ -74,9 +77,7 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
         return factory;
     }
 
-    private static void tick(World world, BlockPos pos, BlockState state, BeholderTileEntity blockEntity, BeholderTileEntity bellEffect) {
-        // Do something
-    }
+    private Map<UUID, Long> affectedEntities = new HashMap<>();
 
     private static void tick(World world, BlockPos pos, BlockState state, BeholderTileEntity blockEntity) {
         blockEntity.applyGlowEffectToHostileEntities(world, pos);
@@ -92,34 +93,59 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
 
     // Method to set the active state
     public void setActiveState(BeholderBlock.State state) {
-        this.activeState = state;
+        System.out.println("Setting active state to: " + state.toString()); // Debugging code
+        if (world != null) {
+            world.setBlockState(pos, getCachedState().with(BeholderBlock.CURRENT_STATE, state), 3);
+            markDirty();
+        }
     }
 
     // Modified method to apply the glow effect based on the active state
     private void applyGlowEffectToHostileEntities(World world, BlockPos pos) {
-        if (activeState == BeholderBlock.State.OFF) {
-            return; // Do nothing if the active state is OFF
-        }
 
-        double radius = 0.0;
-        if (activeState == BeholderBlock.State.LOW) {
+        BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
+        double radius;
+
+        if (activeState == BeholderBlock.State.OFF) {
+            radius = 0.0;
+        }
+        else if (activeState == BeholderBlock.State.LOW) {
             radius = 10.0;
         } else if (activeState == BeholderBlock.State.MEDIUM) {
             radius = 20.0;
         } else if (activeState == BeholderBlock.State.HIGH) {
             radius = 40.0;
+        } else {
+            radius = 0.0;
         }
 
-        Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius)); // Search area with a radius based on the active state
+        Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius));
         List<Entity> entities = world.getEntitiesByClass(Entity.class, searchArea, entity -> entity instanceof HostileEntity);
 
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity) {
-                double distance = entity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ()); // Distance between the tile entity and the hostile entity
+                double distance = entity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
                 if (distance <= radius * radius) {
                     ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 20, 0));
+                    affectedEntities.put(entity.getUuid(), world.getTime() + 20 * 20); // Store the entity UUID and effect expiry timestamp
                 }
             }
+        }
+        if (!world.isClient()) { // Ensure we're on the server side
+            ServerWorld serverWorld = (ServerWorld) world;
+            // Remove the effect from entities that are no longer within the radius or if the effect has expired
+            affectedEntities.entrySet().removeIf(entry -> {
+                UUID entityId = entry.getKey();
+                Entity affectedEntity = serverWorld.getEntity(entityId);
+                if (affectedEntity != null && affectedEntity instanceof LivingEntity) {
+                    double distance = affectedEntity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
+                    if (distance > radius * radius || world.getTime() >= entry.getValue()) {
+                        ((LivingEntity) affectedEntity).removeStatusEffect(StatusEffects.GLOWING);
+                        return true; // Remove the entry from the map
+                    }
+                }
+                return false;
+            });
         }
     }
 }
