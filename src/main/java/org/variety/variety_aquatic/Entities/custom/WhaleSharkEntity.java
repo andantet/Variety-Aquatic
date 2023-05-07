@@ -1,10 +1,8 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
-import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -23,15 +21,11 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.IDaytimeProvider;
 import org.variety.variety_aquatic.Sound.ModSound;
@@ -44,30 +38,49 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable, IDaytimeProvider {
     private AnimationFactory factory = new AnimationFactory(this);
 
+
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health =  NewConfig.whaleshark_health;
-    private static boolean doattack =  NewConfig.whaleshark_attack_fish;
-    private static double speed =  NewConfig.whaleshark_speed;
-    private static double follow =  NewConfig.whaleshark_follow;
-    private static double damage =  NewConfig.whaleshark_damage;
-    private static double knockback =  NewConfig.whaleshark_knockback;
+    private boolean isHungry = false;
+    private int fishEaten = 0;
 
     public WhaleSharkEntity(EntityType<? extends WhaleSharkEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new YawAdjustingLookControl(this, 10);
-
+    }
+    static {
+        MOISTNESS = DataTracker.registerData(WhaleSharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
+        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
     public long getTimeOfDay() {
         return this.world.getTimeOfDay();
     }
+    public static DefaultAttributeContainer.Builder setAttributes() {
+        return WaterCreatureEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.whaleshark_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.whaleshark_speed)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, NewConfig.whaleshark_damage)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, NewConfig.whaleshark_knockback)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.whaleshark_follow);
+    }
+    private static class InWaterPredicate implements Predicate<LivingEntity> {
+        private final WhaleSharkEntity owner;
 
+        public InWaterPredicate(WhaleSharkEntity owner) {
+            this.owner = owner;
+        }
+
+        public boolean test(@Nullable LivingEntity entity) {
+            return entity != null && entity.isTouchingWater();
+        }
+    }
 
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
@@ -92,10 +105,14 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
+        nbt.putBoolean("IsHungry", this.isHungry);
+        nbt.putInt("FishEaten", this.fishEaten);
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
+        this.isHungry = nbt.getBoolean("IsHungry");
+        this.fishEaten = nbt.getInt("FishEaten");
     }
 
     protected void initGoals() {
@@ -105,34 +122,24 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
 
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-        if (doattack==true) {
+        if (isHungry()) {
+            this.goalSelector.add(4, new MeleeAttackGoal(this, 1.2000000476837158D, true));
             this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));
         }
+        this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+    private boolean isHungry() {
+        return this.getMoistness() < 1200;
+    }
+
+    public void eatFish() {
+        this.setMoistness(Math.min(2400, this.getMoistness() + 1200));
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
-
-    public int getMaxAir() {
-        return 4800;
-    }
-
-    protected int getNextAirOnLand(int air) {
-        return this.getMaxAir();
-    }
-
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
     }
@@ -143,6 +150,20 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
 
     public int getBodyYawSpeed() {
         return 1;
+    }
+
+    public void travel(Vec3d movementInput) {
+        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
+            this.updateVelocity(this.getMovementSpeed(), movementInput);
+            this.move(MovementType.SELF, this.getVelocity());
+            this.setVelocity(this.getVelocity().multiply(0.9));
+            if (this.getTarget() == null) {
+                this.setVelocity(this.getVelocity().add(0.0, -0.005, 0.0));
+            }
+        } else {
+            super.travel(movementInput);
+        }
+
     }
 
     public void tick() {
@@ -180,52 +201,18 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
                     this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
                 }
             }
-        }
-    }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return ModSound.WHALE_HURT;
-    }
-
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return ModSound.WHALE_DEATH;
-    }
-
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return  ModSound.DEEP_GROWL;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
-
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
+            if (this.getTarget() == null && this.isHungry()) {
+                List<FishEntity> nearbyFish = this.world.getEntitiesByClass(FishEntity.class, this.getBoundingBox().expand(12.0D, 8.0D, 12.0D), entity -> entity.isTouchingWater() && entity.isAlive());
+                if (!nearbyFish.isEmpty()) {
+                    FishEntity targetFish = nearbyFish.get(this.random.nextInt(nearbyFish.size()));
+                    this.setTarget(targetFish);
+                }
+            } else if (this.getTarget() instanceof FishEntity && !this.isHungry()) {
+                this.setTarget(null);
             }
-        } else {
-            super.travel(movementInput);
         }
-
     }
-
-    static {
-        MOISTNESS = DataTracker.registerData(WhaleSharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
-    }
-
-
-
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if(event.isMoving()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("WhaleSharkSwim", true));
@@ -245,17 +232,5 @@ public class WhaleSharkEntity extends WaterCreatureEntity implements IAnimatable
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final WhaleSharkEntity owner;
-
-        public InWaterPredicate(WhaleSharkEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }

@@ -30,7 +30,6 @@ public class SeaangleRenderer extends GeoEntityRenderer<SeaangleEntity> {
                                      VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder,
                                      int packedLightIn, Identifier textureLocation) {
         stack.scale(1.0f, 1.0f, 1.0f);
-
-        return super.getRenderType(animatable, partialTicks, stack, renderTypeBuffer, vertexBuilder, packedLightIn, textureLocation);
+        return RenderLayer.getEntityTranslucent(getTextureResource(animatable));
     }
 }

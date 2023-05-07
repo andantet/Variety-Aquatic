@@ -5,6 +5,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
+import net.minecraft.world.gen.structure.Structures;
+import net.minecraft.world.gen.structure.*;
+
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
@@ -42,6 +45,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.BiomeKeys;
+
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.ModItems;
@@ -216,6 +220,7 @@ public class squidlingEntity extends WaterCreatureEntity implements IAnimatable,
             }
         }
     }
+
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);
