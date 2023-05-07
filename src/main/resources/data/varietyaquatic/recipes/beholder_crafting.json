@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "V",
+    "H"
+  ],
+  "key": {
+    "#": {
+      "item": "varietyaquatic:giantsquideye"
+    },
+    "V": {
+      "item": "varietyaquatic:giantsquidbeak"
+    },
+    "H": {
+      "item": "minecraft:heart_of_the_sea"
+    }
+  },
+  "result": {
+    "item": "varietyaquatic:beholder",
+    "count": 1
+  }
+}
