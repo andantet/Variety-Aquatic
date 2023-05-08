@@ -16,6 +16,8 @@ repositories {
     maven {
         url "https://api.modrinth.com/maven"
     }
+    maven { url = 'https://maven.minecraftforge.net/' }
+
     maven { url 'https://jitpack.io' }
 
         // Add repositories to retrieve artifacts from in here.
@@ -36,6 +38,8 @@ dependencies {
         // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:1.19.2-${project.terrablender_version}"
+
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
     include "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
 
