@@ -52,17 +52,16 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CRAB, CrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.SEAANGLE, SeaangleRenderer::new);
 
+
         FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
                 new SimpleFluidRenderHandler(
                         new Identifier("minecraft:block/water_still"),
                         new Identifier("minecraft:block/water_flow"),
-                        0xb29062
+                        0x0088ff
                 ));
 
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getCutout(),
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
                 ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER);
-
-
 
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
