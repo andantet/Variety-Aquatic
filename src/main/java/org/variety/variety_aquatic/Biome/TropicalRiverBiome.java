@@ -2,26 +2,19 @@ package org.variety.variety_aquatic.Biome;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.EntityType;
 import net.minecraft.sound.BiomeMoodSound;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.GenerationStep;
-import org.variety.variety_aquatic.Entities.ModEntities;
 
 public class TropicalRiverBiome {
     public static Biome create() {
         SpawnSettings.Builder spawnSettings = new SpawnSettings.Builder()
                 .spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(EntityType.SQUID, 2, 1, 4))
-                .spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(ModEntities.PIRANHA, 10, 1, 3))
-                .spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(ModEntities.TETRA, 20, 1, 3))
-                .spawn(SpawnGroup.WATER_CREATURE, new SpawnSettings.SpawnEntry(ModEntities.BETTA, 20, 1, 3))
-
-                .spawn(SpawnGroup.WATER_AMBIENT, new SpawnSettings.SpawnEntry(EntityType.TROPICAL_FISH, 25, 6, 12))
+                .spawn(SpawnGroup.WATER_AMBIENT, new SpawnSettings.SpawnEntry(EntityType.TROPICAL_FISH, 30, 6, 12))
                 .spawn(SpawnGroup.WATER_AMBIENT, new SpawnSettings.SpawnEntry(EntityType.SALMON, 5, 1, 5));
-
         DefaultBiomeFeatures.addBatsAndMonsters(spawnSettings);
         spawnSettings.spawn(SpawnGroup.MONSTER, new SpawnSettings.SpawnEntry(EntityType.DROWNED, 100, 1, 1));
         GenerationSettings.Builder generationSettings = new GenerationSettings.Builder();//.surfaceBuilder(ConfiguredSurfaceBuilders.DESERT);
@@ -41,7 +34,7 @@ public class TropicalRiverBiome {
         DefaultBiomeFeatures.addDefaultMushrooms(generationSettings);
         DefaultBiomeFeatures.addDefaultVegetation(generationSettings);
         DefaultBiomeFeatures.addSprings(generationSettings);
-        DefaultBiomeFeatures.addSwampFeatures(generationSettings);
+
         DefaultBiomeFeatures.addFrozenTopLayer(generationSettings);
 
         generationSettings.feature(GenerationStep.Feature.VEGETAL_DECORATION, OceanPlacedFeatures.SEAGRASS_RIVER);
