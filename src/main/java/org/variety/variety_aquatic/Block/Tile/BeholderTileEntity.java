@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.Custom.BeholderBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -107,7 +108,7 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
             float meanTickTime = server.getTickTime();
             double tps = meanTickTime > 0 ? 1_000.0 / meanTickTime : 20.0;
 
-            if (tps < 15) {
+            if (tps < NewConfig.beholder_tps) {
                 return; // Disable the applyGlowEffectToHostileEntities if the TPS is below 15
             }
         }
@@ -119,11 +120,11 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
             radius = 0.0;
         }
         else if (activeState == BeholderBlock.State.LOW) {
-            radius = 10.0;
+            radius = NewConfig.beholder_max_range/4;
         } else if (activeState == BeholderBlock.State.MEDIUM) {
-            radius = 20.0;
+            radius = NewConfig.beholder_max_range/2;
         } else if (activeState == BeholderBlock.State.HIGH) {
-            radius = 40.0;
+            radius = NewConfig.beholder_max_range;
         } else {
             radius = 0.0;
         }
