@@ -109,29 +109,15 @@ public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillabl
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED, FLUID);
     }
-    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockPos down = pos.down();
         BlockState downState = world.getBlockState(down);
         Fluid downFluid = downState.getFluidState().getFluid();
-        Direction[] directions = new Direction[]{Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-
-        for (Direction direction : directions) {
-            BlockPos offset = pos.offset(direction);
-            BlockState offsetState = world.getBlockState(offset);
-            Fluid offsetFluid = offsetState.getFluidState().getFluid();
-
-            if (offsetFluid == Fluids.WATER && offsetState.isOf(Blocks.WATER)) {
-                return true;
-            }
-
-            if (offsetState.isSideSolidFullSquare(world, offset, direction.getOpposite())) {
-                return true;
-            }
-        }
-
-        return downFluid == ModFluid.STILL_GLOWING_WATER || downFluid == Fluids.WATER && downState.isOf(Blocks.WATER);
+        return sideCoversSmallSquare(world, down, Direction.UP) ||
+                (downFluid == Fluids.WATER && downState.isOf(Blocks.WATER)) ||
+                downFluid == ModFluid.STILL_GLOWING_WATER;
     }
+
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -145,10 +131,8 @@ public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillabl
         } else if (fluidState.getFluid() == ModFluid.STILL_GLOWING_WATER) {
             fluidType = FluidType.GLOWING_WATER;
         }
-        Direction direction = ctx.getSide().getOpposite();
-        return this.getDefaultState().with(FACING, direction).with(WATERLOGGED, waterlogged).with(FLUID, fluidType);
+        return this.getDefaultState().with(WATERLOGGED, waterlogged).with(FLUID, fluidType);
     }
-
 
     static {
         FACING = HorizontalFacingBlock.FACING;
