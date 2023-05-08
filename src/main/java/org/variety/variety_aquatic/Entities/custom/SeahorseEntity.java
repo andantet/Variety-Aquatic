@@ -28,6 +28,7 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
 import org.variety.variety_aquatic.Items.ModItems;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -58,8 +59,8 @@ public class SeahorseEntity extends FishEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.seahorse_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.seahorse_speed);
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {

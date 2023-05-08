@@ -6,7 +6,6 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;

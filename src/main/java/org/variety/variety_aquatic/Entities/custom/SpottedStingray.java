@@ -46,8 +46,6 @@ public class SpottedStingray extends WaterCreatureEntity implements IAnimatable 
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = NewConfig.spottedstingray_health;
-    private static double speed =  NewConfig.spottedstingray_speed;
 
     public SpottedStingray(EntityType<? extends SpottedStingray> entityType, World world) {
         super(entityType, world);
@@ -94,8 +92,8 @@ public class SpottedStingray extends WaterCreatureEntity implements IAnimatable 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.spottedstingray_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.spottedstingray_speed);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

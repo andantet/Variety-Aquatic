@@ -47,9 +47,6 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = NewConfig.opah_health;
-    private static double speed = NewConfig.opah_speed;
-
     public OpahEntity(EntityType<? extends OpahEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
@@ -94,8 +91,8 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.opah_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.opah_speed);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

@@ -63,7 +63,6 @@ public class BarreleyeEntity extends WaterCreatureEntity implements IAnimatable,
     private static double health = NewConfig.oarfish_health;
     private static double speed = NewConfig.oarfish_speed;
     private static double follow = NewConfig.oarfish_follow;
-    private static double knockback = NewConfig.oarfish_knockback;
 
     public BarreleyeEntity(EntityType<? extends BarreleyeEntity> entityType, World world) {
         super(entityType, world);
@@ -147,11 +146,9 @@ public class BarreleyeEntity extends WaterCreatureEntity implements IAnimatable,
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.barreleye_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.barreleye_speed)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.barreleye_followrange);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

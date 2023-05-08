@@ -45,8 +45,6 @@ public class SunfishEntity extends WaterCreatureEntity implements IAnimatable {
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health =  NewConfig.sunfish_heath;
-    private static double speed =  NewConfig.sunfish_speed;
 
     public SunfishEntity(EntityType<? extends SunfishEntity> entityType, World world) {
         super(entityType, world);
@@ -93,8 +91,8 @@ public class SunfishEntity extends WaterCreatureEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.sunfish_heath)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.sunfish_speed);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

@@ -156,8 +156,8 @@ public class squidlingEntity extends WaterCreatureEntity implements IAnimatable,
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.vampiresquid_health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.vampiresquid_speed);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.squidling_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.squidling_speed);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

@@ -50,7 +50,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class FlashlightfishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
+public class FlashlightfishEntity extends WaterCreatureEntity implements IAnimatable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -60,10 +60,6 @@ public class FlashlightfishEntity extends WaterCreatureEntity implements IAnimat
     private UUID targetUuid;
 
 
-    private static double health = NewConfig.oarfish_health;
-    private static double speed = NewConfig.oarfish_speed;
-    private static double follow = NewConfig.oarfish_follow;
-    private static double knockback = NewConfig.oarfish_knockback;
 
     public FlashlightfishEntity(EntityType<? extends FlashlightfishEntity> entityType, World world) {
         super(entityType, world);
@@ -94,39 +90,17 @@ public class FlashlightfishEntity extends WaterCreatureEntity implements IAnimat
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
-        this.writeAngerToNbt(nbt);
     }
 
-    public void chooseRandomAngerTime() {
-        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
-    }
 
-    public int getMaxGroupSize() {
-        return 5;
-    }
 
-    public void setAngerTime(int ticks) {
-        this.angerTime = ticks;
-    }
 
-    public int getAngerTime() {
-        return this.angerTime;
-    }
-
-    public void setAngryAt(@Nullable UUID uuid) {
-        this.targetUuid = uuid;
-    }
-
-    public UUID getAngryAt() {
-        return this.targetUuid;
-    }
 
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.PIRANHA_BUCKET);
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
-        this.readAngerFromNbt(this.world, nbt);
 
     }
 
@@ -147,11 +121,9 @@ public class FlashlightfishEntity extends WaterCreatureEntity implements IAnimat
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.flashlight_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.flashlight_speed)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.flashlight_followrange);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

@@ -74,6 +74,20 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double oarfish_speed = 1.8;
     @Entry public static int beholder_tps = 15;
     @Entry public static int beholder_max_range = 40;
+    @Entry public static double squidling_speed = 1.2;
+    @Entry public static double squidling_health = 10.0;
+    @Entry public static double seahorse_speed = 1.2;
+    @Entry public static double seahorse_health = 2.0;
+
+    @Entry public static double seaangle_speed = 1.8;
+    @Entry public static double seaangle_health = 3.0;
+    @Entry public static double seaangle_followrange = 3.0;
+    @Entry public static double flashlight_speed = 1.8;
+    @Entry public static double flashlight_health = 4.0;
+    @Entry public static double flashlight_followrange = 3.0;
+    @Entry public static double barreleye_speed = 1.8;
+    @Entry public static double barreleye_health = 6.0;
+    @Entry public static double barreleye_followrange = 3.0;
 
     @Entry(min=0,max=100) public static int oarfish_spawnweight = 25;
 

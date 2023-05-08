@@ -48,7 +48,7 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = 40;
+    private static double health = 50;
     private static double speed = 1.3;
     private static double follow = 10;
     private static double damage = 3;

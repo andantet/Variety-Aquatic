@@ -16,7 +16,6 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Entities.client.*;
 import org.variety.variety_aquatic.Fluid.ModFluid;
 

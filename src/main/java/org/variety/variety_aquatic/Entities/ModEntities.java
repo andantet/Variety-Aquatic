@@ -123,7 +123,7 @@ public class ModEntities {
     public static final EntityType<OarfishEntity> OARFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "oarfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, OarfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.5f, 1.0f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(1.5f, 1.2f)).trackRangeBlocks(50).build());
     public static final EntityType<TornadoEntity> TORNADO = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tornado"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, TornadoEntity::new)

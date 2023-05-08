@@ -50,7 +50,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class SeaangleEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
+public class SeaangleEntity extends WaterCreatureEntity implements IAnimatable{
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -94,52 +94,25 @@ public class SeaangleEntity extends WaterCreatureEntity implements IAnimatable, 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
-        this.writeAngerToNbt(nbt);
     }
 
-    public void chooseRandomAngerTime() {
-        this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
-    }
 
-    public int getMaxGroupSize() {
-        return 5;
-    }
 
     public void setAngerTime(int ticks) {
         this.angerTime = ticks;
     }
 
-    public int getAngerTime() {
-        return this.angerTime;
-    }
-
-    public void setAngryAt(@Nullable UUID uuid) {
-        this.targetUuid = uuid;
-    }
-
-    public UUID getAngryAt() {
-        return this.targetUuid;
-    }
 
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.PIRANHA_BUCKET);
     }
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
-        this.readAngerFromNbt(this.world, nbt);
-
     }
 
     protected void initGoals() {
-        this.goalSelector.add(2,new SeaangleEntity.AttackGoal());
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
-
-        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
+        this.goalSelector.add(8, new EscapeDangerGoal(this, 1.9f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
     }
@@ -147,11 +120,9 @@ public class SeaangleEntity extends WaterCreatureEntity implements IAnimatable, 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.seaangle_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.seaangle_speed)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.seaangle_followrange);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

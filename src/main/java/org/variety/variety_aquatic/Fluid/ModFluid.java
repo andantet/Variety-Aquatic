@@ -22,7 +22,7 @@ public class ModFluid {
 
     public static void register() {
         FabricBlockSettings glowingWaterBlockSettings = FabricBlockSettings.copyOf(Blocks.WATER)
-                .luminance(10);
+                .luminance(5);
         STILL_GLOWING_WATER = Registry.register(Registry.FLUID,
                 new Identifier(Variety_Aquatic.MOD_ID, "glowing_water"), new GlowingWaterFluid.Still());
         FLOWING_GLOWING_WATER = Registry.register(Registry.FLUID,
