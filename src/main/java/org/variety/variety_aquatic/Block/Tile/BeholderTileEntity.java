@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.Custom.BeholderBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
+import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -24,10 +26,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 public class BeholderTileEntity extends BlockEntity implements IAnimatable {
@@ -102,6 +101,17 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
 
     // Modified method to apply the glow effect based on the active state
     private void applyGlowEffectToHostileEntities(World world, BlockPos pos) {
+        if (world instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld) world;
+            MinecraftServer server = serverWorld.getServer();
+
+            float meanTickTime = server.getTickTime();
+            double tps = meanTickTime > 0 ? 1_000.0 / meanTickTime : 20.0;
+
+            if (tps < NewConfig.beholder_tps) {
+                return; // Disable the applyGlowEffectToHostileEntities if the TPS is below 15
+            }
+        }
 
         BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
         double radius;
@@ -110,11 +120,11 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
             radius = 0.0;
         }
         else if (activeState == BeholderBlock.State.LOW) {
-            radius = 10.0;
+            radius = NewConfig.beholder_max_range/4;
         } else if (activeState == BeholderBlock.State.MEDIUM) {
-            radius = 20.0;
+            radius = NewConfig.beholder_max_range/2;
         } else if (activeState == BeholderBlock.State.HIGH) {
-            radius = 40.0;
+            radius = NewConfig.beholder_max_range;
         } else {
             radius = 0.0;
         }

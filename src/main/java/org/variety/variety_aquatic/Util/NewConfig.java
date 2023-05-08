@@ -72,6 +72,9 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double oarfish_knockback = 0.1;
     @Entry public static double oarfish_follow= 10;
     @Entry public static double oarfish_speed = 1.8;
+    @Entry public static int beholder_tps = 15;
+    @Entry public static int beholder_max_range = 40;
+
     @Entry(min=0,max=100) public static int oarfish_spawnweight = 25;
 
 

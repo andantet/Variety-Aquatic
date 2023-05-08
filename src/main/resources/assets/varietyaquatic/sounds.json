@@ -41,6 +41,12 @@
       "varietyaquatic:spermwhale_death"
     ]
   },
+  "crab_hurt": {
+    "subtitle": "varietyaquatic.crab_hurt",
+    "sounds": [
+      "varietyaquatic:crab_hurt"
+    ]
+  },
   "crab_rave": {
     "sounds": [
       {

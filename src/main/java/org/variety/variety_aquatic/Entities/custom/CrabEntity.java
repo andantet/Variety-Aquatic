@@ -42,6 +42,7 @@ import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.custom.AI.GoToWaterGoal;
 import org.variety.variety_aquatic.Items.ModItems;
+import org.variety.variety_aquatic.Sound.ModSound;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -144,7 +145,7 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
+        return ModSound.CRAB_HURT;
     }
 
     @Override
