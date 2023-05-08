@@ -6,7 +6,8 @@
 
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CoralFeatureMixin"
+    "CoralFeatureMixin",
+    "MixinOverworldBiomeBuilder"
 
   ],
   "client": [

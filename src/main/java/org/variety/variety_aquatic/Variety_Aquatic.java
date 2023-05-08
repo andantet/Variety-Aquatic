@@ -8,6 +8,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.variety.variety_aquatic.Biome.OceanBiomes;
+import org.variety.variety_aquatic.Biome.RiverRegion;
+import org.variety.variety_aquatic.Biome.RiverSurfaceRules;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
@@ -20,8 +23,11 @@ import org.variety.variety_aquatic.Util.TornadoParticleFactory;
 import org.variety.variety_aquatic.Util.TornadoParticleType;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib3.GeckoLib;
+import terrablender.api.Regions;
+import terrablender.api.SurfaceRuleManager;
+import terrablender.api.TerraBlenderApi;
 
-public class Variety_Aquatic implements ModInitializer {
+public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
     public static final String MOD_ID = "varietyaquatic";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final TornadoParticleType TORNADO_PARTICLE = Registry.register(Registry.PARTICLE_TYPE, new Identifier("varietyaquatic", "tornado_particle"), new TornadoParticleType());
@@ -32,6 +38,8 @@ public class Variety_Aquatic implements ModInitializer {
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
+        OceanBiomes.init();
+
         MidnightConfig.init(MOD_ID, NewConfig.class);
 
         ModItems.registerModItems();
@@ -71,5 +79,11 @@ public class Variety_Aquatic implements ModInitializer {
         FabricDefaultAttributeRegistry.register(ModEntities.FLASHLIGHTFISH, FlashlightfishEntity.setAttributes());
 
 
+    }
+    @Override
+    public void onTerraBlenderInitialized() {
+        Regions.register(new RiverRegion(new Identifier(Variety_Aquatic.MOD_ID, "overworld"), 1));
+
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Variety_Aquatic.MOD_ID, RiverSurfaceRules.build());
     }
 }
