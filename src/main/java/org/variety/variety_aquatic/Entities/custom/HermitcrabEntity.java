@@ -33,6 +33,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.ModItems;
+import org.variety.variety_aquatic.Sound.ModSound;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -190,11 +191,9 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
             // Return the hiding sound
             isHiding = true;
             canMove = false;
-            return SoundEvents.BLOCK_SHULKER_BOX_CLOSE;
         }
+        return ModSound.CRAB_HURT;
 
-        // Return the default hurt sound
-        return SoundEvents.ENTITY_COD_HURT;
     }
 
 
