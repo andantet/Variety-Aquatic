@@ -1,11 +1,15 @@
 package org.variety.variety_aquatic;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
+import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
@@ -13,6 +17,7 @@ import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.*;
+import org.variety.variety_aquatic.Fluid.ModFluid;
 
 public class Variety_AquaticClient implements ClientModInitializer {
     @Override
@@ -47,6 +52,15 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CRAB, CrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.SEAANGLE, SeaangleRenderer::new);
 
+        FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
+                new SimpleFluidRenderHandler(
+                        new Identifier("minecraft:block/water_still"),
+                        new Identifier("minecraft:block/water_flow"),
+                        0xb29062
+                ));
+
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getCutout(),
+                ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER);
 
 
 
