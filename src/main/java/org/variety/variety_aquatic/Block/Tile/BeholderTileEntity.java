@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.Custom.BeholderBlock;
@@ -129,28 +130,30 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
         }
 
 
-
         Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius));
         List<Entity> entities = world.getEntitiesByClass(Entity.class, searchArea, entity -> entity instanceof HostileEntity);
+        Vec3d blockPos = new Vec3d(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 
         for (Entity entity : entities) {
             if (entity instanceof LivingEntity) {
-                double distance = entity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
-                if (distance <= radius * radius) {
-                    ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 20, 0));
+                LivingEntity livingEntity = (LivingEntity) entity;
+                double distanceSquared = blockPos.squaredDistanceTo(livingEntity.getPos());
+                if (distanceSquared <= radius * radius) {
+                    livingEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 20, 0));
                     affectedEntities.put(entity.getUuid(), world.getTime() + 20 * 20); // Store the entity UUID and effect expiry timestamp
                 }
             }
         }
+
         if (!world.isClient()) { // Ensure we're on the server side
             ServerWorld serverWorld = (ServerWorld) world;
             // Remove the effect from entities that are no longer within the radius or if the effect has expired
             affectedEntities.entrySet().removeIf(entry -> {
                 UUID entityId = entry.getKey();
                 Entity affectedEntity = serverWorld.getEntity(entityId);
-                if (affectedEntity != null && affectedEntity instanceof LivingEntity) {
-                    double distance = affectedEntity.squaredDistanceTo(pos.getX(), pos.getY(), pos.getZ());
-                    if (distance > radius * radius || world.getTime() >= entry.getValue()) {
+                if (affectedEntity instanceof LivingEntity) {
+                    double distanceSquared = blockPos.squaredDistanceTo(affectedEntity.getPos());
+                    if (distanceSquared > radius * radius || world.getTime() >= entry.getValue()) {
                         ((LivingEntity) affectedEntity).removeStatusEffect(StatusEffects.GLOWING);
                         return true; // Remove the entry from the map
                     }
