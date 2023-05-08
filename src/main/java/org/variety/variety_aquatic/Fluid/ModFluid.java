@@ -13,7 +13,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Items.ModItemgroup;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.classic.Mod;
 
 public class ModFluid {
     public static FlowableFluid STILL_GLOWING_WATER;
