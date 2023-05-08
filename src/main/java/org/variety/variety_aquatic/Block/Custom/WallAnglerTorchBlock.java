@@ -101,6 +101,7 @@ public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillabl
         return (BlockState) state.with(FACING, rotation.rotate((Direction) state.get(FACING)));
     }
 
+
     public BlockState mirror(BlockState state, BlockMirror mirror) {
         return state.rotate(mirror.getRotation((Direction) state.get(FACING)));
     }
@@ -109,14 +110,21 @@ public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillabl
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(FACING, WATERLOGGED, FLUID);
     }
+    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockPos down = pos.down();
         BlockState downState = world.getBlockState(down);
         Fluid downFluid = downState.getFluidState().getFluid();
-        return sideCoversSmallSquare(world, down, Direction.UP) ||
+
+        // Add a condition for valid supporting blocks
+        boolean isValidSupport = downState.isSideSolidFullSquare(world, down, Direction.UP);
+
+        return isValidSupport ||
+                sideCoversSmallSquare(world, down, Direction.UP) ||
                 (downFluid == Fluids.WATER && downState.isOf(Blocks.WATER)) ||
                 downFluid == ModFluid.STILL_GLOWING_WATER;
     }
+
 
 
     @Override
@@ -131,8 +139,12 @@ public class WallAnglerTorchBlock extends WallTorchBlock implements FluidFillabl
         } else if (fluidState.getFluid() == ModFluid.STILL_GLOWING_WATER) {
             fluidType = FluidType.GLOWING_WATER;
         }
-        return this.getDefaultState().with(WATERLOGGED, waterlogged).with(FLUID, fluidType);
+
+        Direction facingDirection = ctx.getPlayerFacing().getOpposite();
+
+        return this.getDefaultState().with(FACING, facingDirection).with(WATERLOGGED, waterlogged).with(FLUID, fluidType);
     }
+
 
     static {
         FACING = HorizontalFacingBlock.FACING;
