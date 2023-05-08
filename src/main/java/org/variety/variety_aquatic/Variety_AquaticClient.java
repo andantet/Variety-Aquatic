@@ -16,6 +16,7 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
+import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Entities.client.*;
 import org.variety.variety_aquatic.Fluid.ModFluid;
 
@@ -52,6 +53,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CRAB, CrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.SEAANGLE, SeaangleRenderer::new);
 
+        EntityRendererRegistry.register(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, BlindnessProjectileRenderer::new);
 
         FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
                 new SimpleFluidRenderHandler(

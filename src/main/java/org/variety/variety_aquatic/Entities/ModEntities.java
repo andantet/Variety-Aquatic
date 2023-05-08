@@ -5,13 +5,24 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Entities.custom.OarfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModEntities {
+    public static final EntityType<BlindnessProjectile> BLINDNESS_PROJECTILE_ENTITY_TYPE = Registry.register(
+            Registry.ENTITY_TYPE,
+            new Identifier(Variety_Aquatic.MOD_ID, "blindness_projectile"),
+            FabricEntityTypeBuilder.<BlindnessProjectile>create(SpawnGroup.MISC, (entityType, world) -> new BlindnessProjectile(entityType, world))
+                    .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
+                    .trackRangeBlocks(4).trackedUpdateRate(10)
+                    .build());
+
+
 
     public static final EntityType<SharkEntity> SHARK = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "shark"),

@@ -3,8 +3,10 @@ package org.variety.variety_aquatic.Entities.custom;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
-import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.Vec3d;
+
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.MoveIntoWaterGoal;
@@ -35,18 +37,17 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
+import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import java.util.function.Predicate;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import static net.minecraft.command.argument.StatusEffectArgumentType.statusEffect;
+import java.util.function.Predicate;
 
 
 public class CuttlefishEntity extends FishEntity implements IAnimatable {
@@ -154,18 +155,31 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         return 1;
     }
 
+    @Override
     public boolean damage(DamageSource source, float amount) {
         if (super.damage(source, amount) && this.getAttacker() != null) {
             if (!this.world.isClient) {
                 this.squirt();
-                this.getAttacker().addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 40, 0),attackingPlayer);
-            }
 
+                // Shoot the blindness projectile at the attacking player (if it's a player)
+                if (this.getAttacker() instanceof PlayerEntity) {
+                    PlayerEntity attacker = (PlayerEntity) this.getAttacker();
+                    BlindnessProjectile projectileEntity = new BlindnessProjectile(world, this);
+
+                    projectileEntity.setPos(this.getX(), this.getEyeY() - 0.1, this.getZ());
+
+                    Vec3d direction = attacker.getPos().subtract(this.getPos()).normalize();
+                    projectileEntity.setVelocity(direction.x, direction.y, direction.z, 1.5F, 1.0F);
+
+                    world.spawnEntity(projectileEntity);
+                }
+            }
             return true;
         } else {
             return false;
         }
     }
+
     public void tick() {
         super.tick();
         if (this.isAiDisabled()) {
