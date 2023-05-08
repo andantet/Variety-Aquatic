@@ -10,6 +10,8 @@ import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
@@ -23,8 +25,9 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import java.util.Random;
+
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
@@ -43,6 +46,11 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
 
     private static final Ingredient TAMING_INGREDIENT;
+    private boolean isHiding;
+
+    private boolean isUnhiding;
+    private boolean canMove=true;
+
 
     public HermitcrabEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -61,13 +69,23 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
     }
 
     protected void initGoals() {
-        this.goalSelector.add(1, new AnimalMateGoal(this,0.75D));
-        this.goalSelector.add(2, new TemptGoal(this, 0.75D,TAMING_INGREDIENT,false));
+        this.goalSelector.add(1, new AnimalMateGoal(this, 0.75D));
+        this.goalSelector.add(2, new TemptGoal(this, 0.75D, TAMING_INGREDIENT, false));
         this.goalSelector.add(3, new FollowParentGoal(this, 0.85D));
-        this.goalSelector.add(4, new LookAtEntityGoal(this,PlayerEntity.class,6F));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 0.8f));
-        this.goalSelector.add(6, new WanderAroundGoal(this, 1.0, 100));
+        this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 6F));
+        this.goalSelector.add(6, new WanderAroundGoal(this, 1.0, 100) {
+            @Override
+            public boolean canStart() {
+                return canMove && super.canStart();
+            }
+        });
         this.goalSelector.add(5, new LookAroundGoal(this));
+        this.goalSelector.add(2, new EscapeDangerGoal(this, 0.8f) {
+            @Override
+            public boolean canStart() {
+                return canMove && super.canStart();
+            }
+        });
     }
 
 
@@ -93,8 +111,20 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        AnimationController controller = event.getController();
+
+        if (isHiding) {
+            controller.setAnimation(new AnimationBuilder().addAnimation("Hide", false));
+            return PlayState.CONTINUE;
+        }
+
+        if (isUnhiding) {
+            controller.setAnimation(new AnimationBuilder().addAnimation("Unhide", false));
+            return PlayState.CONTINUE;
+        }
+
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("HermitCrabWalk", true));
+            controller.setAnimation(new AnimationBuilder().addAnimation("walk", true));
             return PlayState.CONTINUE;
         }
 
@@ -108,13 +138,65 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
                 0, this::predicate));
     }
 
+    private int hidingTime;
+
+    public void setHidingTime(int time) {
+        this.hidingTime = time;
+    }
+
+    public int getHidingTime() {
+        return hidingTime;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+
+        if (getHidingTime() > 0) {
+            setHidingTime(getHidingTime() - 1);
+            canMove = false;
+
+            // If the hiding time is over, reset the entity to its normal state
+            if (getHidingTime() == 0) {
+                removeStatusEffect(StatusEffects.RESISTANCE);
+                removeStatusEffect(StatusEffects.ABSORPTION);
+                isUnhiding = true;
+                canMove = false;
+            }
+        } else if (isUnhiding) {
+            canMove = false;
+        } else {
+            canMove = true;
+        }
+    }
+
 
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        // Check if the damage source is not from the player
+        if (pDamageSource.getAttacker() instanceof PlayerEntity) {
+            // Set the hiding animation
+
+            // Set knockback resistance and armor
+            addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 200, 1));
+            addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, 200, 0, false, false));
+
+            // Set a random hiding time between 5-10 seconds
+            int hidingTime = 5 + new Random().nextInt(6);
+            setHidingTime(hidingTime * 20);
+            // Return the hiding sound
+            isHiding = true;
+            canMove = false;
+            return SoundEvents.BLOCK_SHULKER_BOX_CLOSE;
+        }
+
+        // Return the default hurt sound
         return SoundEvents.ENTITY_COD_HURT;
     }
+
 
     @Nullable
     @Override
