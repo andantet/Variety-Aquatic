@@ -118,16 +118,17 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
 
         if (activeState == BeholderBlock.State.OFF) {
             radius = 0.0;
-        }
-        else if (activeState == BeholderBlock.State.LOW) {
-            radius = NewConfig.beholder_max_range/4;
+        } else if (activeState == BeholderBlock.State.LOW) {
+            radius = Math.round(NewConfig.beholder_max_range / 4);
         } else if (activeState == BeholderBlock.State.MEDIUM) {
-            radius = NewConfig.beholder_max_range/2;
+            radius = Math.round(NewConfig.beholder_max_range / 2);
         } else if (activeState == BeholderBlock.State.HIGH) {
-            radius = NewConfig.beholder_max_range;
+            radius = Math.round(NewConfig.beholder_max_range);
         } else {
             radius = 0.0;
         }
+
+
 
         Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius));
         List<Entity> entities = world.getEntitiesByClass(Entity.class, searchArea, entity -> entity instanceof HostileEntity);
