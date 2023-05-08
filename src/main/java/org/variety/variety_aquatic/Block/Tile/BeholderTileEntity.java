@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -24,10 +25,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 public class BeholderTileEntity extends BlockEntity implements IAnimatable {
@@ -102,6 +100,17 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
 
     // Modified method to apply the glow effect based on the active state
     private void applyGlowEffectToHostileEntities(World world, BlockPos pos) {
+        if (world instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld) world;
+            MinecraftServer server = serverWorld.getServer();
+
+            float meanTickTime = server.getTickTime();
+            double tps = meanTickTime > 0 ? 1_000.0 / meanTickTime : 20.0;
+
+            if (tps < 15) {
+                return; // Disable the applyGlowEffectToHostileEntities if the TPS is below 15
+            }
+        }
 
         BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
         double radius;
