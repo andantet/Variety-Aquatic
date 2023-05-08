@@ -94,7 +94,6 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     }
 
     protected void initGoals() {
-        this.goalSelector.add(0, new BreatheAirGoal(this));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new LookAroundGoal(this));
