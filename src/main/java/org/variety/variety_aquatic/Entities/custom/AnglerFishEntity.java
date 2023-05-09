@@ -293,16 +293,15 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
             event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;
         }
-        if (event.isMoving() && this.isTouchingWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
+        else if (event.isMoving() && !this.isSubmergedInWater()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;
         }
-        if (this.isAttacking()){
+
+        else if (this.isAttacking()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
             return PlayState.CONTINUE;
         }
-
-
         return PlayState.STOP;
     }
 

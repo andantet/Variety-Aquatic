@@ -212,11 +212,11 @@ public class ClownfishEntity extends FishEntity implements IAnimatable {
 
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving() && this.isTouchingWater()) {
+        if (event.isMoving() && this.isSubmergedInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
         }
-        if (this.isOnGround() && !this.isWet()) {
+        else if (event.isMoving() && !this.isSubmergedInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;
         }
