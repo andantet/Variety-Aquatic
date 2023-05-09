@@ -33,7 +33,6 @@ public class GiantGlowingSquidTileEntity extends BlockEntity implements IAnimata
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("sway", true));
         return PlayState.CONTINUE;
     }
 
