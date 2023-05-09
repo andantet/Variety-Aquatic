@@ -12,6 +12,7 @@ import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
+import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
 import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
@@ -70,6 +71,11 @@ public class Variety_AquaticClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(ModTileEntity.LEVIATHAN,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new LeviathanTrophyRenderer());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.LEVIATHAN_TROPHY_BLOCK, RenderLayer.getTranslucent());
+
+        BlockEntityRendererRegistry.register(ModTileEntity.GIANTSQUID,
+                (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GiantGlowingSquidTrophyRenderer());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.GIANTSQUID_TROPHY_BLOCK, RenderLayer.getTranslucent());
+
 
         BlockEntityRendererRegistry.register(ModTileEntity.BEHOLDER,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new BeholderRenderer());

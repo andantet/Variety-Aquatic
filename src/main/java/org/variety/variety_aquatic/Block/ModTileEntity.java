@@ -6,6 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
+import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
 import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
@@ -13,6 +14,8 @@ public class ModTileEntity {
 
     public static BlockEntityType<AnemoneTileEntity> ANEMONE;
     public static BlockEntityType<LeviathanTrophyTileEntity> LEVIATHAN;
+    public static BlockEntityType<GiantGlowingSquidTileEntity> GIANTSQUID;
+
     public static BlockEntityType<BeholderTileEntity> BEHOLDER;
 
 
@@ -26,7 +29,10 @@ public class ModTileEntity {
                 new Identifier(Variety_Aquatic.MOD_ID, "leviathan"),
                 FabricBlockEntityTypeBuilder.create(LeviathanTrophyTileEntity::new,
                         ModBlock.LEVIATHAN_TROPHY_BLOCK).build(null));
-
+        GIANTSQUID = Registry.register(Registry.BLOCK_ENTITY_TYPE,
+                new Identifier(Variety_Aquatic.MOD_ID, "giantsquidtrophy"),
+                FabricBlockEntityTypeBuilder.create(GiantGlowingSquidTileEntity::new,
+                        ModBlock.GIANTSQUID_TROPHY_BLOCK).build(null));
 
         BEHOLDER = Registry.register(Registry.BLOCK_ENTITY_TYPE,
                 new Identifier(Variety_Aquatic.MOD_ID, "beholder"),

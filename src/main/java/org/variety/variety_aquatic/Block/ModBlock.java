@@ -25,6 +25,9 @@ public class ModBlock {
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerBlock("leviathan",
             new LeviathanTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+    public static final Block GIANTSQUID_TROPHY_BLOCK = registerBlock("giantsquidtrophy",
+            new GiantGlowingSquidTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+                    .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
     public static final Block BEHOLDER_BLOCK = registerBlock("beholder",
             new BeholderBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
