@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -73,7 +74,7 @@ public class YellowFinTuna extends AbstractSchoolingFish implements IAnimatable 
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.COD_FLOP;
     }
 
     public static AttributeSupplier setAttributes() {
@@ -119,7 +120,7 @@ public class YellowFinTuna extends AbstractSchoolingFish implements IAnimatable 
 
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
+        if (event.isMoving() && this.isInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("YellowfinTunaSwim", true));
             return PlayState.CONTINUE;
         }

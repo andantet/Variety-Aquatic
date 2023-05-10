@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
@@ -103,7 +104,7 @@ public class AnglerfishEntity extends AbstractSchoolingFish implements IAnimatab
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.COD_FLOP;
     }
 
     /**
@@ -118,7 +119,7 @@ public class AnglerfishEntity extends AbstractSchoolingFish implements IAnimatab
     }
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
+        if (event.isMoving() && this.isInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
         }

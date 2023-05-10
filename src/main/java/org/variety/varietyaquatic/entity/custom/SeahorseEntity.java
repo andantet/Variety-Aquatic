@@ -114,7 +114,7 @@ public class SeahorseEntity extends WaterAnimal implements IAnimatable {
 
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
+        if (event.isMoving() && this.isInWater()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
         }

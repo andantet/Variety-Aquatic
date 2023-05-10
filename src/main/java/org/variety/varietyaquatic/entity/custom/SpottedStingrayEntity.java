@@ -5,6 +5,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -70,13 +71,13 @@ public class SpottedStingrayEntity extends AbstractSchoolingFish implements IAni
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.COD_FLOP;
     }
 
     public static AttributeSupplier setAttributes() {
         return WaterAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10)
-                .add(Attributes.MOVEMENT_SPEED, 1.8).build();
+                .add(Attributes.MOVEMENT_SPEED, 2.0).build();
     }
 
 
@@ -114,8 +115,8 @@ public class SpottedStingrayEntity extends AbstractSchoolingFish implements IAni
 
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("YellowfinTunaSwim", true));
+        if (event.isMoving() && this.isInWater()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("StingraySwim", true));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
