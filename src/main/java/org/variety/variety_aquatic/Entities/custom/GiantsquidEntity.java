@@ -11,6 +11,8 @@ import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.boss.BossBar;
+import net.minecraft.entity.boss.ServerBossBar;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -19,8 +21,10 @@ import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -48,7 +52,9 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = 50;
+    private final ServerBossBar bossBar;
+
+    private static double health = 100;
     private static double speed = 1.3;
     private static double follow = 10;
     private static double damage = 3;
@@ -56,6 +62,7 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     public GiantsquidEntity(EntityType<? extends GiantsquidEntity> entityType, World world) {
         super(entityType, world);
+        this.bossBar = (ServerBossBar)(new ServerBossBar(this.getDisplayName(), BossBar.Color.PURPLE, BossBar.Style.PROGRESS)).setDarkenSky(true);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new YawAdjustingLookControl(this, 10);
 
@@ -67,24 +74,7 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
-    @Override
-    public boolean startRiding(Entity passenger, boolean force) {
-        boolean success = super.startRiding(passenger, force);
-        if (success && passenger instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) passenger;
-            if (player.isSneaking()) {
-                return true;
-            }
-        }
-        return success;
-    }
 
-    @Override
-    public void updatePassengerPosition(Entity passenger) {
-        if (this.hasPassenger(passenger)) {
-            passenger.updatePosition(this.getX(), this.getY(), this.getZ());
-        }
-    }
 
     @Override
     public boolean canBeRiddenInWater() {
@@ -112,15 +102,20 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
+        if (this.hasCustomName()) {
+            this.bossBar.setName(this.getDisplayName());
+        }
+    }
+    public void setCustomName(@Nullable Text name) {
+        super.setCustomName(name);
+        this.bossBar.setName(this.getDisplayName());
     }
 
     protected void initGoals() {
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
         this.goalSelector.add(1, new SquidAttackGoal(this, 1.2D, false));
-        this.goalSelector.add(9, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
+        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 12));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
     }
@@ -132,6 +127,22 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+    }
+    protected void mobTick() {
+        this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
+    }
+    public void onStartedTrackingBy(ServerPlayerEntity player) {
+        super.onStartedTrackingBy(player);
+        this.bossBar.addPlayer(player);
+    }
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return false;
+    }
+
+
+    public void onStoppedTrackingBy(ServerPlayerEntity player) {
+        super.onStoppedTrackingBy(player);
+        this.bossBar.removePlayer(player);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

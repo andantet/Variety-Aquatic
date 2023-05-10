@@ -115,7 +115,7 @@ public class ClownfishEntity extends FishEntity implements IAnimatable {
     }
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
+        return 0.3F;
     }
 
     public int getLookPitchSpeed() {

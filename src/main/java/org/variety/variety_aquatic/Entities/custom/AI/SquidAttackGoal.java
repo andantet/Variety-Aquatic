@@ -24,11 +24,13 @@ public class SquidAttackGoal extends MeleeAttackGoal {
 
     public SquidAttackGoal(GiantsquidEntity squid, double speed, boolean pauseWhenMobIdle) {
         super(squid, speed, pauseWhenMobIdle);
+        System.out.println("Checking if SquidAttackGoal can start");
         this.squid = squid;
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK));
     }
 
     public boolean canStart() {
+        System.out.println("Checking if SquidAttackGoal can start");
         if (this.squid.isBaby() || holdingPlayer) {
             return false;
         } else {
@@ -44,7 +46,7 @@ public class SquidAttackGoal extends MeleeAttackGoal {
 
     public void start() {
         super.start();
-        this.attackTime = 50;
+        this.attackTime = 90;
         this.holdingPlayer = true;
 
         // Set the player as a passenger of the squid
@@ -55,18 +57,24 @@ public class SquidAttackGoal extends MeleeAttackGoal {
     }
 
     public void stop() {
+        LivingEntity tempTarget = this.target;
         super.stop();
+        System.out.println("Stopping SquidAttackGoal");
+
         this.target = null;
         this.holdingPlayer = false;
 
         // Release the player from riding the squid
-        if (this.target instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) this.target;
+        if (tempTarget instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) tempTarget;
             player.stopRiding();
         }
     }
+
     public void tick() {
         super.tick();
+        System.out.println("SquidAttackGoal ticking with attackTime: " + this.attackTime);
+
         this.squid.getLookControl().lookAt(this.target, 30.0F, 30.0F);
         if (holdingPlayer) {
             holdPlayer();
@@ -93,6 +101,8 @@ public class SquidAttackGoal extends MeleeAttackGoal {
 
     private void holdPlayer() {
         // Move squid towards the bottom of the ocean
+        System.out.println("Holding player");
+
         this.squid.setVelocity(this.squid.getVelocity().add(0, -0.2, 0));
         this.squid.move(MovementType.SELF, new Vec3d(0, -0.2, 0));
 
@@ -127,6 +137,8 @@ public class SquidAttackGoal extends MeleeAttackGoal {
     }
 
     private void releasePlayer() {
+        System.out.println("Releasing player");
+
         // Move squid towards the surface of the ocean
         this.squid.setVelocity(this.squid.getVelocity().add(0, 0.2, 0));
         this.squid.move(MovementType.SELF, new Vec3d(0, 0.2, 0));

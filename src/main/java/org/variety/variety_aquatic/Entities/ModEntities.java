@@ -110,7 +110,7 @@ public class ModEntities {
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "clownfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, ClownfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.0f, 0.7f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.3f)).trackRangeBlocks(50).build());
 
     public static final EntityType<PiranhaEntity> PIRANHA = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "piranha"),
