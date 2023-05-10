@@ -146,7 +146,7 @@ public class CuttlefishEntity extends WaterAnimal implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("CuttlefishSwim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

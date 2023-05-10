@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -52,7 +54,10 @@ public class WallGlowtorchBlock extends WallTorchBlock {
         Direction direction = pState.getValue(FACING);
         BlockPos blockpos = pPos.relative(direction.getOpposite());
         BlockState blockstate = pLevel.getBlockState(blockpos);
-        return blockstate.isFaceSturdy(pLevel, blockpos, direction);
+        FluidState fluidstate = pLevel.getFluidState(pPos);
+
+        // Allow placement on top of blocks that are sturdy and in water that is deep enough
+        return (blockstate.isFaceSturdy(pLevel, blockpos, direction) && fluidstate.is(FluidTags.WATER) && fluidstate.getAmount() == 8);
     }
 
     @Nullable

@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -101,7 +102,7 @@ public class Piranha extends AbstractSchoolingFish implements GeoEntity {
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.COD_FLOP;
     }
 
     /**
@@ -118,7 +119,7 @@ public class Piranha extends AbstractSchoolingFish implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

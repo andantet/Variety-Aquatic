@@ -254,7 +254,7 @@ public class SunfishEntity extends WaterAnimal implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("swim2", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

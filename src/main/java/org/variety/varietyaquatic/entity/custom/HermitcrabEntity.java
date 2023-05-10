@@ -407,7 +407,7 @@ public class HermitcrabEntity extends Animal implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("HermitCrabWalk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

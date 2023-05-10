@@ -36,19 +36,19 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntityTypes.ANGLERFISH, 0x22b341, 0x19732e,
                     new Item.Properties()));
     public static final RegistryObject<Item> BETTA_EGG = ITEMS.register("betta_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.BETTAFISH, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.BETTAFISH, 0x581f45, 0xba3569,
                     new Item.Properties()));
     public static final RegistryObject<Item> CLOWNFISH_EGG = ITEMS.register("clownfish_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.CLOWNFISH, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.CLOWNFISH, 0xff5000 , 0xffffff,
                     new Item.Properties()));
     public static final RegistryObject<Item> TETRA_EGG = ITEMS.register("tetra_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.TETRA, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.TETRA, 0x4eb1cc, 0xe64d43,
                     new Item.Properties()));
     public static final RegistryObject<Item> HERMITCRAB_EGG = ITEMS.register("hermitcrab_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.HERMITCRAB, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.HERMITCRAB, 0xedab50, 0x8a4836,
                     new Item.Properties()));
     public static final RegistryObject<Item> CRAB_EGG = ITEMS.register("crab_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.CRAB, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.CRAB, 0x953a3a, 0xe3c5b6,
                     new Item.Properties()));
     public static final RegistryObject<Item> LIONFISH_EGG = ITEMS.register("lionfish_egg",
             () -> new ForgeSpawnEggItem(ModEntityTypes.LIONFISH, 0x22b341, 0x19732e,
@@ -66,7 +66,7 @@ public class ModItems {
             () -> new ForgeSpawnEggItem(ModEntityTypes.PIRANHA, 0x22b341, 0x19732e,
                     new Item.Properties()));
     public static final RegistryObject<Item> SEAHORSE_EGG = ITEMS.register("seahorse_egg",
-            () -> new ForgeSpawnEggItem(ModEntityTypes.SEAHORSE, 0x22b341, 0x19732e,
+            () -> new ForgeSpawnEggItem(ModEntityTypes.SEAHORSE, 0xff5c71, 0xffe570,
                     new Item.Properties()));
     public static final RegistryObject<Item> WHALESHARK_EGG = ITEMS.register("whaleshark_egg",
             () -> new ForgeSpawnEggItem(ModEntityTypes.WHALESHARK, 0x22b341, 0x19732e,

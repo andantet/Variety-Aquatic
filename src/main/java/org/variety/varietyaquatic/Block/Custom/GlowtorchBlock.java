@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -40,8 +42,23 @@ public class GlowtorchBlock extends Block {
     }
 
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        return canSupportCenter(pLevel, pPos.below(), Direction.UP);
+        BlockState blockBelowState = pLevel.getBlockState(pPos.below());
+        FluidState fluidState = pLevel.getFluidState(pPos);
+
+        // Allow placement on top of dirt or other blocks that can support the block
+        if (canSupportCenter(pLevel, pPos.below(), Direction.UP)) {
+            return true;
+        }
+
+        // Allow placement in water if the water is deep enough
+        if (fluidState.is(FluidTags.WATER) && fluidState.getAmount() == 8) {
+            return true;
+        }
+
+        // Otherwise, the block cannot survive
+        return false;
     }
+
 
     /**
      * Called periodically clientside on blocks near the player to show effects (like furnace fire particles).

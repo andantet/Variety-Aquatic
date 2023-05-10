@@ -8,15 +8,14 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class TunaModel extends GeoModel<YellowFinTuna> {
     @Override
-    public ResourceLocation getModelResource(YellowFinTuna object) {
+    public ResourceLocation getModelResource(YellowFinTuna animatable) {
         return new ResourceLocation(VarietyAquatic.MODID, "geo/yellowfintuna.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(YellowFinTuna object) {
+    public ResourceLocation getTextureResource(YellowFinTuna animatable) {
         return new ResourceLocation(VarietyAquatic.MODID, "textures/entity/yellowfintuna_texture.png");
     }
-
     @Override
     public ResourceLocation getAnimationResource(YellowFinTuna animatable) {
         return new ResourceLocation(VarietyAquatic.MODID, "animations/yellowfintuna.animation.json");

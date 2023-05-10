@@ -248,7 +248,7 @@ public class WhaleSharkEntity extends WaterAnimal implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("WhaleSharkSwim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }

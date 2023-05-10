@@ -107,7 +107,7 @@ public class ClownfishEntity extends WaterAnimal implements GeoEntity {
 
 
     private PlayState predicate(AnimationState tAnimationState) {
-        if(this.isSwimming()) {
+        if(tAnimationState.isMoving() && this.isInWater()) {
             tAnimationState.getController().setAnimation(RawAnimation.begin().then("ClownfishSwim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
