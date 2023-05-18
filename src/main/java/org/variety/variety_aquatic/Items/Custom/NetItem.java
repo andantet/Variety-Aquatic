@@ -14,8 +14,11 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import org.variety.variety_aquatic.Entities.ModEntities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class NetItem extends Item {
@@ -66,19 +69,45 @@ public class NetItem extends Item {
         List<Entity> entities = player.world.getOtherEntities(player, box);
         Entity nearestEntity = null;
         double nearestDistanceSq = maxDistance * maxDistance;
+
+        Set<EntityType<?>> allowedTypes = new HashSet<>();
+        allowedTypes.add(ModEntities.BETTA);
+        allowedTypes.add(ModEntities.BARRELEE);
+        allowedTypes.add(ModEntities.SEAANGLE);
+        allowedTypes.add(ModEntities.CRAB);
+        allowedTypes.add(ModEntities.ANGLERFISH);
+        allowedTypes.add(ModEntities.SEAHORSE);
+        allowedTypes.add(ModEntities.CLOWNFISH);
+        allowedTypes.add(ModEntities.CUTTLEFISH);
+        allowedTypes.add(ModEntities.FLASHLIGHTFISH);
+        allowedTypes.add(ModEntities.HERMITCRAB);
+        allowedTypes.add(ModEntities.JELLYFISH);
+        allowedTypes.add(ModEntities.LIONFISH);
+        allowedTypes.add(ModEntities.MOONJELLY);
+        allowedTypes.add(ModEntities.OPAH);
+        allowedTypes.add(ModEntities.PIRANHA);
+        allowedTypes.add(ModEntities.YELLOWFIN);
+        allowedTypes.add(ModEntities.VAMPIRESQUID);
+        allowedTypes.add(ModEntities.TETRA);
+        allowedTypes.add(ModEntities.SUNFISH);
+
         for (Entity entity : entities) {
-            double distanceSq = player.getPos().squaredDistanceTo(entity.getPos());
-            if (distanceSq < nearestDistanceSq) {
-                nearestEntity = entity;
-                nearestDistanceSq = distanceSq;
-                // Early exit if the entity is close enough
-                if (nearestDistanceSq < 1.0) {
-                    break;
+            if (allowedTypes.contains(entity.getType())) {
+                double distanceSq = player.getPos().squaredDistanceTo(entity.getPos());
+                if (distanceSq < nearestDistanceSq) {
+                    nearestEntity = entity;
+                    nearestDistanceSq = distanceSq;
+                    // Early exit if the entity is close enough
+                    if (nearestDistanceSq < 1.0) {
+                        break;
+                    }
                 }
             }
         }
+
         return nearestEntity;
     }
+
 
 
 }
