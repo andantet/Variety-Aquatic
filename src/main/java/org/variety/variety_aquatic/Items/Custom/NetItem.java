@@ -90,6 +90,11 @@ public class NetItem extends Item {
         allowedTypes.add(ModEntities.VAMPIRESQUID);
         allowedTypes.add(ModEntities.TETRA);
         allowedTypes.add(ModEntities.SUNFISH);
+        allowedTypes.add(EntityType.TADPOLE);
+        allowedTypes.add(EntityType.TROPICAL_FISH);
+        allowedTypes.add(EntityType.PUFFERFISH);
+        allowedTypes.add(EntityType.SALMON);
+
 
         for (Entity entity : entities) {
             if (allowedTypes.contains(entity.getType())) {
