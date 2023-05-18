@@ -26,7 +26,7 @@ public class NetItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getStackInHand(hand);
-        if (!world.isClient && player.isSneaking()) {
+        if (!world.isClient) {
             NbtCompound itemTag = stack.getOrCreateNbt();
             if (itemTag.contains("pickedEntity")) {
                 // Spawn the stored entity
