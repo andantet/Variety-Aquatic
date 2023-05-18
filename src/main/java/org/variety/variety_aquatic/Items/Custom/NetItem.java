@@ -93,6 +93,7 @@ public class NetItem extends Item {
         allowedTypes.add(EntityType.TADPOLE);
         allowedTypes.add(EntityType.TROPICAL_FISH);
         allowedTypes.add(EntityType.PUFFERFISH);
+        allowedTypes.add(EntityType.COD);
         allowedTypes.add(EntityType.SALMON);
 
 
