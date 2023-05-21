@@ -6,7 +6,10 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -63,8 +66,9 @@ public class AnemoneBlock extends BlockWithEntity implements Waterloggable {
 
 
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-
-        //entity.damage(DamageSource.CACTUS, 1.0F);
+        if (!(entity instanceof ClownfishEntity)&& entity instanceof LivingEntity) {
+            ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 10, 0));
+        }
         if (!world.isClient && entity instanceof ClownfishEntity) {
             ClownfishEntity clownfish = (ClownfishEntity) entity;
             if (!clownfish.isBaby() && clownfish.getNavigation().isIdle()) {
