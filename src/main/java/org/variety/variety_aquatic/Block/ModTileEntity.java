@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.variety.variety_aquatic.Block.Tile.AquariumBlockEntity;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
 import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
@@ -17,6 +18,7 @@ public class ModTileEntity {
     public static BlockEntityType<GiantGlowingSquidTileEntity> GIANTSQUID;
 
     public static BlockEntityType<BeholderTileEntity> BEHOLDER;
+    public static BlockEntityType<AquariumBlockEntity> AQUARIUM;
 
 
 
@@ -39,6 +41,10 @@ public class ModTileEntity {
                 FabricBlockEntityTypeBuilder.create(BeholderTileEntity::new,
                         ModBlock.BEHOLDER_BLOCK).build(null));
 
+        AQUARIUM = Registry.register(Registry.BLOCK_ENTITY_TYPE,
+                new Identifier(Variety_Aquatic.MOD_ID, "aquarium"),
+                FabricBlockEntityTypeBuilder.create(AquariumBlockEntity::new,
+                        ModBlock.AQUARIUM_BLOCK).build(null));
 
     }
 }

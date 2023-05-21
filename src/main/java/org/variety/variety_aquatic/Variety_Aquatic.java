@@ -4,41 +4,37 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.variety.variety_aquatic.Biome.OceanBiomes;
-import org.variety.variety_aquatic.Biome.RiverRegion;
-import org.variety.variety_aquatic.Biome.RiverSurfaceRules;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Fluid.ModFluid;
 import org.variety.variety_aquatic.Items.ModItems;
+import org.variety.variety_aquatic.Screen.BoxScreenHandler;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
-import org.variety.variety_aquatic.Util.TornadoParticleFactory;
-import org.variety.variety_aquatic.Util.TornadoParticleType;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib3.GeckoLib;
-import terrablender.api.Regions;
-import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
 public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
     public static final String MOD_ID = "varietyaquatic";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-    public static final TornadoParticleType TORNADO_PARTICLE = Registry.register(Registry.PARTICLE_TYPE, new Identifier("varietyaquatic", "tornado_particle"), new TornadoParticleType());
 
     public static Identifier id(String path) {
         return new Identifier(MOD_ID, path);
     }
+    public static final ScreenHandlerType<BoxScreenHandler> BOX_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(BoxScreenHandler::new);
+
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
-        OceanBiomes.init();
 
         MidnightConfig.init(MOD_ID, NewConfig.class);
 
@@ -48,7 +44,6 @@ public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
         ModTileEntity.registerBlockEntities();
         ModFluid.register();
         ModWorldGen.generateWorldGen();
-        ParticleFactoryRegistry.getInstance().register(TORNADO_PARTICLE, TornadoParticleFactory::new);
         FabricDefaultAttributeRegistry.register(ModEntities.SEAANGLE, SeaangleEntity.setAttributes());
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());
@@ -77,13 +72,12 @@ public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
         FabricDefaultAttributeRegistry.register(ModEntities.CRAB, CrabEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.BARRELEE, BarreleyeEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.FLASHLIGHTFISH, FlashlightfishEntity.setAttributes());
+        Registry.register(Registry.SCREEN_HANDLER, id("box"), BOX_SCREEN_HANDLER);
 
 
     }
     @Override
     public void onTerraBlenderInitialized() {
-        Regions.register(new RiverRegion(new Identifier(Variety_Aquatic.MOD_ID, "overworld"), 1));
 
-        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Variety_Aquatic.MOD_ID, RiverSurfaceRules.build());
     }
 }

@@ -19,8 +19,10 @@ repositories {
     maven { url = 'https://maven.minecraftforge.net/' }
 
     maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.blamejared.com' }
 
-        // Add repositories to retrieve artifacts from in here.
+
+    // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
     // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
@@ -34,14 +36,14 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.18'
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
-    modImplementation ( "maven.modrinth:midnightlib:${project.midnightlib_version}")
-        // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
     modImplementation "com.github.glitchfiend:TerraBlender-fabric:1.19.2-${project.terrablender_version}"
+    modImplementation ( "maven.modrinth:midnightlib:${project.midnightlib_version}")
 
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
     include "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
+    modImplementation "vazkii.patchouli:Patchouli:1.19.2-77-FABRIC"
 
     modCompileOnly "maven.modrinth:sodium:${sodium_version}"
     modRuntimeOnly "maven.modrinth:sodium:${sodium_version}"

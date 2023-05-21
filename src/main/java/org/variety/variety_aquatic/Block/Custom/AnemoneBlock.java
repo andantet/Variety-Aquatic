@@ -3,6 +3,8 @@ package org.variety.variety_aquatic.Block.Custom;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BeehiveBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.Fluid;
@@ -25,10 +27,10 @@ import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.FluidType;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
-import org.variety.variety_aquatic.Entities.ModEntities;
+import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
 import org.variety.variety_aquatic.Fluid.ModFluid;
 
-public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Waterloggable {
+public class AnemoneBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<FluidType> FLUID = EnumProperty.of("fluid", FluidType.class);
 
     private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -38,6 +40,14 @@ public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Wate
         super(settings);
         this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
+
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, ModTileEntity.ANEMONE, world.isClient ? AnemoneTileEntity::clientTick : AnemoneTileEntity::serverTick);
+    }
+
+
 
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
         return false;
@@ -51,13 +61,22 @@ public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Wate
         return SHAPE;
     }
 
-    @Override
-    protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
-        return !floor.getCollisionShape(world, pos).getFace(Direction.UP).isEmpty() || floor.isSideSolidFullSquare(world, pos, Direction.UP);
-    }
+
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        entity.damage(DamageSource.CACTUS, 1.0F);
+
+        //entity.damage(DamageSource.CACTUS, 1.0F);
+        if (!world.isClient && entity instanceof ClownfishEntity) {
+            ClownfishEntity clownfish = (ClownfishEntity) entity;
+            if (!clownfish.isBaby() && clownfish.getNavigation().isIdle()) {
+                AnemoneTileEntity anemoneTileEntity = (AnemoneTileEntity) world.getBlockEntity(pos);
+                if (anemoneTileEntity != null && !anemoneTileEntity.hasClownfish()) {
+                    anemoneTileEntity.setClownfish(clownfish);
+                    entity.remove(Entity.RemovalReason.DISCARDED);
+                }
+            }
+        }
     }
+
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockPos down = pos.down();
         BlockState downState = world.getBlockState(down);

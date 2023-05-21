@@ -7,17 +7,24 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Rarity;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.variety.variety_aquatic.Items.Custom.AbstractBookItem;
 import org.variety.variety_aquatic.Items.Custom.NetItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 
 public class ModItems {
+
+    public static final Item GUIDE_BOOK = registerItem("guide_book", new AbstractBookItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).maxCount(1).group(ModItemgroup.VARIETY_AQUATIC), new Identifier(Variety_Aquatic.MOD_ID, "fish")));
+
+    public static final Item AQUARIUM_LIGHT_ITEM = registerItem("aquarium_light_item",
+            new Item(new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC)));
 
     public static final Item SUNFISH_EGG = registerItem("sunfish_egg",
             new SpawnEggItem(ModEntities.SUNFISH,0x22b341, 0x19732e,

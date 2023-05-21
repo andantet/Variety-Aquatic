@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "org.variety.variety_aquatic.Variety_AquaticClient"
+      "org.variety.variety_aquatic.Client.Variety_AquaticClient"
     ],
     "main": [
       "org.variety.variety_aquatic.Variety_Aquatic"
@@ -42,7 +42,7 @@
     "fabric-api": ">=0.60.0+1.19.2",
     "minecraft": "1.19.2",
     "geckolib3": ">=3.1.0",
-    "midnightlib":"*"
+    "midnightlib": "*"
 
   },
   "custom": {

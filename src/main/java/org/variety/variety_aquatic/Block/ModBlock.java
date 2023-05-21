@@ -31,6 +31,10 @@ public class ModBlock {
     public static final Block BEHOLDER_BLOCK = registerBlock("beholder",
             new BeholderBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque()), ModItemgroup.VARIETY_AQUATIC);
+    public static final Block AQUARIUM_BLOCK  = registerBlock("aquarium_block",
+            new AquariumBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
+                return 14;
+            }).sounds(BlockSoundGroup.WOOD)),ModItemgroup.VARIETY_AQUATIC);
 
 
 

@@ -1,0 +1,10 @@
+{
+  "name": "item.varietyaquatic.guide_book",
+  "landing_text": "text.varietyaquatic.guide_book.landing_text",
+  "version": 1,
+  "model": "varietyaquatic:guide_book",
+  "show_progress": false,
+  "dont_generate_book": true,
+  "i18n": true,
+  "custom_book_item": "varietyaquatic:guide_book"
+}

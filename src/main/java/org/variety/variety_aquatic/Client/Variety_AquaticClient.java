@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic;
+package org.variety.variety_aquatic.Client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -6,7 +6,9 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry
 import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.util.Identifier;
@@ -19,6 +21,7 @@ import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.*;
 import org.variety.variety_aquatic.Fluid.ModFluid;
+import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class Variety_AquaticClient implements ClientModInitializer {
     @Override
@@ -64,6 +67,9 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
                 ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER);
+
+        HandledScreens.register(Variety_Aquatic.BOX_SCREEN_HANDLER, PositionedScreen::new);
+
 
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());

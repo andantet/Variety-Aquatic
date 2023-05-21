@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Util;
 
+
 import eu.midnightdust.lib.config.MidnightConfig;
 
 public class NewConfig extends MidnightConfig {
