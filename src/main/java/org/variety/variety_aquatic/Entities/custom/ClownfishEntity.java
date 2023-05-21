@@ -1,17 +1,12 @@
 package org.variety.variety_aquatic.Entities.custom;
 
-import com.google.common.collect.Lists;
-import net.minecraft.block.entity.BeehiveBlockEntity;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.NoWaterTargeting;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
-import net.minecraft.entity.ai.control.LookControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -20,27 +15,21 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.tag.PointOfInterestTypeTags;
-import net.minecraft.util.annotation.Debug;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.poi.PointOfInterest;
-import net.minecraft.world.poi.PointOfInterestStorage;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -51,18 +40,15 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-import java.util.Comparator;
 import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class ClownfishEntity extends FishEntity implements IAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
+    private boolean isAttacked;
+
     private static final TrackedData<Integer> MOISTNESS;
 
     private static double health = NewConfig.clownfish_health;
@@ -107,9 +93,8 @@ public class ClownfishEntity extends FishEntity implements IAnimatable {
     }
 
     protected void initGoals() {
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
+        this.goalSelector.add(2, new GoalHideInAnemone(this));
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
     }
@@ -143,8 +128,75 @@ public class ClownfishEntity extends FishEntity implements IAnimatable {
         return 1;
     }
 
+
+
+    public class GoalHideInAnemone extends Goal {
+        private final ClownfishEntity clownfish;
+        private BlockPos targetAnemonePos;
+
+        public GoalHideInAnemone(ClownfishEntity clownfish) {
+            this.clownfish = clownfish;
+            this.setControls(EnumSet.of(Control.MOVE));
+        }
+
+        @Override
+        public boolean canStart() {
+            return this.clownfish.getAttacker() != null;
+        }
+
+        @Override
+        public void start() {
+            BlockPos nearestAnemonePos = findNearestAnemone();
+            if (nearestAnemonePos != null) {
+                this.targetAnemonePos = nearestAnemonePos;
+                this.clownfish.getNavigation().startMovingTo(targetAnemonePos.getX(), targetAnemonePos.getY(), targetAnemonePos.getZ(), 1.0);
+            }
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return this.targetAnemonePos != null && this.clownfish.isAlive() && this.clownfish.isAttacked;
+        }
+
+        @Override
+        public void tick() {
+            if (this.targetAnemonePos != null) {
+                this.clownfish.getNavigation().startMovingTo(targetAnemonePos.getX(), targetAnemonePos.getY(), targetAnemonePos.getZ(), 1.0);
+            }
+        }
+
+        @Override
+        public void stop() {
+            this.targetAnemonePos = null;
+            this.clownfish.getNavigation().stop();
+        }
+
+        private BlockPos findNearestAnemone() {
+            BlockPos currentPos = this.clownfish.getBlockPos();
+            for (int i = -8; i <= 8; i++) {
+                for (int j = -8; j <= 8; j++) {
+                    for (int k = -8; k <= 8; k++) {
+                        BlockPos checkPos = currentPos.add(i, j, k);
+                        Block block = this.clownfish.world.getBlockState(checkPos).getBlock();
+                        if (block == ModBlock.ANEMONE_BLOCK) {
+                            return checkPos;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+
+
     public void tick() {
         super.tick();
+        if (this.getAttacker() != null) {
+            this.isAttacked = true;
+        } else {
+            this.isAttacked = false;
+        }
         if (this.isAiDisabled()) {
             this.setAir(this.getMaxAir());
         } else {
