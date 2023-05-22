@@ -2,12 +2,21 @@ package org.variety.variety_aquatic;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeEffects;
+import net.minecraft.world.biome.GenerationSettings;
+import net.minecraft.world.biome.SpawnSettings;
+import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.variety.variety_aquatic.Block.ModBlock;
@@ -31,7 +40,6 @@ public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
         return new Identifier(MOD_ID, path);
     }
     public static final ScreenHandlerType<BoxScreenHandler> BOX_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(BoxScreenHandler::new);
-
     @Override
     public void onInitialize() {
         GeckoLib.initialize();
@@ -76,6 +84,8 @@ public class Variety_Aquatic implements ModInitializer, TerraBlenderApi {
 
 
     }
+
+
     @Override
     public void onTerraBlenderInitialized() {
 
