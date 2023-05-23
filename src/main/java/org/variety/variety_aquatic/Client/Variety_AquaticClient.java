@@ -42,79 +42,87 @@ import static net.minecraft.client.render.BackgroundRenderer.applyFog;
 public class Variety_AquaticClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+
+        FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
+                new SimpleFluidRenderHandler(
+                        new Identifier("minecraft:block/water_still"),
+                        new Identifier("minecraft:block/water_flow"),
+                        0x00ccff
+                ));
+
         EntityRendererRegistry.register(ModEntities.SHARK, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SharkModel(), "textures/entity/shark_texture.png", 2.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("shark.geo","shark_texture","shark.animation"), "shark_texture",2.0f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.WHALESHARK, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new WhaleSharkModel(), "textures/entity/whaleshark_texture.png", 1.3f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("whaleshark.geo","whaleshark_texture","whaleshark.animation"), "whaleshark_texture", 1.3f,1.2f, false,false)
         );
 
 
         EntityRendererRegistry.register(ModEntities.TORNADO,TornadoRenderer::new); //TODO SWITCH
 
         EntityRendererRegistry.register(ModEntities.SUNFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SunfishModel(), "textures/entity/sunfish_texture.png", 2.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("sunfish.geo","sunfish_texture","sunfish.animation"), "sunfish_texture", 2.0f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.SQUIDLING, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SunfishModel(), "textures/entity/squidling_texture.png", 1.0f,1.2f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("squidling.geo","squidling_texture","squidling.animation"), "squidling_texture", 1.0f,1.2f, false,true)
         );
 
         EntityRendererRegistry.register(ModEntities.HERMITCRAB, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new HermitcrabModel(), "textures/entity/hermitcrab_texture.png", 1.2f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("hermitcrab.geo","hermitcrab_texture","hermitcrab.animation"), "hermitcrab_texture", 1.2f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.JELLYFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new JellyfishModel(), "textures/entity/jellyfish_texture.png", 1.2f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("jellyfish.geo","jellyfish_texture","jellyfish.animation"), "jellyfish_texture", 1.2f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.MOONJELLY, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new MoonJellyModel(), "textures/entity/moonjelly_texture.png", 1.0f,1.2f, true,true)
+                new GenericRenderer<>(ctx, new GenericModel("moonjelly.geo","moonjelly_texture","moonjelly.animation"), "moonjelly_texture", 1.0f,1.2f, true,true)
         );
         EntityRendererRegistry.register(ModEntities.YELLOWFIN, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new YelllowFinTunaModel(), "textures/entity/yellowfintuna_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("yellowfintuna.geo","yellowfintuna_texture","yellowfintuna.animation"), "yellowfintuna_texture", 1.0f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.PIRANHA, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new PiranhaModel(), "textures/entity/piranha_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("piranha.geo","piranha_texture","piranha.animation"), "piranha_texture", 1.0f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.VAMPIRESQUID, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new VampireSquidModel(), "textures/entity/vampiresquid_texture.png", 1.0f,1.2f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("vampiresquid.geo","vampiresquid_texture","vampiresquid.animation"), "vampiresquid_texture", 1.0f,1.2f, false,true)
         );
         EntityRendererRegistry.register(ModEntities.OARFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new OarfishModel(), "textures/entity/oarfish_texture.png", 1.0f,1.2f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("oarfish.geo","oarfish_texture","oarfish.animation"), "oarfish_texture", 1.0f,1.2f, false,true)
         );
         EntityRendererRegistry.register(ModEntities.BARRELEE, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new BarreleModel(), "textures/entity/barreleye_texture.png", 1.0f,1.2f,true,true)
+                new GenericRenderer<>(ctx, new GenericModel("barreleye.geo","barreleye_texture","barreleye.animation"), "barreleye_texture", 1.0f,1.2f,true,true)
         );
         EntityRendererRegistry.register(ModEntities.FLASHLIGHTFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new FlashlightfishModel(), "textures/entity/flashlightfish_texture.png", 1.0f,1.2f,false,true)
+                new GenericRenderer<>(ctx, new GenericModel("flashlightfish.geo","flashlightfish_texture","flashlightfish.animation"), "flashlightfish_texture", 1.0f,1.2f,false,true)
         );
         EntityRendererRegistry.register(ModEntities.CUTTLEFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new CuttlefishModel(), "textures/entity/cuttlefish_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("cuttlefish.geo","cuttlefish_texture","cuttlefish.animation"), "cuttlefish_texture", 1.0f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.OPAH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new OpahModel(), "textures/entity/opah_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("opah.geo","opah_texture","opah.animation"), "opah_texture", 1.0f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.LIONFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new LionfishModel(), "textures/entity/lionfish_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("lionfish.geo","lionfish_texture","lionfish.animation"), "lionfish_texture", 1.0f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.GIANTGLOWINGSQUID, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new GiantsquidModel(), "textures/entity/giantsquid_texture.png", 1.0f,1.2f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("giantsquid.geo","giantsquid_texture","giantsquid.animation"), "giantsquid_texture", 1.0f,1.2f, false,true)
         );
 
         EntityRendererRegistry.register(ModEntities.SPOTTEDSTINGRAY, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SpottedStingrayModel(), "textures/entity/spottedstingray_texture.png", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("spottedstingray.geo","spottedstingray_texture","spottedstingray.animation"), "spottedstingray_texture", 1.0f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.LEVIATHAN, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SpermwhaleModel(), "textures/entity/spermwhale_texture.png", 1.1f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("spermwhale.geo","spermwhale_texture","spermwhale.animation"), "spermwhale_texture", 1.1f,1.2f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.TETRA, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new TetraModel(), "textures/entity/tetra_texture.png", 1.2f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("tetra.geo","tetra_texture","tetra.animation"), "tetra_texture", 1.2f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new ClownfishModel(), "textures/entity/clownfish_texture.png", 1.2f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("clownfish.geo","clownfish_texture","clownfish.animation"), "clownfish_texture", 1.2f,1.2f, false,false)
         );
 
 
@@ -123,25 +131,19 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
 
         EntityRendererRegistry.register(ModEntities.ANGLERFISH, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new AnglerFishModel(), "textures/entity/anglerfish_texture.png", 1.2f,1.2f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("anglerfish.geo","anglerfish_texture","anglerfish.animation"), "anglerfish_texture", 1.2f,1.2f, false,true)
         );
         EntityRendererRegistry.register(ModEntities.CRAB, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new CrabModel(), "textures/entity/crab_texture.png", 1.6f,0.7f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel("crab.geo","crab_texture","crab.animation"), "crab_texture", 1.6f,0.7f, false,false)
         );
         EntityRendererRegistry.register(ModEntities.SEAANGLE, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new SeaAngleModel(), "textures/entity/seaangle_texture.png", 1.0f,1.0f, false,true)
+                new GenericRenderer<>(ctx, new GenericModel("seaangle.geo","seaangle_texture","seaangle.animation"), "seaangle_texture", 1.0f,1.0f, false,true)
         );
 
 
 
         EntityRendererRegistry.register(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, BlindnessProjectileRenderer::new); //TODO LATER
 
-        FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
-                new SimpleFluidRenderHandler(
-                        new Identifier("minecraft:block/water_still"),
-                        new Identifier("minecraft:block/water_flow"),
-                        0x00ccff
-                ));
 
         BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
                 ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER);

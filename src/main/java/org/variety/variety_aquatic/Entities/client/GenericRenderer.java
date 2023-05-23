@@ -39,7 +39,7 @@ public class GenericRenderer<T extends LivingEntity & IAnimatable> extends GeoEn
 
     @Override
     public Identifier getTextureResource(T instance) {
-        return new Identifier(Variety_Aquatic.MOD_ID, texturePath);
+        return new Identifier(Variety_Aquatic.MOD_ID, "textures/entity/"+texturePath+".png");
     }
 
     @Override
