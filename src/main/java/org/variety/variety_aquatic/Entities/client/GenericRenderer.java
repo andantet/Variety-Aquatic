@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import software.bernie.geckolib3.renderers.geo.layer.LayerGlowingAreasGeo;
@@ -27,13 +26,11 @@ public class GenericRenderer<T extends LivingEntity & IAnimatable> extends GeoEn
         this.texturePath = texturePath;
         this.scale = scale;
         this.scalebaby = scalebaby;
-
         this.isTranslucent = isTranslucent;
 
         this.shadowRadius = 0.4f;
-        //fix later
       //  if(hasGlowLayer) {
-        //    this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
+        //   this.addLayer(new LayerGlowingAreasGeo<>(this, getGeoModelProvider()::getTextureResource, getGeoModelProvider()::getModelResource, RenderLayer::getEntityTranslucentEmissive));
         //}
     }
 
