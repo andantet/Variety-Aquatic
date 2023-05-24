@@ -11,8 +11,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.variety.variety_aquatic.Items.ModItemgroup;
 import org.variety.variety_aquatic.Variety_Aquatic;
+import org.varietymods.varietyapi.Items.ModItemGroup;
 
 public class ModFluid {
     public static FlowableFluid STILL_GLOWING_WATER;
@@ -31,6 +31,6 @@ public class ModFluid {
         GLOWING_WATER_BLOCK = Registry.register(Registry.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "glowing_water_block"),
                 new FluidBlock(ModFluid.STILL_GLOWING_WATER, glowingWaterBlockSettings){ });
         GLOWING_WATER_BUCKET = Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, "glowing_water_bucket"),
-                new BucketItem(ModFluid.STILL_GLOWING_WATER, new FabricItemSettings().group(ModItemgroup.VARIETY_AQUATIC).recipeRemainder(Items.BUCKET).maxCount(1)));
+                new BucketItem(ModFluid.STILL_GLOWING_WATER, new FabricItemSettings().group(ModItemGroup.VARIETY_MODS).recipeRemainder(Items.BUCKET).maxCount(1)));
     }
 }
