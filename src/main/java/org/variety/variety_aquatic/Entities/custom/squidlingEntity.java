@@ -137,14 +137,12 @@ public class squidlingEntity extends WaterCreatureEntity implements IAnimatable,
 
     protected void initGoals() {
         this.goalSelector.add(2,new squidlingEntity.AttackGoal());
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
+        this.goalSelector.add(3, new EscapeDangerGoal(this, 2.0f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
 
-        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
     }
