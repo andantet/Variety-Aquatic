@@ -28,8 +28,6 @@
   "item.varietyaquatic.tetra_bucket": "Tetra Bucket",
   "item.varietyaquatic.raw_tuna": "Raw Tuna",
   "item.varietyaquatic.cooked_tuna": "Cooked Tuna",
-  "item.varietyaquatic.net_item": "Fishing Net",
-
 
   "item.varietyaquatic.lionfish_bucket": "Lionfish Bucket",
   "item.varietyaquatic.piranha_egg": "Piranha Spawn Egg",
@@ -72,9 +70,6 @@
   "item.varietyaquatic.jellyfish_bucket": "Jellyfish Bucket",
   "item.varietyaquatic.cuttlefish_bucket": "Cuttlefish Bucket",
   "item.varietyaquatic.lionfishfish_bucket": "Lionfish Bucket",
-
-  "itemGroup.varietyaquatic.variety_aquatic": "Variety Aquatic",
-
   "varietyaquatic.midnightconfig.jellyfish_spawnweight": "Jellyfish Spawnweight",
   "varietyaquatic.midnightconfig.hermitcrab_spawnweight": "Hermitcrab Spawnweight",
   "varietyaquatic.midnightconfig.sunfish_heath": "Sunfish Health",

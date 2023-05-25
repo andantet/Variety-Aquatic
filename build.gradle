@@ -34,12 +34,12 @@ dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
     modImplementation files('libs/VarietyAPI-1.0.jar')
+
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.18'
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
-    modImplementation "com.github.glitchfiend:TerraBlender-fabric:1.19.2-${project.terrablender_version}"
     modImplementation ( "maven.modrinth:midnightlib:${project.midnightlib_version}")
 
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
