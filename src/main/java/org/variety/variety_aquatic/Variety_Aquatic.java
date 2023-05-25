@@ -13,7 +13,6 @@ import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
-import org.variety.variety_aquatic.Fluid.ModFluid;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Screen.BoxScreenHandler;
 import org.variety.variety_aquatic.Sound.ModSound;
@@ -38,7 +37,6 @@ public class Variety_Aquatic implements ModInitializer {
         ModSound.initializeSounds();
         ModBlock.registerModBlocks();
         ModTileEntity.registerBlockEntities();
-        ModFluid.register();
         ModWorldGen.generateWorldGen();
         FabricDefaultAttributeRegistry.register(ModEntities.SEAANGLE, SeaangleEntity.setAttributes());
 

@@ -1,9 +1,6 @@
 package org.variety.variety_aquatic.Client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandlerRegistry;
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
@@ -11,7 +8,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
@@ -23,10 +19,7 @@ import org.variety.variety_aquatic.Entities.client.BettaRenderer;
 import org.variety.variety_aquatic.Entities.client.BlindnessProjectileRenderer;
 import org.variety.variety_aquatic.Entities.client.SeahorseRenderer;
 import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
-import org.variety.variety_aquatic.Fluid.ModFluid;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import org.varietymods.varietyapi.API.GenericBlockModel;
-import org.varietymods.varietyapi.API.GenericBlockRenderer;
 import org.varietymods.varietyapi.API.GenericModel;
 import org.varietymods.varietyapi.API.GenericRenderer;
 
@@ -34,12 +27,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        FluidRenderHandlerRegistry.INSTANCE.register(ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER,
-                new SimpleFluidRenderHandler(
-                        new Identifier("minecraft:block/water_still"),
-                        new Identifier("minecraft:block/water_flow"),
-                        0x00ccff
-                ));
 
         EntityRendererRegistry.register(ModEntities.SHARK, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"shark.geo","shark_texture","shark.animation"),Variety_Aquatic.MOD_ID, "shark_texture",2.0f,1.2f, false,false)
@@ -137,8 +124,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, BlindnessProjectileRenderer::new); //TODO LATER
 
 
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderLayer.getTranslucent(),
-                ModFluid.STILL_GLOWING_WATER, ModFluid.FLOWING_GLOWING_WATER);
 
         HandledScreens.register(Variety_Aquatic.BOX_SCREEN_HANDLER, PositionedScreen::new);
         BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,

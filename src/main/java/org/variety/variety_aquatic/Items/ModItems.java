@@ -14,7 +14,6 @@ import net.minecraft.item.*;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Items.Custom.AbstractBookItem;
-import org.variety.variety_aquatic.Items.Custom.NetItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.Items.ModItemGroup;
@@ -33,8 +32,6 @@ public class ModItems {
     public static final Item SQUIDLING_EGG = registerItem("squidling_egg",
             new SpawnEggItem(ModEntities.SQUIDLING,0x424c6e, 0x00cdf9,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
-    public static final Item NETITEM = registerItem("net_item",
-            new NetItem(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
     public static final Item SHARK_EGG = registerItem("shark_egg",
             new SpawnEggItem(ModEntities.SHARK,0x134273, 0xc8d8dd,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
