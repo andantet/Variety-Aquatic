@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.variety.variety_aquatic.Block.ModBlock;
 @Mixin(CoralFeature.class)
 public class CoralFeatureMixin {
-    /*
+
     @Inject(method = "generateCoralPiece", at = @At("RETURN"))
     protected void generateCoralPiece(WorldAccess world, Random random, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if(cir.getReturnValue()) {
@@ -42,6 +42,6 @@ public class CoralFeatureMixin {
         return state.isIn(BlockTags.CORALS) || (state.isIn(BlockTags.WALL_CORALS) && state.getBlock() != ModBlock.ANEMONE_BLOCK) || state.isOf(Blocks.WATER);
 
     }
-    */
+
 }
 

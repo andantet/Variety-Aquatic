@@ -23,8 +23,28 @@
 
   "block.varietyaquatic.anemone": "Anemone",
   "block.varietyaquatic.sea_urchin_block": "Urchin",
+  "block.varietyaquatic.leviathan": "Leviathan Trophy",
+  "block.varietyaquatic.giantsquidtrophy": "Glowing Squid Trophy",
+  "block.varietyaquatic.beholder": "Beholder",
+
 
   "item.varietyaquatic.raw_tetra": "Raw Tetra",
+  "item.varietyaquatic.guide_book": "Guide Book",
+  "item.varietyaquatic.seahorse_bucket": "Seahorse Bucket",
+  "item.varietyaquatic.crab_egg": "Crab Spawn Egg",
+  "item.varietyaquatic.vampiresquid_egg": "Vampiresquid Spawn Egg",
+  "item.varietyaquatic.crab_egg": "Crab Spawn Egg",
+  "item.varietyaquatic.angler_egg": "Anglerfish Spawn Egg",
+  "item.varietyaquatic.oarfish_egg": "Oarfish Spawn Egg",
+  "item.varietyaquatic.flashlightfish_egg": "Flashlightfish Spawn Egg",
+  "item.varietyaquatic.giantsquideye": "Glowing Giant Squid Eye",
+  "item.varietyaquatic.giantsquidbeak": "Giantsquid Beak",
+  "item.varietyaquatic.angler_egg": "Anglerfish Spawn Egg",
+  "item.varietyaquatic.barreleye_egg": "Barreleye Spawn Egg",
+  "item.varietyaquatic.seaangel_egg": "Sea Angel Spawn Egg",
+  "item.varietyaquatic.seahorse_egg": "Seahorse Spawn Egg",
+  "item.varietyaquatic.squidling_egg": "Squidling Spawn Egg",
+
   "item.varietyaquatic.tetra_bucket": "Tetra Bucket",
   "item.varietyaquatic.raw_tuna": "Raw Tuna",
   "item.varietyaquatic.cooked_tuna": "Cooked Tuna",
@@ -37,8 +57,9 @@
   "block.varietyaquatic.angler_torch_ground": "Glow Stick",
 
   "item.varietyaquatic.leviathan_egg": "Leviathan Spawn Egg",
-  "item.varietyaquatic.crab_rave_music_disc": "Crab Rave Disc",
-  "item.varietyaquatic.crab_rave_music_disc.desc": "Most beautiful song",
+  "item.varietyaquatic.crab_rave_music_disc": "Music Disc",
+  "item.varietyaquatic.crab_rave_music_disc.desc": "Crab Rave",
+  "item.varietyaquatic.crab_rave_music_disc": "Music Disc",
 
   "item.varietyaquatic.stingray_egg": "Stingray Spawn Egg",
   "item.varietyaquatic.shark_egg": "Shark Spawn Egg",

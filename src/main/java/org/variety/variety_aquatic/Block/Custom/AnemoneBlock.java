@@ -24,7 +24,7 @@ import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
 
 public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Waterloggable {
     private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    private static final VoxelShape SHAPE = Block.createCuboidShape(5, 0, 5, 11, 9, 11);
+    private static final VoxelShape SHAPE = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
 
     public AnemoneBlock(Settings settings) {
         super(settings);
