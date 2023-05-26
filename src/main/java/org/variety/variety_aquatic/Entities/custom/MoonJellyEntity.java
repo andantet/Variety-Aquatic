@@ -244,16 +244,7 @@ public class MoonJellyEntity extends FishEntity implements IAnimatable {
     public ItemStack getBucketItem() {
         return null;
     }
-    public void onPlayerCollision(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {
-            if (!this.isSilent()) {
-                ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
-            }
 
-            player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0), this);
-        }
-
-    }
     class SwimGoal extends Goal {
         private final MoonJellyEntity jellyfish;
 

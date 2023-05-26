@@ -23,10 +23,7 @@ import org.variety.variety_aquatic.Entities.custom.BettaEntity;
 import org.variety.variety_aquatic.Entities.custom.SeahorseEntity;
 import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import org.varietymods.varietyapi.API.GenericModel;
-import org.varietymods.varietyapi.API.GenericRenderer;
-import org.varietymods.varietyapi.API.GenericVariantModel;
-import org.varietymods.varietyapi.API.GenericVariantRenderer;
+import org.varietymods.varietyapi.API.*;
 
 import java.util.Map;
 
@@ -101,9 +98,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"giantsquid.geo","giantsquid_texture","giantsquid.animation"),Variety_Aquatic.MOD_ID, "giantsquid_texture", 1.0f,1.2f, false,true)
         );
 
-
         EntityRendererRegistry.register(ModEntities.SPOTTEDSTINGRAY, (EntityRendererFactory.Context ctx) ->
-                new GenericRenderer<>(ctx, new GenericModel<>(Variety_Aquatic.MOD_ID,"spottedstingray.geo","spottedstingray_texture","spottedstingray.animation"), Variety_Aquatic.MOD_ID, "spottedstingray_texture", 1.0f,1.2f, false,false)
+                new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"spottedstingray.geo","spottedstingray_texture","spottedstingray.animation"),Variety_Aquatic.MOD_ID, "spottedstingray_texture", 1.1f,1.2f, false,false)
         );
 
         EntityRendererRegistry.register(ModEntities.LEVIATHAN, (EntityRendererFactory.Context ctx) ->
@@ -117,7 +113,9 @@ public class Variety_AquaticClient implements ClientModInitializer {
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"clownfish.geo","clownfish_texture","clownfish.animation"),Variety_Aquatic.MOD_ID,"clownfish_texture", 1.2f,1.2f, false,false)
         );
 
-
+        EntityRendererRegistry.register(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, (EntityRendererFactory.Context ctx) ->
+                new GenericProjectileRenderer<>(ctx, new GenericProjectileModel(Variety_Aquatic.MOD_ID,"blindnessprojectile.geo","blindnessprojectile","null"),Variety_Aquatic.MOD_ID,"blindnessprojectile", false,false)
+        );
 
 
 
@@ -132,9 +130,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"seaangle.geo","seaangle_texture","seaangle.animation"), Variety_Aquatic.MOD_ID,"seaangle_texture",1.0f, 1.0f,true, true)
         );
 
-
-
-        EntityRendererRegistry.register(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, BlindnessProjectileRenderer::new); //TODO LATER
 
 
 

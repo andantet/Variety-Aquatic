@@ -47,11 +47,11 @@ public class ModEntities {
     public static final EntityType<SunfishEntity> SUNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "sunfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SunfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.5f, 2.3f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(1.0f, 1.5f)).trackRangeBlocks(50).build());
     public static final EntityType<JellyfishEntity> JELLYFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "jellyfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, JellyfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(1f, 1.2f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(0.8f, 0.9f)).trackRangeBlocks(50).build());
     public static final EntityType<SeaangleEntity> SEAANGLE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "seaangle"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, SeaangleEntity::new)
@@ -96,7 +96,7 @@ public class ModEntities {
     public static final EntityType<LionfishEntity> LIONFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "lionfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, LionfishEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(0.4f, 0.4f)).trackRangeBlocks(50).build());
     public static final EntityType<SpottedStingray> SPOTTEDSTINGRAY = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "spottedstingray"),
             FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, SpottedStingray::new)
