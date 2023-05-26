@@ -25,6 +25,8 @@ import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.GenericModel;
 import org.varietymods.varietyapi.API.GenericRenderer;
+import org.varietymods.varietyapi.API.GenericVariantModel;
+import org.varietymods.varietyapi.API.GenericVariantRenderer;
 
 import java.util.Map;
 
@@ -34,10 +36,10 @@ public class Variety_AquaticClient implements ClientModInitializer {
     public void onInitializeClient() {
 
         EntityRendererRegistry.register(ModEntities.SEAHORSE,
-                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context, new GenericVariantModel<>("geo/seahorse.geo.json", "animations/seahorse.animation.json")));
+                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context,new GenericVariantModel<>(Variety_Aquatic.MOD_ID,"seahorse.geo", "seahorse.animation"),1.0f,1.0f,false,false));
 
         EntityRendererRegistry.register(ModEntities.BETTA,
-                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context, new GenericVariantModel<>("geo/betta.geo.json", "animations/betta.animation.json")));
+                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context, new GenericVariantModel<>(Variety_Aquatic.MOD_ID,"betta.geo", "betta.animation"),1.0f,1.0f,false,false));
 
         EntityRendererRegistry.register(ModEntities.SHARK, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"shark.geo","shark_texture","shark.animation"),Variety_Aquatic.MOD_ID, "shark_texture",2.0f,1.2f, false,false)

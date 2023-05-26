@@ -1,8 +1,8 @@
 package org.variety.variety_aquatic.Entities.Variant;
 
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Entities.client.IVariant;
 import org.variety.variety_aquatic.Variety_Aquatic;
+import org.varietymods.varietyapi.API.IVariant;
 
 import java.util.Arrays;
 import java.util.Comparator;
