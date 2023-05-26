@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
@@ -15,18 +16,28 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.client.BettaRenderer;
-import org.variety.variety_aquatic.Entities.client.BlindnessProjectileRenderer;
-import org.variety.variety_aquatic.Entities.client.SeahorseRenderer;
-import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
+import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
+import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
+import org.variety.variety_aquatic.Entities.client.*;
+import org.variety.variety_aquatic.Entities.custom.BettaEntity;
+import org.variety.variety_aquatic.Entities.custom.SeahorseEntity;
+import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.GenericModel;
 import org.varietymods.varietyapi.API.GenericRenderer;
 
+import java.util.Map;
+
 public class Variety_AquaticClient implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
 
+        EntityRendererRegistry.register(ModEntities.SEAHORSE,
+                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context, new GenericVariantModel<>("geo/seahorse.geo.json", "animations/seahorse.animation.json")));
+
+        EntityRendererRegistry.register(ModEntities.BETTA,
+                (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context, new GenericVariantModel<>("geo/betta.geo.json", "animations/betta.animation.json")));
 
         EntityRendererRegistry.register(ModEntities.SHARK, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"shark.geo","shark_texture","shark.animation"),Variety_Aquatic.MOD_ID, "shark_texture",2.0f,1.2f, false,false)
@@ -105,8 +116,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
         );
 
 
-        EntityRendererRegistry.register(ModEntities.BETTA, BettaRenderer::new); //TODO LATER
-        EntityRendererRegistry.register(ModEntities.SEAHORSE, SeahorseRenderer::new); //TODO LATER
+
+
 
 
         EntityRendererRegistry.register(ModEntities.ANGLERFISH, (EntityRendererFactory.Context ctx) ->

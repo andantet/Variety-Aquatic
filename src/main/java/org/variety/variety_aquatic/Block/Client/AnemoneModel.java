@@ -13,17 +13,12 @@ public class AnemoneModel extends AnimatedGeoModel<AnemoneTileEntity> {
     public Identifier getAnimationResource(AnemoneTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/anemone.animation.json");
     }
-
     @Override
     public Identifier getModelResource(AnemoneTileEntity animatable) {
             return new Identifier(Variety_Aquatic.MOD_ID, "geo/anemone.geo.json");
-
     }
-
     @Override
     public Identifier getTextureResource(AnemoneTileEntity entity) {
-
         return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/anemone_texture.png");
-
     }
 }

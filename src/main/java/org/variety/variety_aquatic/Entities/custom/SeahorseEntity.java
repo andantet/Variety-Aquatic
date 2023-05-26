@@ -26,7 +26,9 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
+import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
 import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
+import org.variety.variety_aquatic.Entities.client.IVariantEntity;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -37,7 +39,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class SeahorseEntity extends FishEntity implements IAnimatable {
+public class SeahorseEntity extends FishEntity implements IAnimatable, IVariantEntity<SeahorseVariant> {
     private AnimationFactory factory = new AnimationFactory(this);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
 
