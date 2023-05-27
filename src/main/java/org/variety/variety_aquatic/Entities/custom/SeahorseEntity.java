@@ -38,25 +38,18 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class SeahorseEntity extends FishEntity implements IAnimatable, IVariantEntity<SeahorseVariant> {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class SeahorseEntity extends VarietyFish implements IVariantEntity<SeahorseVariant> {
+    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT = DataTracker.registerData(SeahorseEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-
 
     public SeahorseEntity(EntityType<? extends FishEntity> entityType, World world) {
         super(entityType, world);
     }
 
-
     protected void initGoals() {
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.8f));
-        this.goalSelector.add(1, new SwimAroundGoal(this, 0.50, 6));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
+        super.initGoals();
         goalSelector.add(1, new MoveToKelpGoal(this));
     }
-
-
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
@@ -64,49 +57,32 @@ public class SeahorseEntity extends FishEntity implements IAnimatable, IVariantE
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.seahorse_speed);
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
-    }
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("BucketVariantTag", this.getTypeVariant());
     }
+
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getTypeVariant());
     }
 
-
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
     }
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
     }
-    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
-            DataTracker.registerData(SeahorseEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @Nullable EntityData entityData,
-                                 @Nullable NbtCompound entityNbt) {
 
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains("BucketVariantTag", 3)) {
             setVariant(SeahorseVariant.byId(entityNbt.getInt("BucketVariantTag")));
         }
@@ -124,34 +100,11 @@ public class SeahorseEntity extends FishEntity implements IAnimatable, IVariantE
     private int getTypeVariant() {
         return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
     }
+
     private void setVariant(SeahorseVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
 
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_COD_FLOP;
-    }
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.SEAHORSE_BUCKET);
@@ -173,9 +126,5 @@ public class SeahorseEntity extends FishEntity implements IAnimatable, IVariantE
             BlockState state = world.getBlockState(pos.up());
             return state.isOf(Blocks.KELP) || state.isOf(Blocks.KELP_PLANT);
         }
-    }
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

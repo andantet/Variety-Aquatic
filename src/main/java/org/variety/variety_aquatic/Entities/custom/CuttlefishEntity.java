@@ -58,10 +58,6 @@ public class CuttlefishEntity extends VarietyFish {
         return ParticleTypes.SQUID_INK;
     }
 
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setMoistness(nbt.getInt("Moistness"));
-    }
-
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.cuttlefish_health)
