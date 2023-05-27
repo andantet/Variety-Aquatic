@@ -1,9 +1,6 @@
 package org.variety.variety_aquatic.Client;
 
-import java.util.Optional;
-
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +9,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import org.variety.variety_aquatic.Screen.PositionedScreenHandler;
+
+import java.util.Optional;
 
 public class PositionedScreen extends HandledScreen<ScreenHandler> {
     private static final Identifier TEXTURE = new Identifier("minecraft", "textures/gui/container/dispenser.png");

@@ -5,7 +5,6 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import software.bernie.geckolib3.renderers.geo.GeoBlockRenderer;
 

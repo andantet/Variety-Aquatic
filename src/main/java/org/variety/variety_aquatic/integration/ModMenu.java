@@ -2,7 +2,6 @@ package org.variety.variety_aquatic.integration;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-
 import eu.midnightdust.lib.config.MidnightConfig;
 import org.variety.variety_aquatic.Variety_Aquatic;
 

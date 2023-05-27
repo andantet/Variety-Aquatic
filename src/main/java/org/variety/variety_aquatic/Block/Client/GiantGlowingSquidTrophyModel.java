@@ -3,7 +3,6 @@ package org.variety.variety_aquatic.Block.Client;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
-import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 

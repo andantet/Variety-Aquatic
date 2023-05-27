@@ -1,7 +1,6 @@
 package org.variety.variety_aquatic.Entities.custom.AI;
 
 import net.minecraft.entity.ai.goal.DiveJumpingGoal;
-import net.minecraft.entity.passive.DolphinEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.FluidTags;

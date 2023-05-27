@@ -7,9 +7,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
 import net.minecraft.util.shape.VoxelShape;
-
+import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 

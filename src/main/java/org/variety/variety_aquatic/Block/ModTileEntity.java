@@ -4,11 +4,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import org.variety.variety_aquatic.Block.Tile.AquariumBlockEntity;
-import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
-import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
-import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
-import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
+import org.variety.variety_aquatic.Block.Tile.*;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModTileEntity {

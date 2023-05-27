@@ -1,9 +1,6 @@
 package org.variety.variety_aquatic.Block.Client;
 
 import net.minecraft.util.Identifier;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;

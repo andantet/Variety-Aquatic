@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
@@ -16,16 +15,9 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
-import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
-import org.variety.variety_aquatic.Entities.client.*;
-import org.variety.variety_aquatic.Entities.custom.BettaEntity;
-import org.variety.variety_aquatic.Entities.custom.SeahorseEntity;
-import org.variety.variety_aquatic.Entities.custom.SunfishEntity;
+import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
-
-import java.util.Map;
 
 public class Variety_AquaticClient implements ClientModInitializer {
 
