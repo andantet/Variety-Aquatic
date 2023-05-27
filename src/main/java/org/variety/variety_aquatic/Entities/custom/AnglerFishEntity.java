@@ -49,8 +49,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
-    private AnimationFactory factory = new AnimationFactory(this);
+public class AnglerFishEntity extends VarietyFish implements Angerable {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
     private static final UniformIntProvider ANGER_TIME_RANGE;
@@ -58,18 +57,10 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
     private int angerTime;
     private UUID targetUuid;
 
-
-    private static double health = NewConfig.anglerfish_health;
-    private static double speed = NewConfig.anglerfish_speed;
-    private static double follow = NewConfig.anglerfish_follow;
-    private static double knockback = NewConfig.anglerfish_knockback;
-
     public AnglerFishEntity(EntityType<? extends AnglerFishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new YawAdjustingLookControl(this, 10);
-
     }
+
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
@@ -100,10 +91,6 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
 
-    public int getMaxGroupSize() {
-        return 5;
-    }
-
     public void setAngerTime(int ticks) {
         this.angerTime = ticks;
     }
@@ -131,29 +118,21 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
 
     protected void initGoals() {
         this.goalSelector.add(2,new AnglerFishEntity.AttackGoal());
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 3f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
 
-        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
+        super.initGoals();
     }
 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.anglerfish_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.anglerfish_speed)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
-    }
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, NewConfig.anglerfish_knockback)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.anglerfish_follow);
     }
 
     public int getMaxAir() {
@@ -218,7 +197,6 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
         return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);
     }
 
-
     private class AttackGoal extends MeleeAttackGoal {
         public AttackGoal() {
             super(AnglerFishEntity.this, 1.25D, true);
@@ -241,28 +219,6 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
         }
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
-
     public void travel(Vec3d movementInput) {
         if (this.canMoveVoluntarily() && this.isTouchingWater()) {
             this.updateVelocity(this.getMovementSpeed(), movementInput);
@@ -277,10 +233,6 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
 
     }
 
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-    }
-
     static {
         MOISTNESS = DataTracker.registerData(AnglerFishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
@@ -288,7 +240,8 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
     }
 
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    @Override
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isOnGround() && !this.isWet()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;
@@ -303,30 +256,5 @@ public class AnglerFishEntity extends WaterCreatureEntity implements IAnimatable
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final AnglerFishEntity owner;
-
-        public InWaterPredicate(AnglerFishEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }
