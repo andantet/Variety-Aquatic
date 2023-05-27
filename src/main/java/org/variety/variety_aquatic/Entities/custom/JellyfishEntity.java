@@ -43,9 +43,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class JellyfishEntity extends FishEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-
+public class JellyfishEntity extends VarietyFish {
     public float tiltAngle;
     public float prevTiltAngle;
     public float rollAngle;
@@ -88,9 +86,11 @@ public class JellyfishEntity extends FishEntity implements IAnimatable {
         }
 
     }
+
     public ItemStack getBucketItem() {
         return null;
     }
+
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.5F;
     }
@@ -187,11 +187,6 @@ public class JellyfishEntity extends FishEntity implements IAnimatable {
 
     }
 
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-    }
-
     public boolean damage(DamageSource source, float amount) {
         if (super.damage(source, amount) && this.getAttacker() != null) {
             if (!this.world.isClient) {
@@ -226,6 +221,7 @@ public class JellyfishEntity extends FishEntity implements IAnimatable {
         return ParticleTypes.DRIPPING_WATER;
     }
 
+    @Override
     public void travel(Vec3d movementInput) {
         this.move(MovementType.SELF, this.getVelocity());
     }
@@ -337,27 +333,12 @@ public class JellyfishEntity extends FishEntity implements IAnimatable {
         }
     }
 
-
-
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    @Override
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (this.isDead()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
         }
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

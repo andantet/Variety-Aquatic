@@ -61,8 +61,6 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
 
     }
 
-
-
     @Nullable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setAir(this.getMaxAir());
@@ -87,17 +85,18 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
     }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
         if (this.hasCustomName()) {
             this.bossBar.setName(this.getDisplayName());
         }
     }
+
     public void setCustomName(@Nullable Text name) {
         super.setCustomName(name);
         this.bossBar.setName(this.getDisplayName());
     }
-
 
     protected void initGoals() {
         this.goalSelector.add(0, new BreatheAirGoal(this));
@@ -108,9 +107,7 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         this.goalSelector.add(4, new WanderAroundPointOfInterestGoal(this, 1.0, false));
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-
     }
-
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
@@ -125,9 +122,11 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
+
     protected void mobTick() {
         this.bossBar.setPercent(this.getHealth() / this.getMaxHealth());
     }
+
     public int getMaxAir() {
         return 4800;
     }
@@ -217,37 +216,14 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         return SoundEvents.ENTITY_DOLPHIN_SWIM;
     }
 
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
-    }
-
-
-
-
     public boolean canImmediatelyDespawn(double distanceSquared) {
         return false;
     }
-
-
-
-
-
 
     static {
         MOISTNESS = DataTracker.registerData(LeviathanEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
-
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
@@ -258,28 +234,14 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         return PlayState.STOP;
     }
 
-
     @Override
     public void registerControllers(AnimationData animationData) {
         animationData.addAnimationController(new AnimationController(this, "controller",
                 0, this::predicate));
     }
 
-
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final LeviathanEntity owner;
-
-        public InWaterPredicate(LeviathanEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }
