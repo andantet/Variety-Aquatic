@@ -44,12 +44,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
     private static final TrackedData<Integer> MOISTNESS;
     private static final TrackedData<Integer> SHARKHUNGER;
 
-    private static double health = NewConfig.shark_health;
-    private static boolean doattack = NewConfig.shark_attack_fish;
-    private static double speed = NewConfig.shark_speed;
-    private static double follow =  NewConfig.shark_follow;
-    private static double damage =  NewConfig.shark_damage;
-    private static double knockback =  NewConfig.shark_knockback;
+
 
     public SharkEntity(EntityType<? extends SharkEntity> entityType, World world) {
         super(entityType, world);
@@ -107,7 +102,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, PlayerEntity.class, 10, true, true, null));
-        if (doattack==true) {
+        if (NewConfig.shark_attack_fish) {
             this.targetSelector.add(4, new ActiveTargetGoal<>(this, FishEntity.class, 10, true, true, null));
         }
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, AnimalEntity.class, 10, true, true, null));
@@ -115,11 +110,11 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, damage)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.shark_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.shark_speed)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, NewConfig.shark_damage)
+                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, NewConfig.shark_knockback)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.shark_follow);
     }
 
     protected EntityNavigation createNavigation(World world) {

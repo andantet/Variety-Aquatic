@@ -147,7 +147,7 @@ public class squidlingEntity extends WaterCreatureEntity implements IAnimatable,
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.squidling_health)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5) //TODO REPLACE WHEN DRAGON COMMITS
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.squidling_speed);
 
     }

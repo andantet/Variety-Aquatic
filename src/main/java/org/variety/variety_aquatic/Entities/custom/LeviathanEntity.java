@@ -48,8 +48,6 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
     private static final TrackedData<Integer> MOISTNESS;
 
     private final ServerBossBar bossBar;
-    private static double health = NewConfig.leviathan_health;
-    private static double speed = NewConfig.leviathan_speed;
 
     public LeviathanEntity(EntityType<? extends LeviathanEntity> entityType, World world) {
         super(entityType, world);
@@ -109,12 +107,12 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return HostileEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.leviathan_health)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 1)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, 1)
 
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.leviathan_speed);
     }
 
     protected EntityNavigation createNavigation(World world) {
