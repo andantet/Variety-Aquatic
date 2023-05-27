@@ -50,27 +50,15 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class CuttlefishEntity extends FishEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class CuttlefishEntity extends VarietyFish {
     public float tiltAngle;
     public float prevTiltAngle;
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
-    private static double health = NewConfig.cuttlefish_health;
-    private static double speed = NewConfig.cuttlefish_speed;
 
     public CuttlefishEntity(EntityType<? extends CuttlefishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new YawAdjustingLookControl(this, 10);
-
-    }
-    @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.setAir(this.getMaxAir());
-        this.setPitch(0.0F);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     public int getMoistness() {
@@ -85,9 +73,11 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         super.initDataTracker();
         this.dataTracker.startTracking(MOISTNESS, 2400);
     }
+
     protected SoundEvent getSquirtSound() {
         return SoundEvents.ENTITY_SQUID_SQUIRT;
     }
+
     private Vec3d applyBodyRotations(Vec3d shootVector) {
         Vec3d vec3d = shootVector.rotateX(this.prevTiltAngle * 0.017453292F);
         vec3d = vec3d.rotateY(-this.prevBodyYaw * 0.017453292F);
@@ -109,6 +99,7 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
     protected ParticleEffect getInkParticle() {
         return ParticleTypes.SQUID_INK;
     }
+
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Moistness", this.getMoistness());
@@ -118,21 +109,10 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         this.setMoistness(nbt.getInt("Moistness"));
     }
 
-    protected void initGoals() {
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.0f));
-
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 1.0, 10));
-    }
-
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
-    }
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.cuttlefish_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.cuttlefish_speed);
     }
 
     public int getMaxAir() {
@@ -218,50 +198,9 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         }
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_COD_AMBIENT;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
     public void tickMovement() {
         super.tickMovement();
         this.prevTiltAngle = this.tiltAngle;
-    }
-
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
-    }
-
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-
     }
 
     static {
@@ -269,42 +208,8 @@ public class CuttlefishEntity extends FishEntity implements IAnimatable {
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("CuttlefishSwim", true));
-            return PlayState.CONTINUE;
-        }
-
-        return PlayState.STOP;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
     @Override
     public ItemStack getBucketItem() {
         return null;
-    }
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final CuttlefishEntity owner;
-
-        public InWaterPredicate(CuttlefishEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }
