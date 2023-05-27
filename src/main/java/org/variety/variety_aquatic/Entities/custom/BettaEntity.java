@@ -42,21 +42,10 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BettaEntity extends FishEntity implements IAnimatable, IVariantEntity<BettaVariant> {
-    private AnimationFactory factory = new AnimationFactory(this);
-    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-
+public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVariant> {
 
     public BettaEntity(EntityType<? extends FishEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-
-    protected void initGoals() {
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
     }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
@@ -69,7 +58,8 @@ public class BettaEntity extends FishEntity implements IAnimatable, IVariantEnti
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    @Override
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
@@ -77,17 +67,12 @@ public class BettaEntity extends FishEntity implements IAnimatable, IVariantEnti
         return PlayState.STOP;
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("BucketVariantTag", this.getTypeVariant());
     }
+
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -100,18 +85,17 @@ public class BettaEntity extends FishEntity implements IAnimatable, IVariantEnti
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, nbt.getInt("Variant"));
     }
+
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(DATA_ID_TYPE_VARIANT, 0);
     }
-    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT =
-            DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty,
-                                 SpawnReason spawnReason, @Nullable EntityData entityData,
-                                 @Nullable NbtCompound entityNbt) {
 
+    private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains("BucketVariantTag", 3)) {
             setVariant(BettaVariant.byId(entityNbt.getInt("BucketVariantTag")));
         }
@@ -121,6 +105,7 @@ public class BettaEntity extends FishEntity implements IAnimatable, IVariantEnti
         }
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
+
     public BettaVariant getVariant() {
         return BettaVariant.byId(this.getTypeVariant() & 255);
     }
@@ -128,42 +113,14 @@ public class BettaEntity extends FishEntity implements IAnimatable, IVariantEnti
     private int getTypeVariant() {
         return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
     }
+
     private void setVariant(BettaVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
 
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_COD_FLOP;
-    }
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.BETTA_BUCKET);
     }
 
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
 }
