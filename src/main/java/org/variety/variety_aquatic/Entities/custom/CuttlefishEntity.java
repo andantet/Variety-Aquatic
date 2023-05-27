@@ -55,23 +55,9 @@ public class CuttlefishEntity extends VarietyFish {
     public float prevTiltAngle;
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-    private static final TrackedData<Integer> MOISTNESS;
 
     public CuttlefishEntity(EntityType<? extends CuttlefishEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    public int getMoistness() {
-        return this.dataTracker.get(MOISTNESS);
-    }
-
-    public void setMoistness(int moistness) {
-        this.dataTracker.set(MOISTNESS, moistness);
-    }
-
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(MOISTNESS, 2400);
     }
 
     protected SoundEvent getSquirtSound() {
@@ -98,11 +84,6 @@ public class CuttlefishEntity extends VarietyFish {
 
     protected ParticleEffect getInkParticle() {
         return ParticleTypes.SQUID_INK;
-    }
-
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Moistness", this.getMoistness());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -204,7 +185,6 @@ public class CuttlefishEntity extends VarietyFish {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(CuttlefishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 

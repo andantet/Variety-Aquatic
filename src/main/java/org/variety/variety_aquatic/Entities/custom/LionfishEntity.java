@@ -50,37 +50,13 @@ import java.util.function.Predicate;
 
 public class LionfishEntity extends VarietyFish {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-    private static final TrackedData<Integer> MOISTNESS;
 
     public LionfishEntity(EntityType<? extends LionfishEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public int getMoistness() {
-        return this.dataTracker.get(MOISTNESS);
-    }
-
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.LIONFISH_BUCKET);
-    }
-
-    public void setMoistness(int moistness) {
-        this.dataTracker.set(MOISTNESS, moistness);
-    }
-
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(MOISTNESS, 2400);
-    }
-
-
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Moistness", this.getMoistness());
-    }
-
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setMoistness(nbt.getInt("Moistness"));
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -118,55 +94,7 @@ public class LionfishEntity extends VarietyFish {
         return 1;
     }
 
-    public void tick() {
-        super.tick();
-        if (this.isAiDisabled()) {
-            this.setAir(this.getMaxAir());
-        } else {
-            if (this.isWet()) {
-                this.setMoistness(2400);
-                this.setAir(4800);
-            } else {
-                this.setMoistness(this.getMoistness() - 1);
-                if (this.getMoistness() <= 0) {
-                    this.damage(DamageSource.DRYOUT, 1.0F);
-                }
-
-                if (this.onGround) {
-                    this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F,
-                            0.5D,
-                            (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F));
-                    this.setYaw(this.random.nextFloat() * 360.0F);
-                    this.onGround = false;
-                    this.velocityDirty = true;
-                }
-            }
-
-            if (this.world.isClient && this.isTouchingWater() && this.isAttacking()) {
-                Vec3d vec3d = this.getRotationVec(0.0F);
-                float f = MathHelper.cos(this.getYaw() * 0.017453292F) * 0.6F;
-                float g = MathHelper.sin(this.getYaw() * 0.017453292F) * 0.6F;
-                float h = 0.0F - this.random.nextFloat() * 0.7F;
-
-                for(int i = 0; i < 2; ++i) {
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
-                }
-            }
-        }
-    }
-
     static {
-        MOISTNESS = DataTracker.registerData(LionfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
-    }
-
-    @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
     }
 }

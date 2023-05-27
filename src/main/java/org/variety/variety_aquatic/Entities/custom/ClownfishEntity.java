@@ -48,37 +48,13 @@ public class ClownfishEntity extends VarietyFish {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private boolean isAttacked;
 
-    private static final TrackedData<Integer> MOISTNESS;
-
     public ClownfishEntity(EntityType<? extends ClownfishEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    public int getMoistness() {
-        return this.dataTracker.get(MOISTNESS);
-    }
-
-    public void setMoistness(int moistness) {
-        this.dataTracker.set(MOISTNESS, moistness);
-    }
-
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(MOISTNESS, 2400);
-    }
-
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Moistness", this.getMoistness());
     }
 
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.CLOWNFISH_BUCKET);
-    }
-
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setMoistness(nbt.getInt("Moistness"));
     }
 
     protected void initGoals() {
@@ -112,7 +88,7 @@ public class ClownfishEntity extends VarietyFish {
         return 1;
     }
 
-    public class GoalHideInAnemone extends Goal {
+    public static class GoalHideInAnemone extends Goal {
         private final ClownfishEntity clownfish;
         private BlockPos targetAnemonePos;
 
@@ -210,10 +186,8 @@ public class ClownfishEntity extends VarietyFish {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(ClownfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
-
 
     @Override
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
