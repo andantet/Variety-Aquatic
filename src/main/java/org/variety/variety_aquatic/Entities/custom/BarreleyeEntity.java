@@ -174,14 +174,4 @@ public class BarreleyeEntity extends VarietyFish {
         MOISTNESS = DataTracker.registerData(BarreleyeEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
-
-    @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
-
-        return PlayState.STOP;
-    }
 }

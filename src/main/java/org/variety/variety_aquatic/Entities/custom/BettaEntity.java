@@ -58,15 +58,6 @@ public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVari
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
 
-    @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
-    }
-
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
