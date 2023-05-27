@@ -56,24 +56,8 @@ public class OpahEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.opah_speed);
     }
 
-    public int getMaxAir() {
-        return 4800;
-    }
-
-    protected int getNextAirOnLand(int air) {
-        return this.getMaxAir();
-    }
-
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
-    }
-
-    public int getLookPitchSpeed() {
-        return 1;
-    }
-
-    public int getBodyYawSpeed() {
-        return 1;
     }
 
     static {

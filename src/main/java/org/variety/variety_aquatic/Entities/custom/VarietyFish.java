@@ -158,6 +158,21 @@ public class VarietyFish extends FishEntity implements IAnimatable {
         this.dataTracker.set(MOISTNESS, moistness);
     }
 
+    public int getMaxAir() {
+        return 4800;
+    }
+    public int getNextAirOnLand(int air) {
+        return this.getMaxAir();
+    }
+
+    public int getLookPitchSpeed() {
+        return 1;
+    }
+
+    public int getBodyYawSpeed() {
+        return 1;
+    }
+
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
