@@ -61,13 +61,6 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
         super(entityType, world);
     }
 
-    @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.setAir(this.getMaxAir());
-        this.setPitch(0.0F);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
     public int getMoistness() {
         return this.dataTracker.get(MOISTNESS);
     }

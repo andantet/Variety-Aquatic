@@ -1,6 +1,8 @@
 package org.variety.variety_aquatic.Entities.custom;
 
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -13,8 +15,11 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -41,6 +46,13 @@ public class VarietyFish extends FishEntity implements IAnimatable {
         this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         super.initGoals();
+    }
+
+    @Nullable
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.setAir(this.getMaxAir());
+        this.setPitch(0.0F);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
