@@ -106,7 +106,6 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
         this.readAngerFromNbt(this.world, nbt);
-
     }
 
     protected void initGoals() {
@@ -117,7 +116,6 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
 
         super.initGoals();
     }
-
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
@@ -210,20 +208,6 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
         protected double getSquaredMaxAttackDistance(LivingEntity entity) {
             return 4.0F + entity.getWidth();
         }
-    }
-
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
     }
 
     static {

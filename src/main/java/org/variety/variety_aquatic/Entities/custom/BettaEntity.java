@@ -70,7 +70,6 @@ public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVari
         nbt.putInt("Variant", this.getTypeVariant());
     }
 
-
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
