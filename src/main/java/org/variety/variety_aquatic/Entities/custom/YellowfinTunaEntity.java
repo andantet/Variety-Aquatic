@@ -53,8 +53,6 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
 
-    private static double health = NewConfig.yellowfin_health;
-    private static double speed =  NewConfig.yellowfin_speed;
 
     public YellowfinTunaEntity(EntityType<? extends YellowfinTunaEntity> entityType, World world) {
         super(entityType, world);
@@ -101,8 +99,8 @@ public class YellowfinTunaEntity extends SchoolingFishEntity implements IAnimata
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.yellowfin_health)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.yellowfin_speed);
     }
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);

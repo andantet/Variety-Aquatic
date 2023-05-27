@@ -154,7 +154,6 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
             setHidingTime(getHidingTime() - 1);
             canMove = false;
 
-            // If the hiding time is over, reset the entity to its normal state
             if (getHidingTime() == 0) {
                 removeStatusEffect(StatusEffects.RESISTANCE);
                 removeStatusEffect(StatusEffects.ABSORPTION);

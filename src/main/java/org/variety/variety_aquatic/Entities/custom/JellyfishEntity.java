@@ -324,6 +324,9 @@ public class JellyfishEntity extends VarietyFish {
         if (this.isDead()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
         }
+        if (this.isOnGround()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("blob", true));
+        }
         event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
         return PlayState.CONTINUE;
     }
