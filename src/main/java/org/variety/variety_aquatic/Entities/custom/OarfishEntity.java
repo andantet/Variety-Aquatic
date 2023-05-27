@@ -50,8 +50,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, Angerable{
-    private AnimationFactory factory = new AnimationFactory(this);
+public class OarfishEntity extends VarietyFish implements Angerable {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
     private static final UniformIntProvider ANGER_TIME_RANGE;
@@ -67,15 +66,6 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
 
     public OarfishEntity(EntityType<? extends OarfishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new YawAdjustingLookControl(this, 10);
-
-    }
-    @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.setAir(this.getMaxAir());
-        this.setPitch(0.0F);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     public int getMoistness() {
@@ -101,10 +91,6 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
         this.setAngerTime(ANGER_TIME_RANGE.get(this.random));
     }
 
-    public int getMaxGroupSize() {
-        return 5;
-    }
-
     public void setAngerTime(int ticks) {
         this.angerTime = ticks;
     }
@@ -124,6 +110,7 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.PIRANHA_BUCKET);
     }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         this.setMoistness(nbt.getInt("Moistness"));
         this.readAngerFromNbt(this.world, nbt);
@@ -132,18 +119,12 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
 
     protected void initGoals() {
         this.goalSelector.add(2,new OarfishEntity.AttackGoal());
-        this.goalSelector.add(3, new EscapeDangerGoal(this, 2.0f));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, ChickenEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, RabbitEntity.class, 10, true, true, null));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, OcelotEntity.class, 10, true, true, null));
 
-        this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
+        super.initGoals();
     }
-
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
@@ -152,9 +133,6 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
-    }
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
     }
 
     public int getMaxAir() {
@@ -219,7 +197,6 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
         return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
     }
 
-
     private class AttackGoal extends MeleeAttackGoal {
         public AttackGoal() {
             super(OarfishEntity.this, 1.25D, true);
@@ -242,54 +219,14 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
         }
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
-
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
-    }
-
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-    }
-
     static {
         MOISTNESS = DataTracker.registerData(OarfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    @Override
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
             return PlayState.CONTINUE;
@@ -300,30 +237,5 @@ public class OarfishEntity extends WaterCreatureEntity implements IAnimatable, A
         }
 
         return PlayState.STOP;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final OarfishEntity owner;
-
-        public InWaterPredicate(OarfishEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }

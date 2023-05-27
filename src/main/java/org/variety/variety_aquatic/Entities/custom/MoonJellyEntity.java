@@ -42,8 +42,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class MoonJellyEntity extends FishEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class MoonJellyEntity extends VarietyFish {
 
     public float tiltAngle;
     public float prevTiltAngle;
@@ -76,11 +75,6 @@ public class MoonJellyEntity extends FishEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
-
-
-
-
-
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.5F;
@@ -176,11 +170,6 @@ public class MoonJellyEntity extends FishEntity implements IAnimatable {
             this.tiltAngle += (-90.0F - this.tiltAngle) * 0.02F;
         }
 
-    }
-
-    @Override
-    protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
     }
 
     public boolean damage(DamageSource source, float amount) {
@@ -333,23 +322,9 @@ public class MoonJellyEntity extends FishEntity implements IAnimatable {
         }
     }
 
-
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    @Override
+    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         event.getController().setAnimation(new AnimationBuilder().addAnimation("Swim", true));
         return PlayState.CONTINUE;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

@@ -42,22 +42,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 
 
-public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
-
+public class OpahEntity extends VarietyFish {
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
+
     public OpahEntity(EntityType<? extends OpahEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new YawAdjustingLookControl(this, 10);
-
-    }
-    @Nullable
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.setAir(this.getMaxAir());
-        this.setPitch(0.0F);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
 
     public int getMoistness() {
@@ -82,20 +72,10 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
         this.setMoistness(nbt.getInt("Moistness"));
     }
 
-    protected void initGoals() {
-        this.goalSelector.add(2, new EscapeDangerGoal(this, 2.1f));
-        this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
-        this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
-    }
-
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.opah_health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.opah_speed);
-    }
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
     }
 
     public int getMaxAir() {
@@ -156,81 +136,8 @@ public class OpahEntity extends WaterCreatureEntity implements IAnimatable {
         }
     }
 
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Nullable
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_COD_DEATH;
-    }
-
-    @Nullable
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_COD_AMBIENT;
-
-    }
-
-    protected SoundEvent getSplashSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SPLASH;
-    }
-
-    protected SoundEvent getSwimSound() {
-        return SoundEvents.ENTITY_DOLPHIN_SWIM;
-    }
-
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(this.getMovementSpeed(), movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9D));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0D, -0.005D, 0.0D));
-            }
-        } else {
-            super.travel(movementInput);
-        }
-
-    }
-
     static {
         MOISTNESS = DataTracker.registerData(OpahEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
-    }
-
-
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if(event.isMoving()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("OpahSwimming", true));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
-    }
-
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
-    }
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
-
-
-    static class InWaterPredicate implements Predicate<LivingEntity> {
-        private final OpahEntity owner;
-
-        public InWaterPredicate(OpahEntity owner) {
-            this.owner = owner;
-        }
-
-        public boolean test(@Nullable LivingEntity entity) {
-            return entity != null && entity.isTouchingWater();
-        }
     }
 }
