@@ -4,6 +4,8 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -19,6 +21,12 @@ import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
 import org.variety.variety_aquatic.world.ModWorldGen;
 import software.bernie.geckolib3.GeckoLib;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
+
 public class Variety_Aquatic implements ModInitializer {
     public static final String MOD_ID = "varietyaquatic";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -38,6 +46,9 @@ public class Variety_Aquatic implements ModInitializer {
         ModBlock.registerModBlocks();
         ModTileEntity.registerBlockEntities();
         ModWorldGen.generateWorldGen();
+
+
+
         FabricDefaultAttributeRegistry.register(ModEntities.SEAANGLE, SeaangleEntity.setAttributes());
 
         FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());

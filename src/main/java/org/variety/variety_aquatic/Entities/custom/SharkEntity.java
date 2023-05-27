@@ -121,6 +121,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK, knockback)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, follow);
     }
+
     protected EntityNavigation createNavigation(World world) {
         return new SwimNavigation(this, world);
     }
@@ -256,6 +257,7 @@ public class SharkEntity extends WaterCreatureEntity implements IAnimatable {
     public AnimationFactory getFactory() {
         return factory;
     }
+
 
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
