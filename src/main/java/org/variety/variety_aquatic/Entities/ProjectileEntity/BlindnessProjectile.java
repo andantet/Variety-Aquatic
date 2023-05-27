@@ -47,7 +47,7 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
         float h = 0.06F;
         if (this.world.getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
-        } else if (this.isInsideWaterOrBubbleColumn()) {
+        } else if (!this.isInsideWaterOrBubbleColumn()) {
             this.discard();
         } else {
             this.setVelocity(vec3d.multiply(0.9900000095367432));
@@ -65,7 +65,7 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
         if (entity instanceof LivingEntity) {
             Entity hitEntity = entityHitResult.getEntity();
             if (hitEntity instanceof LivingEntity) {
-                ((LivingEntity) hitEntity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 40));
+                ((LivingEntity) hitEntity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60));
             }
         }
     }
