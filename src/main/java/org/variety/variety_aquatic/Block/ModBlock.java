@@ -19,16 +19,16 @@ import org.varietymods.varietyapi.Items.ModItemGroup;
 public class ModBlock {
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
-            new AnemoneBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+            new AnemoneBlock(FabricBlockSettings.of(Material.DECORATION)
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerBlock("leviathan",
-            new LeviathanTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+            new LeviathanTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block GIANTSQUID_TROPHY_BLOCK = registerBlock("giantsquidtrophy",
-            new GiantGlowingSquidTrophyBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+            new GiantGlowingSquidTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block BEHOLDER_BLOCK = registerBlock("beholder",
-            new BeholderBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
+            new BeholderBlock(FabricBlockSettings.of(Material.DECORATION)
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block AQUARIUM_BLOCK  = registerBlock("aquarium_block",
             new AquariumBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {

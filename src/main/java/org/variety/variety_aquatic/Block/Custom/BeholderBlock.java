@@ -17,6 +17,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +28,8 @@ import org.variety.variety_aquatic.Sound.ModSound;
 public class BeholderBlock extends BlockWithEntity {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final EnumProperty<State> CURRENT_STATE = EnumProperty.of("current_state", State.class);
-    private static final VoxelShape FULL_BLOCK_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 16, 16);
+    private static final VoxelShape SLAB_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
+    private static final VoxelShape MOUTH_SHAPE = Block.createCuboidShape(3,8,4,13,16,12);
 
     // Enum class for the states
     public enum State implements StringIdentifiable {
@@ -49,7 +51,12 @@ public class BeholderBlock extends BlockWithEntity {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return FULL_BLOCK_SHAPE;
+        return VoxelShapes.union(SLAB_SHAPE, MOUTH_SHAPE);
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.union(SLAB_SHAPE, MOUTH_SHAPE);
     }
 
     @Nullable
