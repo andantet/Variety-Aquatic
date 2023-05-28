@@ -22,7 +22,7 @@ public class SchoolingVarietyFish extends VarietyFish {
     private SchoolingVarietyFish leader;
     private int groupSize = 1;
 
-    public SchoolingVarietyFish(EntityType<? extends FishEntity> entityType, World world) {
+    public SchoolingVarietyFish(EntityType<? extends VarietyFishFish> entityType, World world) {
         super(entityType, world);
     }
 
@@ -86,7 +86,7 @@ public class SchoolingVarietyFish extends VarietyFish {
     public void tick() {
         super.tick();
         if (this.hasOtherFishInGroup() && this.world.random.nextInt(200) == 1) {
-            List<? extends FishEntity> list = this.world.getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0));
+            List<? extends VarietyFishFish> list = this.world.getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0));
             if (list.size() <= 1) {
                 this.groupSize = 1;
             }

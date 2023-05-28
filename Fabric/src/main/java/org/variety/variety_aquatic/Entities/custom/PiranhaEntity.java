@@ -96,10 +96,6 @@ public class PiranhaEntity extends SchoolingVarietyFish implements Angerable {
         return this.targetUuid;
     }
 
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.PIRANHA_BUCKET);
-    }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);

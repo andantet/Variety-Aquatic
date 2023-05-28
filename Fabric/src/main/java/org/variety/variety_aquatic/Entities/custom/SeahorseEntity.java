@@ -29,9 +29,7 @@ import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class SeahorseEntity extends VarietyFish implements IVariantEntity<SeahorseVariant> {
     private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT = DataTracker.registerData(SeahorseEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-
-    public SeahorseEntity(EntityType<? extends FishEntity> entityType, World world) {
+    public SeahorseEntity(EntityType<? extends VarietyFishFish> entityType, World world) {
         super(entityType, world);
     }
 
@@ -46,11 +44,6 @@ public class SeahorseEntity extends VarietyFish implements IVariantEntity<Seahor
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.seahorse_speed);
     }
 
-    public void copyDataToStack(ItemStack stack) {
-        super.copyDataToStack(stack);
-        NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("BucketVariantTag", this.getTypeVariant());
-    }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -92,11 +85,6 @@ public class SeahorseEntity extends VarietyFish implements IVariantEntity<Seahor
 
     private void setVariant(SeahorseVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
-    }
-
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.SEAHORSE_BUCKET);
     }
 
     static class MoveToKelpGoal extends MoveToTargetPosGoal {

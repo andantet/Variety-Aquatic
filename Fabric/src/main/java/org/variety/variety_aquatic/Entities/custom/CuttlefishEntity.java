@@ -91,9 +91,4 @@ public class CuttlefishEntity extends VarietyFish {
         super.tickMovement();
         this.prevTiltAngle = this.tiltAngle;
     }
-
-    @Override
-    public ItemStack getBucketItem() {
-        return null;
-    }
 }

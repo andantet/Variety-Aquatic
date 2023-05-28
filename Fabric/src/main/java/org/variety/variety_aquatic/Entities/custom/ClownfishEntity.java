@@ -30,10 +30,6 @@ public class ClownfishEntity extends VarietyFish {
         super(entityType, world);
     }
 
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CLOWNFISH_BUCKET);
-    }
 
     protected void initGoals() {
         this.goalSelector.add(2, new GoalHideInAnemone(this));

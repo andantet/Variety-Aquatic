@@ -55,10 +55,6 @@ public class TetraEntity extends SchoolingVarietyFish {
         super(entityType, world);
     }
 
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.TETRA_BUCKET);
-    }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()

@@ -204,10 +204,6 @@ public class MoonJellyEntity extends VarietyFish {
         return this.swimX != 0.0F || this.swimY != 0.0F || this.swimZ != 0.0F;
     }
 
-    @Override
-    public ItemStack getBucketItem() {
-        return null;
-    }
 
     class SwimGoal extends Goal {
         private final MoonJellyEntity jellyfish;

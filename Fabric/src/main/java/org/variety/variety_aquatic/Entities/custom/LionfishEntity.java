@@ -25,9 +25,6 @@ public class LionfishEntity extends VarietyFish {
         super(entityType, world);
     }
 
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.LIONFISH_BUCKET);
-    }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()

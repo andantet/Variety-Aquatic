@@ -56,12 +56,6 @@ public class ModItems {
     public static final Item TETRA_EGG = registerItem("tetra_egg",
             new SpawnEggItem(ModEntities.TETRA,0x4eb1cc, 0xe64d43,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
-    public static final Item TETRA_BUCKET = registerItem("tetra_bucket",
-            new EntityBucketItem(ModEntities.TETRA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
-    public static final Item BETTA_BUCKET = registerItem("betta_bucket",
-            new EntityBucketItem(ModEntities.BETTA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
-    public static final Item SEAHORSE_BUCKET = registerItem("seahorse_bucket",
-            new EntityBucketItem(ModEntities.SEAHORSE, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
     public static final Item RAW_BETTA = registerItem("raw_betta",
             new Item(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)
                     .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
@@ -94,8 +88,6 @@ public class ModItems {
     public static final Item CLOWNFISH_EGG = registerItem("clownfish_egg",
             new SpawnEggItem(ModEntities.CLOWNFISH,0xff5000, 0xffffff,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
-    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
     public static final Item JELLYFISH_EGG = registerItem("jellyfish_egg",
             new SpawnEggItem(ModEntities.JELLYFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
@@ -122,7 +114,6 @@ public class ModItems {
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
 
 
-
     public static final Item GIANTGLOWINGSQUID_EGG = registerItem("giantglowingsquid_egg",
             new SpawnEggItem(ModEntities.GIANTGLOWINGSQUID,0x2a2f4e, 0x94fdff,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
@@ -133,9 +124,6 @@ public class ModItems {
             new SpawnEggItem(ModEntities.CRAB,0x953a3a, 0xe3c5b6,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
 
-
-    public static final Item LIONFISH_BUCKET = registerItem("lionfish_bucket",
-            new EntityBucketItem(ModEntities.LIONFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
 
     public static final Item RAW_LIONFISH = registerItem("raw_lionfish",
             new Item(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)
@@ -162,8 +150,6 @@ public class ModItems {
     public static final Item RAW_PIRANHA = registerItem("raw_piranha",
             new Item(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)
                     .food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
-    public static final Item PIRANHA_BUCKET = registerItem("piranha_bucket",
-            new EntityBucketItem(ModEntities.PIRANHA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, (new Item.Settings()).maxCount(1).group(ModItemGroup.VARIETY_MODS)));
 
     public static final Item CRAB_RAVE_MUSIC_DISC = registerItem("crab_rave_music_disc",
             new ModMusicDiskItem(7, ModSound.CRAB_RAVE,

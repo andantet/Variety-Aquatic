@@ -29,7 +29,7 @@ import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVariant> {
 
-    public BettaEntity(EntityType<? extends FishEntity> entityType, World world) {
+    public BettaEntity(EntityType<? extends VarietyFishFish> entityType, World world) {
         super(entityType, world);
     }
 
@@ -43,11 +43,6 @@ public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVari
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
 
-    public void copyDataToStack(ItemStack stack) {
-        super.copyDataToStack(stack);
-        NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("BucketVariantTag", this.getTypeVariant());
-    }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -93,9 +88,5 @@ public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVari
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.BETTA_BUCKET);
-    }
 
 }

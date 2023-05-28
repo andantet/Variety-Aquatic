@@ -1,7 +1,9 @@
 package org.variety.variety_aquatic.Entities.custom;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.AquaticMoveControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
@@ -13,10 +15,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
@@ -38,13 +37,13 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class VarietyFish extends FishEntity implements IAnimatable {
+public class VarietyFish extends VarietyFishFish implements IAnimatable {
 
     private final AnimationFactory factory = new AnimationFactory(this);
     private static final TrackedData<Integer> MOISTNESS;
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
 
-    public VarietyFish(EntityType<? extends FishEntity> entityType, World world) {
+    public VarietyFish(EntityType<? extends VarietyFishFish> entityType, World world) {
         super(entityType, world);
         this.moveControl = new AquaticMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new YawAdjustingLookControl(this, 10);
@@ -187,11 +186,6 @@ public class VarietyFish extends FishEntity implements IAnimatable {
     public static boolean CanSpawnDeep(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
     }
-    @Override
-    public ItemStack getBucketItem() {
-        return null;
-    }
-
 
 
     @Override

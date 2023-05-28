@@ -66,10 +66,6 @@ public class OarfishEntity extends VarietyFish implements Angerable {
         return this.targetUuid;
     }
 
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.PIRANHA_BUCKET);
-    }
-
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.readAngerFromNbt(this.world, nbt);
