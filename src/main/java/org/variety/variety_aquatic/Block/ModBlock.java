@@ -31,9 +31,7 @@ public class ModBlock {
             new BeholderBlock(FabricBlockSettings.of(Material.DECORATION)
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block AQUARIUM_BLOCK  = registerBlock("aquarium_block",
-            new AquariumBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
-                return 14;
-            }).sounds(BlockSoundGroup.WOOD)),ModItemGroup.VARIETY_MODS);
+            new AquariumBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD)),ModItemGroup.VARIETY_MODS);
 
 
 
@@ -42,13 +40,9 @@ public class ModBlock {
             new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
                     .strength(4f).nonOpaque().breakInstantly()), ModItemGroup.VARIETY_MODS);
     public static final Block ANGLER_TORCH= registerBlock("angler_torch_ground",
-            new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
-                return 14;
-            }).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE),null);
+            new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE),null);
     public static final Block WALL_ANGLER_TORCH = registerBlock("wall_angler_torch",
-            new WallAnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
-                return 14;
-            }).sounds(BlockSoundGroup.WOOD).dropsLike(ModBlock.ANGLER_TORCH), ParticleTypes.BUBBLE),null);
+            new WallAnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD).dropsLike(ModBlock.ANGLER_TORCH), ParticleTypes.BUBBLE),null);
 
 
 
