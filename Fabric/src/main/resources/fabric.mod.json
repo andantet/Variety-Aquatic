@@ -26,9 +26,6 @@
     "modmenu": [
       "org.variety.variety_aquatic.integration.ModMenu"
     ],
-    "terrablender": [
-      "org.variety.variety_aquatic.Variety_Aquatic"
-    ],
     "preLaunch": [
       "org.variety.variety_aquatic.VarietyPreLaunch"
     ]
