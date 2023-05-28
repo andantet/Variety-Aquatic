@@ -33,9 +33,17 @@
       "org.variety.variety_aquatic.VarietyPreLaunch"
     ]
   },
+  "accessWidener": "varietyaquatic.accesswidener",
+
   "mixins": [
     "varietyaquatic.mixins.json"
   ],
+  "conflicts": {
+    "clear-skies": "*"
+  },
+  "suggests": {
+    "sodium": "*"
+  },
   "depends": {
     "fabricloader": ">=0.14.9",
     "fabric": "*",
@@ -46,6 +54,7 @@
     "varietyapi": "*"
 
   },
+
   "custom": {
     "modmenu": {
       "links": {

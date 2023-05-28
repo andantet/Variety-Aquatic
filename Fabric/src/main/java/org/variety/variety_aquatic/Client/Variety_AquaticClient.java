@@ -21,6 +21,8 @@ import org.varietymods.varietyapi.API.*;
 
 public class Variety_AquaticClient implements ClientModInitializer {
 
+    public static String currentBiome = "";
+    public static String currentDimension = "";
     @Override
     public void onInitializeClient() {
 

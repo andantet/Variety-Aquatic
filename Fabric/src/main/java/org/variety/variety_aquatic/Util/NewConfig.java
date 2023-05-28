@@ -91,7 +91,4 @@ public class NewConfig extends MidnightConfig {
     @Entry public static double barreleye_followrange = 3.0;
 
     @Entry(min=0,max=100) public static int oarfish_spawnweight = 25;
-
-
-
 }
