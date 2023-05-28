@@ -65,9 +65,7 @@ public class YellowfinTunaEntity extends SchoolingVarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.yellowfin_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
+
 
     public int getMaxGroupSize() {
         return 4;

@@ -60,21 +60,7 @@ public class MoonJellyEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 2);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.5F;
-    }
 
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
-    }
-
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_SQUID_HURT;
-    }
-
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SQUID_DEATH;
-    }
 
     protected SoundEvent getSquirtSound() {
         return SoundEvents.ENTITY_SQUID_SQUIRT;

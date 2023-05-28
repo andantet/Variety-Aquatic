@@ -73,25 +73,6 @@ public class JellyfishEntity extends VarietyFish {
 
     }
 
-    public ItemStack getBucketItem() {
-        return null;
-    }
-
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.5F;
-    }
-
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
-    }
-
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_SQUID_HURT;
-    }
-
-    protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SQUID_DEATH;
-    }
 
     protected SoundEvent getSquirtSound() {
         return SoundEvents.ENTITY_SQUID_SQUIRT;

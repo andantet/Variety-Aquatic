@@ -131,10 +131,6 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         return this.getMaxAir();
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
-
     public int getLookPitchSpeed() {
         return 1;
     }

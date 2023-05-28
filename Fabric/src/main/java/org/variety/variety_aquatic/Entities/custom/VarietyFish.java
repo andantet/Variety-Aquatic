@@ -176,9 +176,7 @@ public class VarietyFish extends FishEntity implements IAnimatable {
         return 1;
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return dimensions.height * 0.65F;
-    }
+
 
     @Override
     public ItemStack getBucketItem() {

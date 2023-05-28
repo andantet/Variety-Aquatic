@@ -23,8 +23,5 @@ public class OpahEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.opah_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
 }

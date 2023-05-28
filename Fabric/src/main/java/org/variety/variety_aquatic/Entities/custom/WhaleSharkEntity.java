@@ -87,9 +87,6 @@ public class WhaleSharkEntity extends VarietyFish {
         return new SwimNavigation(this, world);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
     public void tick() {
         super.tick();

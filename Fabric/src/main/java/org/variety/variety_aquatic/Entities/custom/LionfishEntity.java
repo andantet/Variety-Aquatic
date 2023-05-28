@@ -43,8 +43,4 @@ public class LionfishEntity extends VarietyFish {
             player.addStatusEffect(new StatusEffectInstance(StatusEffects.POISON, 60, 0), this);
         }
     }
-
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 }

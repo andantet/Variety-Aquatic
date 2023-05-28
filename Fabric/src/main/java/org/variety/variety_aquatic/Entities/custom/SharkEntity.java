@@ -87,10 +87,6 @@ public class SharkEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.shark_follow);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
-
     static {
         SHARKHUNGER = DataTracker.registerData(SharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }

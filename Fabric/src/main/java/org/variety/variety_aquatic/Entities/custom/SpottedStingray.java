@@ -52,7 +52,4 @@ public class SpottedStingray extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.spottedstingray_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 }

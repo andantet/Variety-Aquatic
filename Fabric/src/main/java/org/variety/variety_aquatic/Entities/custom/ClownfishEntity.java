@@ -46,9 +46,6 @@ public class ClownfishEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.clownfish_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.3F;
-    }
 
     public static class GoalHideInAnemone extends Goal {
         private final ClownfishEntity clownfish;

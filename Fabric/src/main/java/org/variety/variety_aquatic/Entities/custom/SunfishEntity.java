@@ -52,9 +52,6 @@ public class SunfishEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.sunfish_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
     @Override
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {

@@ -105,9 +105,6 @@ public class VampireSquidEntity extends VarietyFish implements Angerable {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.vampiresquid_speed);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);

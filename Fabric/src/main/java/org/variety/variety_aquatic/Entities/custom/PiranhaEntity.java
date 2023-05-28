@@ -124,9 +124,6 @@ public class PiranhaEntity extends SchoolingVarietyFish implements Angerable {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.piranha_follow);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
     private class AttackGoal extends MeleeAttackGoal {
         public AttackGoal() {

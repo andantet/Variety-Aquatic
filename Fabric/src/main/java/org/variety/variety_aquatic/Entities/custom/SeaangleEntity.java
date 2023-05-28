@@ -59,9 +59,6 @@ public class SeaangleEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.seaangle_followrange);
     }
 
-    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-        return 0.5F;
-    }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
