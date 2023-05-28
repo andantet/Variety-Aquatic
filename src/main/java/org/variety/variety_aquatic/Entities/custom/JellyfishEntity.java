@@ -63,7 +63,7 @@ public class JellyfishEntity extends VarietyFish {
     }
 
     public void onPlayerCollision(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity && 1 > 0 && player.damage(DamageSource.mob(this), (float)(1 + 1))) {
+        if (player instanceof ServerPlayerEntity && player.damage(DamageSource.mob(this), (float) (1 + 1))) {
             if (!this.isSilent()) {
                 ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
             }

@@ -24,7 +24,6 @@ import java.util.EnumSet;
 
 
 public class ClownfishEntity extends VarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private boolean isAttacked;
 
     public ClownfishEntity(EntityType<? extends ClownfishEntity> entityType, World world) {
@@ -107,10 +106,6 @@ public class ClownfishEntity extends VarietyFish {
             }
             return null;
         }
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

@@ -42,8 +42,6 @@ import java.util.function.Predicate;
 
 public class SunfishEntity extends VarietyFish {
 
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-
     public SunfishEntity(EntityType<? extends SunfishEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -56,10 +54,6 @@ public class SunfishEntity extends VarietyFish {
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

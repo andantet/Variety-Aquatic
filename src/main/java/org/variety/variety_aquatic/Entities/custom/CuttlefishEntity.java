@@ -26,8 +26,6 @@ public class CuttlefishEntity extends VarietyFish {
     public float tiltAngle;
     public float prevTiltAngle;
 
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-
     public CuttlefishEntity(EntityType<? extends CuttlefishEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -96,10 +94,6 @@ public class CuttlefishEntity extends VarietyFish {
     public void tickMovement() {
         super.tickMovement();
         this.prevTiltAngle = this.tiltAngle;
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

@@ -17,7 +17,6 @@ import org.variety.variety_aquatic.Util.NewConfig;
 
 
 public class FlashlightfishEntity extends VarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
 
     public FlashlightfishEntity(EntityType<? extends FlashlightfishEntity> entityType, World world) {
         super(entityType, world);
@@ -36,9 +35,5 @@ public class FlashlightfishEntity extends VarietyFish {
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }

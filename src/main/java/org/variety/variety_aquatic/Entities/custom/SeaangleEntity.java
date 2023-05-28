@@ -47,14 +47,9 @@ import java.util.function.Predicate;
 
 
 public class SeaangleEntity extends VarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
 
     public SeaangleEntity(EntityType<? extends SeaangleEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    public ItemStack getBucketItem() {
-        return null;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -74,9 +69,5 @@ public class SeaangleEntity extends VarietyFish {
 
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_PUFFER_FISH_FLOP;
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }

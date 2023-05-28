@@ -20,7 +20,6 @@ import org.variety.variety_aquatic.Util.NewConfig;
 
 
 public class LionfishEntity extends VarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
 
     public LionfishEntity(EntityType<? extends LionfishEntity> entityType, World world) {
         super(entityType, world);
@@ -47,9 +46,5 @@ public class LionfishEntity extends VarietyFish {
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }

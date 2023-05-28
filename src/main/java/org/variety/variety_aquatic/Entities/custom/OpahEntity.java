@@ -13,8 +13,6 @@ import org.variety.variety_aquatic.Util.NewConfig;
 
 public class OpahEntity extends VarietyFish {
 
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-
     public OpahEntity(EntityType<? extends OpahEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -29,7 +27,4 @@ public class OpahEntity extends VarietyFish {
         return 0.5F;
     }
 
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
-    }
 }

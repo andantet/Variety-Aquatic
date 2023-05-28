@@ -39,7 +39,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import java.util.function.Predicate;
 @SuppressWarnings({"ConstantConditions", "FieldMayBeFinal", "rawtypes"})
 public class SharkEntity extends VarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> SHARKHUNGER;
 
     public SharkEntity(EntityType<? extends SharkEntity> entityType, World world) {
@@ -94,7 +93,6 @@ public class SharkEntity extends VarietyFish {
 
     static {
         SHARKHUNGER = DataTracker.registerData(SharkEntity.class, TrackedDataHandlerRegistry.INTEGER);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

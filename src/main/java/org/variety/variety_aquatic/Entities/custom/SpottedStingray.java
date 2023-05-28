@@ -42,8 +42,6 @@ import java.util.function.Predicate;
 
 public class SpottedStingray extends VarietyFish {
 
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
-
     public SpottedStingray(EntityType<? extends SpottedStingray> entityType, World world) {
         super(entityType, world);
     }
@@ -56,9 +54,5 @@ public class SpottedStingray extends VarietyFish {
 
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }

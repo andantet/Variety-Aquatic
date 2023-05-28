@@ -32,7 +32,6 @@ import java.util.UUID;
 
 
 public class OarfishEntity extends VarietyFish implements Angerable {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final UniformIntProvider ANGER_TIME_RANGE;
 
     private int angerTime;
@@ -126,7 +125,6 @@ public class OarfishEntity extends VarietyFish implements Angerable {
 
     static {
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

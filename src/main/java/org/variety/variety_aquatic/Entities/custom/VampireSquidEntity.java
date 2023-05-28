@@ -50,8 +50,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class VampireSquidEntity extends VarietyFish implements Angerable{
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
+public class VampireSquidEntity extends VarietyFish implements Angerable {
     private static final UniformIntProvider ANGER_TIME_RANGE;
 
     private int angerTime;
@@ -138,6 +137,5 @@ public class VampireSquidEntity extends VarietyFish implements Angerable{
 
     static {
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }

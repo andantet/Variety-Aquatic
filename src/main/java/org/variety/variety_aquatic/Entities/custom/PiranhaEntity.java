@@ -53,8 +53,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 
-public class PiranhaEntity extends SchoolingVarietyFish implements Angerable{
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
+public class PiranhaEntity extends SchoolingVarietyFish implements Angerable {
     private static final UniformIntProvider ANGER_TIME_RANGE;
 
     private int angerTime;
@@ -153,7 +152,6 @@ public class PiranhaEntity extends SchoolingVarietyFish implements Angerable{
 
     static {
         ANGER_TIME_RANGE = TimeHelper.betweenSeconds(20, 39);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
     @Override

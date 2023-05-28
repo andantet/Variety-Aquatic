@@ -48,7 +48,6 @@ import java.util.function.Predicate;
 
 
 public class TetraEntity extends SchoolingVarietyFish {
-    static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static double health = 2;
     private static double speed = 1.8;
 
@@ -66,15 +65,12 @@ public class TetraEntity extends SchoolingVarietyFish {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, health)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, speed);
     }
+
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return 0.5F;
     }
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return (world.getBiome(pos.down()).isIn(BiomeTags.IS_JUNGLE) ||world.getBiome(pos.down()).matchesKey(BiomeKeys.MANGROVE_SWAMP))&& world.getBlockState(pos).isOf(Blocks.WATER);
-    }
-
-    static {
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 }
