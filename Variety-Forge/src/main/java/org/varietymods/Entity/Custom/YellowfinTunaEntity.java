@@ -1,20 +1,12 @@
 package org.varietymods.Entity.Custom;
 
 
-
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import org.varietymods.Entity.AI.TunaJump;
-
-import java.util.Random;
-import java.util.function.Predicate;
 
 
 public class YellowfinTunaEntity extends SchoolingVarietyFish {
