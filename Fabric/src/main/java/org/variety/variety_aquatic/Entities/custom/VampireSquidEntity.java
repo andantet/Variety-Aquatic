@@ -102,7 +102,9 @@ public class VampireSquidEntity extends VarietyFish implements Angerable {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.vampiresquid_health)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.vampiresquid_speed);
+
     }
 
     private class AttackGoal extends MeleeAttackGoal {
