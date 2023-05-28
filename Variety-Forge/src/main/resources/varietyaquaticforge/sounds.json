@@ -1,0 +1,64 @@
+{
+  "whale_ambient": {
+    "subtitle": "varietyaquatic.whale_ambient",
+    "sounds": [
+      "varietyaquatic:whale_ambient"
+    ]
+  },
+  "deep_growl": {
+    "subtitle": "varietyaquatic.deep_growl",
+    "sounds": [
+      "varietyaquatic:deep_growl"
+    ]
+  },
+  "whale_death": {
+    "subtitle": "varietyaquatic.whale_death",
+    "sounds": [
+      "varietyaquatic:whale_death"
+    ]
+  },
+  "whale_hurt": {
+    "subtitle": "varietyaquatic.whale_hurt",
+    "sounds": [
+      "varietyaquatic:whale_hurt"
+    ]
+  },
+  "giantsquid_ambient": {
+    "subtitle": "varietyaquatic.giantsquid_ambient",
+    "sounds": [
+      "varietyaquatic:giantsquid_ambient"
+    ]
+  },
+  "giantsquid_hurt": {
+    "subtitle": "varietyaquatic.giantsquid_hurt",
+    "sounds": [
+      "varietyaquatic:giantsquid_hurt"
+    ]
+  },
+  "spermwhale_death": {
+    "subtitle": "varietyaquatic.spermwhale_death",
+    "sounds": [
+      "varietyaquatic:spermwhale_death"
+    ]
+  },
+  "beholder_click": {
+    "subtitle": "varietyaquatic.beholder_click",
+    "sounds": [
+      "varietyaquatic:beholder_click"
+    ]
+  },
+  "crab_hurt": {
+    "subtitle": "varietyaquatic.crab_hurt",
+    "sounds": [
+      "varietyaquatic:crab_hurt"
+    ]
+  },
+  "crab_rave": {
+    "sounds": [
+      {
+        "name": "varietyaquatic:crab_rave",
+        "stream": true
+      }
+    ]
+  }
+}

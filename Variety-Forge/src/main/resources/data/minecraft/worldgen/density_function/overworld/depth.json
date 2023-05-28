@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:add",
+  "argument1": "varietyaquatic:overworld/warped_gradient",
+  "argument2": "minecraft:overworld/offset"
+}

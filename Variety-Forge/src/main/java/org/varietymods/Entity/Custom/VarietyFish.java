@@ -3,10 +3,11 @@ package org.varietymods.Entity.Custom;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.Dolphin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -194,7 +196,7 @@ public class VarietyFish extends AbstractFish implements IAnimatable {
     }
 
     static {
-        MOISTNESS = DataTracker.registerData(VarietyFish.class, TrackedDataHandlerRegistry.INTEGER);
-        CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
+        MOISTNESS = SynchedEntityData.defineId(VarietyFish.class, EntityDataSerializers.INT);
+        CLOSE_PLAYER_PREDICATE = TargetingConditions.forNonCombat().range(10.0D).ignoreInvisibilityTesting();
     }
 }

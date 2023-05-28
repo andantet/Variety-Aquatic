@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east": { "model": "varietyaquatic:block/wall_angler_torch" },
+    "facing=south": { "model": "varietyaquatic:block/wall_angler_torch", "y": 90 },
+    "facing=west": { "model": "varietyaquatic:block/wall_angler_torch", "y": 180 },
+    "facing=north": { "model": "varietyaquatic:block/wall_angler_torch", "y": 270 }
+  }
+}

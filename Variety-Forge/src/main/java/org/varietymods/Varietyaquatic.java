@@ -1,6 +1,7 @@
 package org.varietymods;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -14,15 +15,17 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import org.varietymods.Entity.ModEntityTypes;
+import org.varietymods.varietyapi.API.GenericModel;
+import org.varietymods.varietyapi.API.GenericRenderer;
 import software.bernie.geckolib3.GeckoLib;
 
-@Mod(VarietyAquatic.MODID)
-public class VarietyAquatic {
+@Mod(Varietyaquatic.MODID)
+public class Varietyaquatic {
     public static final String MODID = "varietyaquaticforge";
     private static final Logger LOGGER = LogUtils.getLogger();
 
     // Very Important Comment
-    public VarietyAquatic() {
+    public Varietyaquatic() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
       //  ModItems.register(modEventBus);
@@ -56,7 +59,9 @@ public class VarietyAquatic {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityRenderers.register(ModEntityTypes.YELLOWFIN.get(), TunaRenderer::new);
+            EntityRenderers.register(ModEntityTypes.YELLOWFIN.get(), (EntityRendererProvider.Context ctx) ->
+                    new GenericRenderer<>(ctx, new GenericModel(Varietyaquatic.MODID,"yellowfintuna.geo","yellowfintuna_texture","yellowfintuna.animation"),Varietyaquatic.MODID, "yellowfintuna_texture", 1.0f,1.2f, false,false)
+            );
         }
     }
 }
