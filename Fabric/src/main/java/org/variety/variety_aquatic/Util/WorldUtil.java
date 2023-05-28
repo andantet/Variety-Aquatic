@@ -2,32 +2,33 @@ package org.variety.variety_aquatic.Util;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.Camera;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.dimension.DimensionType;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class WorldUtil {
-    public static Identifier GetBiomeBelowCamera(Camera camera) {
-        var errorIdentifier = Identifier.of(Variety_Aquatic.MOD_ID, "error_fetching_biome");
-        if (camera == null) return errorIdentifier;
+    private static final Identifier ERROR_IDENTIFIER_BIOME = Identifier.of(Variety_Aquatic.MOD_ID, "error_fetching_biome");
+    private static final Identifier ERROR_IDENTIFIER_DIMENSION = Identifier.of(Variety_Aquatic.MOD_ID, "error_fetching_dimension");
 
-        var world = MinecraftClient.getInstance().world;
-        if (world == null) return errorIdentifier;
+    public static RegistryKey<Biome> GetBiomeBelowCamera(Camera camera) {
+        if (camera == null) return RegistryKey.of(Registry.BIOME_KEY, ERROR_IDENTIFIER_BIOME);
 
-        var biomeBelowCamera = MinecraftClient.getInstance().world.getBiome(camera.getBlockPos()).getKey();
-        if (biomeBelowCamera.isEmpty()) return errorIdentifier;
+        ClientWorld world = MinecraftClient.getInstance().world;
+        if (world == null) return RegistryKey.of(Registry.BIOME_KEY, ERROR_IDENTIFIER_BIOME);
 
-        return biomeBelowCamera.get().getValue();
+        var biomeBelowCamera = world.getBiome(camera.getBlockPos()).getKey();
+        return biomeBelowCamera.orElse(RegistryKey.of(Registry.BIOME_KEY, ERROR_IDENTIFIER_BIOME));
     }
 
-    public static Identifier GetDimension() {
-        var errorIdentifier = Identifier.of(Variety_Aquatic.MOD_ID, "error_fetching_dimension");
+    public static RegistryKey<DimensionType> GetDimension() {
+        ClientWorld world = MinecraftClient.getInstance().world;
+        if (world == null) return RegistryKey.of(Registry.DIMENSION_TYPE_KEY, ERROR_IDENTIFIER_DIMENSION);
 
-        var world = MinecraftClient.getInstance().world;
-        if (world == null) return errorIdentifier;
-
-        var dimension = MinecraftClient.getInstance().world.getDimensionKey();
-        if (dimension == null) return errorIdentifier;
-
-        return dimension.getValue();
+        var dimension = world.getDimensionKey();
+        return (dimension != null) ? dimension : RegistryKey.of(Registry.DIMENSION_TYPE_KEY, ERROR_IDENTIFIER_DIMENSION);
     }
 }

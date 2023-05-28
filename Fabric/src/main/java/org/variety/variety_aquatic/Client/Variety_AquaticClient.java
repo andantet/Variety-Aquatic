@@ -20,9 +20,6 @@ import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
 
 public class Variety_AquaticClient implements ClientModInitializer {
-
-    public static String currentBiome = "";
-    public static String currentDimension = "";
     @Override
     public void onInitializeClient() {
 
@@ -145,7 +142,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
         BlockEntityRendererRegistry.register(ModTileEntity.BEHOLDER,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new BeholderRenderer());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER_BLOCK, RenderLayer.getTranslucent());
-
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
 

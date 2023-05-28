@@ -3,6 +3,9 @@ package org.variety.variety_aquatic.Util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.util.math.Vec3d;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.util.math.Vec3d;
+
 public class RenderSystemUtil {
     public static void setShaderFogColor(Vec3d fogColor) {
         RenderSystem.setShaderFogColor((float) fogColor.x, (float) fogColor.y, (float) fogColor.z, 1f);

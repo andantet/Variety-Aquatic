@@ -4,6 +4,7 @@ import net.minecraft.client.world.ClientWorld;
 
 public class TimeUtil {
     public static boolean isNight(ClientWorld world) {
-        return world.getTimeOfDay() >= 13000 && world.getTimeOfDay() <= 23000;
+        long timeOfDay = world.getTimeOfDay();
+        return timeOfDay >= 13000 && timeOfDay <= 23000;
     }
 }
