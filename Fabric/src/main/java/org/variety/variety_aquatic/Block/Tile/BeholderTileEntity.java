@@ -96,7 +96,6 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
 
     // Method to set the active state
     public void setActiveState(BeholderBlock.State state) {
-        System.out.println("Setting active state to: " + state.toString()); // Debugging code
         if (world != null) {
             world.setBlockState(pos, getCachedState().with(BeholderBlock.CURRENT_STATE, state), 3);
             markDirty();

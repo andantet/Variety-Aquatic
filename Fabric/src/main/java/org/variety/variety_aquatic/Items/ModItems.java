@@ -109,7 +109,7 @@ public class ModItems {
     public static final Item OPAH_EGG = registerItem("opah_egg",
             new SpawnEggItem(ModEntities.OPAH,0x687596, 0x9e2a38,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
-    public static final Item VAMPIRESQUID_EGG = registerItem("vapiresquid_egg",
+    public static final Item VAMPIRESQUID_EGG = registerItem("vampiresquid_egg",
             new SpawnEggItem(ModEntities.VAMPIRESQUID,0x8a353b, 0xb3eefc,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
 

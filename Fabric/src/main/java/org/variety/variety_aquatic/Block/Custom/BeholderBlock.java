@@ -5,11 +5,16 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
+import net.minecraft.state.property.Properties;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.StringIdentifiable;
@@ -20,13 +25,17 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
 import org.variety.variety_aquatic.Sound.ModSound;
 
-public class BeholderBlock extends BlockWithEntity {
+public class BeholderBlock extends BlockWithEntity implements Waterloggable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+
     public static final EnumProperty<State> CURRENT_STATE = EnumProperty.of("current_state", State.class);
     private static final VoxelShape SLAB_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
     private static final VoxelShape MOUTH_SHAPE = Block.createCuboidShape(3,8,4,13,16,12);
@@ -46,7 +55,10 @@ public class BeholderBlock extends BlockWithEntity {
 
     public BeholderBlock(AbstractBlock.Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(FACING, Direction.NORTH).with(CURRENT_STATE, State.OFF));
+        setDefaultState(getDefaultState()
+                .with(FACING, Direction.NORTH)
+                .with(CURRENT_STATE, State.OFF)
+                .with(WATERLOGGED, false));
     }
 
     @Override
@@ -59,10 +71,26 @@ public class BeholderBlock extends BlockWithEntity {
         return VoxelShapes.union(SLAB_SHAPE, MOUTH_SHAPE);
     }
 
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite());
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        return getDefaultState()
+                .with(FACING, ctx.getPlayerFacing().getOpposite())
+                .with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED)) {
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
     @Override
@@ -96,7 +124,6 @@ public class BeholderBlock extends BlockWithEntity {
                     break;
             }
 
-            System.out.println("New state: " + newState.toString()); // Debugging code
 
             // Set the active state of the block entity
             world.setBlockState(pos, state.with(CURRENT_STATE, newState), 3);
@@ -107,6 +134,13 @@ public class BeholderBlock extends BlockWithEntity {
         }
         return ActionResult.CONSUME;
     }
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        BlockState blockState = world.getBlockState(pos);
+        FluidState fluidState = world.getFluidState(pos);
+        return super.canPlaceAt(state, world, pos) || blockState.getMaterial().isReplaceable() || fluidState.isIn(FluidTags.WATER);
+    }
+
 
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -120,6 +154,6 @@ public class BeholderBlock extends BlockWithEntity {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING, CURRENT_STATE);
+        builder.add(FACING, CURRENT_STATE, WATERLOGGED);
     }
 }

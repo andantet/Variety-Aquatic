@@ -64,7 +64,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.SEAANGLE, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.SQUIDLING, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
+                ModEntities.SQUIDLING, 2, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
 
 
 

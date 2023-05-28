@@ -102,7 +102,7 @@ public class ModEntities {
     public static final EntityType<YellowfinTunaEntity> YELLOWFIN = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "yellowfin"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, YellowfinTunaEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.4f, 1.7f)).trackRangeBlocks(50).build());
+                    .dimensions(EntityDimensions.fixed(1.0f, 1.0f)).trackRangeBlocks(50).build());
 
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "clownfish"),
