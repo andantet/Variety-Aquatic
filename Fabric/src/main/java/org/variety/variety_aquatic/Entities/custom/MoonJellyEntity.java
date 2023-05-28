@@ -80,67 +80,72 @@ public class MoonJellyEntity extends VarietyFish {
 
     public void tickMovement() {
         super.tickMovement();
-        this.prevTiltAngle = this.tiltAngle;
-        this.prevRollAngle = this.rollAngle;
-        this.prevThrustTimer = this.thrustTimer;
-        this.prevTentacleAngle = this.tentacleAngle;
-        this.thrustTimer += this.thrustTimerSpeed;
-        if ((double) this.thrustTimer > 6.283185307179586) {
-            if (this.world.isClient) {
-                this.thrustTimer = 6.2831855F;
+        prevTiltAngle = tiltAngle;
+        prevRollAngle = rollAngle;
+        prevThrustTimer = thrustTimer;
+        prevTentacleAngle = tentacleAngle;
+        thrustTimer += thrustTimerSpeed;
+
+        if (thrustTimer > Math.PI * 2) {
+            if (world.isClient) {
+                thrustTimer = (float) (Math.PI * 2);
             } else {
-                this.thrustTimer -= 6.2831855F;
-                if (this.random.nextInt(10) == 0) {
-                    this.thrustTimerSpeed = 1.0F / (this.random.nextFloat() + 1.0F) * 0.2F;
+                thrustTimer -= (float) (Math.PI * 2);
+
+                if (random.nextInt(10) == 0) {
+                    thrustTimerSpeed = 1.0F / (random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                this.world.sendEntityStatus(this, (byte) 19);
+                world.sendEntityStatus(this, (byte) 19);
             }
         }
 
-        if (this.isInsideWaterOrBubbleColumn()) {
-            if (this.thrustTimer < 3.1415927F) {
-                float f = this.thrustTimer / 3.1415927F;
-                this.tentacleAngle = MathHelper.sin(f * f * 3.1415927F) * 3.1415927F * 0.25F;
-                if ((double) f > 0.75) {
-                    this.swimVelocityScale = 0.8F;
-                    this.turningSpeed = 1.0F;
+        if (isInsideWaterOrBubbleColumn()) {
+            if (thrustTimer < Math.PI) {
+                float f = thrustTimer / (float) Math.PI;
+                tentacleAngle = MathHelper.sin(f * f * (float) Math.PI) * (float) Math.PI * 0.25F;
+
+                if (f > 0.75) {
+                    swimVelocityScale = 0.8F;
+                    turningSpeed = 1.0F;
                 } else {
-                    this.turningSpeed *= 0.8F;
+                    turningSpeed *= 0.8F;
                 }
             } else {
-                this.tentacleAngle = 0.0F;
-                this.swimVelocityScale *= 0.6F;
-                this.turningSpeed *= 0.99F;
+                tentacleAngle = 0.0F;
+                swimVelocityScale *= 0.6F;
+                turningSpeed *= 0.99F;
             }
 
-            if (!this.world.isClient) {
-                this.setVelocity((double) (this.swimX * this.swimVelocityScale), (double) (this.swimY * this.swimVelocityScale), (double) (this.swimZ * this.swimVelocityScale));
+            if (!world.isClient) {
+                setVelocity(swimX * swimVelocityScale, swimY * swimVelocityScale, swimZ * swimVelocityScale);
             }
 
-            Vec3d vec3d = this.getVelocity();
-            double d = vec3d.horizontalLength();
-            this.bodyYaw += (-((float) MathHelper.atan2(vec3d.x, vec3d.z)) * 57.295776F - this.bodyYaw) * 0.1F;
-            this.setYaw(this.bodyYaw);
-            this.rollAngle += 3.1415927F * this.turningSpeed * 1.5F;
-            this.tiltAngle += (-((float) MathHelper.atan2(d, vec3d.y)) * 57.295776F - this.tiltAngle) * 0.1F;
+            Vec3d velocity = getVelocity();
+            double horizontalSpeed = velocity.horizontalLength();
+            bodyYaw += (-((float) MathHelper.atan2(velocity.x, velocity.z)) * (180.0 / Math.PI) - bodyYaw) * 0.1F;
+            setYaw(bodyYaw);
+            rollAngle += Math.PI * turningSpeed * 1.5F;
+            tiltAngle += (-((float) MathHelper.atan2(horizontalSpeed, velocity.y)) * (180.0 / Math.PI) - tiltAngle) * 0.1F;
         } else {
-            this.tentacleAngle = MathHelper.abs(MathHelper.sin(this.thrustTimer)) * 3.1415927F * 0.25F;
-            if (!this.world.isClient) {
-                double e = this.getVelocity().y;
-                if (this.hasStatusEffect(StatusEffects.LEVITATION)) {
-                    e = 0.05 * (double) (this.getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
-                } else if (!this.hasNoGravity()) {
-                    e -= 0.08;
+            tentacleAngle = MathHelper.abs(MathHelper.sin(thrustTimer)) * (float) Math.PI * 0.25F;
+
+            if (!world.isClient) {
+                double verticalSpeed = getVelocity().y;
+
+                if (hasStatusEffect(StatusEffects.LEVITATION)) {
+                    verticalSpeed = 0.05 * (getStatusEffect(StatusEffects.LEVITATION).getAmplifier() + 1);
+                } else if (!hasNoGravity()) {
+                    verticalSpeed -= 0.08;
                 }
 
-                this.setVelocity(0.0, e * 0.9800000190734863, 0.0);
+                setVelocity(0.0, verticalSpeed * 0.9800000190734863, 0.0);
             }
 
-            this.tiltAngle += (-90.0F - this.tiltAngle) * 0.02F;
+            tiltAngle += (-90.0F - tiltAngle) * 0.02F;
         }
-
     }
+
 
     public boolean damage(DamageSource source, float amount) {
         if (super.damage(source, amount) && this.getAttacker() != null) {
@@ -161,16 +166,16 @@ public class MoonJellyEntity extends VarietyFish {
     }
 
     private void squirt() {
-        this.playSound(this.getSquirtSound(), this.getSoundVolume(), this.getSoundPitch());
-        Vec3d vec3d = this.applyBodyRotations(new Vec3d(0.0, -1.0, 0.0)).add(this.getX(), this.getY(), this.getZ());
+        playSound(getSquirtSound(), getSoundVolume(), getSoundPitch());
+        Vec3d startPos = applyBodyRotations(new Vec3d(0.0, -1.0, 0.0)).add(getX(), getY(), getZ());
 
         for (int i = 0; i < 30; ++i) {
-            Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double) this.random.nextFloat() * 0.6 - 0.3, -1.0, (double) this.random.nextFloat() * 0.6 - 0.3));
-            Vec3d vec3d3 = vec3d2.multiply(0.3 + (double) (this.random.nextFloat() * 2.0F));
-            ((ServerWorld) this.world).spawnParticles(this.getInkParticle(), vec3d.x, vec3d.y + 0.5, vec3d.z, 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
+            Vec3d squirtDir = applyBodyRotations(new Vec3d(random.nextFloat() * 0.6 - 0.3, -1.0, random.nextFloat() * 0.6 - 0.3));
+            Vec3d squirtVelocity = squirtDir.multiply(0.3 + (random.nextFloat() * 2.0F));
+            ((ServerWorld) world).spawnParticles(getInkParticle(), startPos.x, startPos.y + 0.5, startPos.z, 0, squirtVelocity.x, squirtVelocity.y, squirtVelocity.z, 0.1);
         }
-
     }
+
 
     protected ParticleEffect getInkParticle() {
         return ParticleTypes.DRIPPING_WATER;
@@ -216,40 +221,37 @@ public class MoonJellyEntity extends VarietyFish {
         }
 
         public void tick() {
-            int i = this.jellyfish.getDespawnCounter();
-            if (i > 100) {
-                this.jellyfish.setSwimmingVector(0.0F, 0.0F, 0.0F);
-            } else if (this.jellyfish.getRandom().nextInt(toGoalTicks(50)) == 0 || !this.jellyfish.touchingWater || !this.jellyfish.hasSwimmingVector()) {
-                float f = this.jellyfish.getRandom().nextFloat() * 6.2831855F;
-                float g = MathHelper.cos(f) * 0.2F;
-                float h = -0.1F + this.jellyfish.getRandom().nextFloat() * 0.2F;
-                float j = MathHelper.sin(f) * 0.2F;
-                this.jellyfish.setSwimmingVector(g, h, j);
-            }
+            int despawnCounter = jellyfish.getDespawnCounter();
 
+            if (despawnCounter > 100) {
+                jellyfish.setSwimmingVector(0.0F, 0.0F, 0.0F);
+            } else if (jellyfish.getRandom().nextInt(toGoalTicks(50)) == 0 || !jellyfish.touchingWater || !jellyfish.hasSwimmingVector()) {
+                float angle = jellyfish.getRandom().nextFloat() * 6.2F;
+                float x = MathHelper.cos(angle) * 0.2F;
+                float y = -0.1F + jellyfish.getRandom().nextFloat() * 0.2F;
+                float z = MathHelper.sin(angle) * 0.2F;
+                jellyfish.setSwimmingVector(x, y, z);
+            }
         }
     }
 
+
     class EscapeAttackerGoal extends Goal {
-        private static final float field_30375 = 3.0F;
-        private static final float field_30376 = 5.0F;
-        private static final float field_30377 = 10.0F;
+        private static final float MIN_DISTANCE = 3.0F;
+        private static final float MAX_DISTANCE = 5.0F;
+        private static final float SWIMMING_MULTIPLIER = 10.0F;
         private int timer;
 
-        EscapeAttackerGoal() {
+        public EscapeAttackerGoal() {
         }
 
         public boolean canStart() {
-            LivingEntity livingEntity = MoonJellyEntity.this.getAttacker();
-            if (MoonJellyEntity.this.isTouchingWater() && livingEntity != null) {
-                return MoonJellyEntity.this.squaredDistanceTo(livingEntity) < 100.0;
-            } else {
-                return false;
-            }
+            LivingEntity attacker = MoonJellyEntity.this.getAttacker();
+            return MoonJellyEntity.this.isTouchingWater() && attacker != null && MoonJellyEntity.this.squaredDistanceTo(attacker) < 100.0;
         }
 
         public void start() {
-            this.timer = 0;
+            timer = 0;
         }
 
         public boolean shouldRunEveryTick() {
@@ -257,40 +259,43 @@ public class MoonJellyEntity extends VarietyFish {
         }
 
         public void tick() {
-            ++this.timer;
-            LivingEntity livingEntity = MoonJellyEntity.this.getAttacker();
-            if (livingEntity != null) {
-                Vec3d vec3d = new Vec3d(MoonJellyEntity.this.getX() - livingEntity.getX(), MoonJellyEntity.this.getY() - livingEntity.getY(), MoonJellyEntity.this.getZ() - livingEntity.getZ());
-                BlockState blockState = MoonJellyEntity.this.world.getBlockState(new BlockPos(MoonJellyEntity.this.getX() + vec3d.x, MoonJellyEntity.this.getY() + vec3d.y, MoonJellyEntity.this.getZ() + vec3d.z));
-                FluidState fluidState = MoonJellyEntity.this.world.getFluidState(new BlockPos(MoonJellyEntity.this.getX() + vec3d.x, MoonJellyEntity.this.getY() + vec3d.y, MoonJellyEntity.this.getZ() + vec3d.z));
+            timer++;
+            LivingEntity attacker = MoonJellyEntity.this.getAttacker();
+
+            if (attacker != null) {
+                Vec3d difference = new Vec3d(MoonJellyEntity.this.getX() - attacker.getX(), MoonJellyEntity.this.getY() - attacker.getY(), MoonJellyEntity.this.getZ() - attacker.getZ());
+                BlockState blockState = MoonJellyEntity.this.world.getBlockState(new BlockPos(MoonJellyEntity.this.getX() + difference.x, MoonJellyEntity.this.getY() + difference.y, MoonJellyEntity.this.getZ() + difference.z));
+                FluidState fluidState = MoonJellyEntity.this.world.getFluidState(new BlockPos(MoonJellyEntity.this.getX() + difference.x, MoonJellyEntity.this.getY() + difference.y, MoonJellyEntity.this.getZ() + difference.z));
+
                 if (fluidState.isIn(FluidTags.WATER) || blockState.isAir()) {
-                    double d = vec3d.length();
-                    if (d > 0.0) {
-                        vec3d.normalize();
-                        double e = 3.0;
-                        if (d > 5.0) {
-                            e -= (d - 5.0) / 5.0;
+                    double distance = difference.length();
+
+                    if (distance > 0.0) {
+                        difference = difference.normalize();
+                        double multiplier = MIN_DISTANCE;
+                        if (distance > MAX_DISTANCE) {
+                            multiplier -= (distance - MAX_DISTANCE) / MAX_DISTANCE;
                         }
 
-                        if (e > 0.0) {
-                            vec3d = vec3d.multiply(e);
+                        if (multiplier > 0.0) {
+                            difference = difference.multiply(multiplier);
                         }
                     }
 
                     if (blockState.isAir()) {
-                        vec3d = vec3d.subtract(0.0, vec3d.y, 0.0);
+                        difference = difference.subtract(0.0, difference.y, 0.0);
                     }
 
-                    MoonJellyEntity.this.setSwimmingVector((float) vec3d.x / 20.0F, (float) vec3d.y / 20.0F, (float) vec3d.z / 20.0F);
+                    MoonJellyEntity.this.setSwimmingVector((float) (difference.x / SWIMMING_MULTIPLIER), (float) (difference.y / SWIMMING_MULTIPLIER), (float) (difference.z / SWIMMING_MULTIPLIER));
                 }
 
-                if (this.timer % 10 == 5) {
+                if (timer % 10 == 5) {
                     MoonJellyEntity.this.world.addParticle(ParticleTypes.BUBBLE, MoonJellyEntity.this.getX(), MoonJellyEntity.this.getY(), MoonJellyEntity.this.getZ(), 0.0, 0.0, 0.0);
                 }
-
             }
         }
     }
+
 
     @Override
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {

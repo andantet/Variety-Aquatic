@@ -68,41 +68,42 @@ public class VarietyFish extends FishEntity implements IAnimatable {
 
     public void tick() {
         super.tick();
-        if (this.isAiDisabled()) {
-            this.setAir(this.getMaxAir());
+
+        if (isAiDisabled()) {
+            setAir(getMaxAir());
         } else {
-            if (this.isWet()) {
-                this.setMoistness(2400);
-                this.setAir(4800);
+            if (isWet()) {
+                setMoistness(2400);
+                setAir(4800);
             } else {
-                this.setMoistness(this.getMoistness() - 1);
-                if (this.getMoistness() <= 0) {
-                    this.damage(DamageSource.DRYOUT, 1.0F);
+                setMoistness(getMoistness() - 1);
+                if (getMoistness() <= 0) {
+                    damage(DamageSource.DRYOUT, 1.0F);
                 }
 
-                if (this.onGround) {
-                    this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F,
-                            0.5D,
-                            (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F));
-                    this.setYaw(this.random.nextFloat() * 360.0F);
-                    this.onGround = false;
-                    this.velocityDirty = true;
+                if (onGround) {
+                    float randomFloat = random.nextFloat();
+                    setVelocity(getVelocity().add((randomFloat * 2.0F - 1.0F) * 0.2F, 0.5D, (random.nextFloat() * 2.0F - 1.0F) * 0.2F));
+                    setYaw(randomFloat * 360.0F);
+                    onGround = false;
+                    velocityDirty = true;
                 }
             }
 
-            if (this.world.isClient && this.isTouchingWater() && this.isAttacking()) {
-                Vec3d vec3d = this.getRotationVec(0.0F);
-                float f = MathHelper.cos(this.getYaw() * 0.017453292F) * 0.6F;
-                float g = MathHelper.sin(this.getYaw() * 0.017453292F) * 0.6F;
-                float h = 0.0F - this.random.nextFloat() * 0.7F;
+            if (world.isClient && isTouchingWater() && isAttacking()) {
+                Vec3d rotationVec = getRotationVec(0.0F);
+                float cosYaw = MathHelper.cos(getYaw() * 0.017453292F) * 0.6F;
+                float sinYaw = MathHelper.sin(getYaw() * 0.017453292F) * 0.6F;
+                float offsetY = 0.0F - random.nextFloat() * 0.7F;
 
-                for(int i = 0; i < 2; ++i) {
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
+                for (int i = 0; i < 2; ++i) {
+                    world.addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY + cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY + sinYaw, 0.0D, 0.0D, 0.0D);
+                    world.addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY - cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY - sinYaw, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
     }
+
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);

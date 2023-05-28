@@ -5,7 +5,6 @@ import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
 public class GoToWaterGoal extends MoveToTargetPosGoal {
-
     private final PathAwareEntity entity;
 
     public GoToWaterGoal(PathAwareEntity mob, double speed, int range) {
@@ -35,6 +34,7 @@ public class GoToWaterGoal extends MoveToTargetPosGoal {
 
     @Override
     protected boolean isTargetPos(WorldView world, BlockPos pos) {
-        return world.getFluidState(pos.up()).isIn(FluidTags.WATER);
+        BlockPos upPos = pos.up();
+        return world.getFluidState(upPos).isIn(FluidTags.WATER);
     }
 }

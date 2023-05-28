@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import org.variety.variety_aquatic.Entities.custom.YellowfinTunaEntity;
 
 public class TunaJumpGoal extends DiveJumpingGoal {
-    private static final int[] OFFSET_MULTIPLIERS = new int[]{0, 1, 4, 5, 6, 7};
+    private static final int[] OFFSET_MULTIPLIERS = {0, 1, 4, 5, 6, 7};
     private final YellowfinTunaEntity yellowfin;
     private final int chance;
     private boolean inWater;
@@ -22,39 +22,38 @@ public class TunaJumpGoal extends DiveJumpingGoal {
     }
 
     public boolean canStart() {
-        if (this.yellowfin.getRandom().nextInt(this.chance) != 0) {
-            return false;
-        } else {
-            Direction direction = this.yellowfin.getMovementDirection();
-            int i = direction.getOffsetX();
-            int j = direction.getOffsetZ();
-            BlockPos blockPos = this.yellowfin.getBlockPos();
-            int[] var5 = OFFSET_MULTIPLIERS;
-            int var6 = var5.length;
+        return yellowfin.getRandom().nextInt(chance) == 0 && checkWaterAndAirBlocks();
+    }
 
-            for(int var7 = 0; var7 < var6; ++var7) {
-                int k = var5[var7];
-                if (!this.isWater(blockPos, i, j, k) || !this.isAirAbove(blockPos, i, j, k)) {
-                    return false;
-                }
-            }
+    private boolean checkWaterAndAirBlocks() {
+        Direction direction = yellowfin.getMovementDirection();
+        int offsetX = direction.getOffsetX();
+        int offsetZ = direction.getOffsetZ();
+        BlockPos blockPos = yellowfin.getBlockPos();
 
-            return true;
+        for (int multiplier : OFFSET_MULTIPLIERS) {
+            BlockPos offsetPos = blockPos.add(offsetX * multiplier, 0, offsetZ * multiplier);
+            if (!isWater(offsetPos) || !isAirAbove(offsetPos))
+                return false;
         }
+
+        return true;
     }
 
-    private boolean isWater(BlockPos pos, int offsetX, int offsetZ, int multiplier) {
-        BlockPos blockPos = pos.add(offsetX * multiplier, 0, offsetZ * multiplier);
-        return this.yellowfin.world.getFluidState(blockPos).isIn(FluidTags.WATER) && !this.yellowfin.world.getBlockState(blockPos).getMaterial().blocksMovement();
+    private boolean isWater(BlockPos pos) {
+        FluidState fluidState = yellowfin.world.getFluidState(pos);
+        return fluidState.isIn(FluidTags.WATER) && !yellowfin.world.getBlockState(pos).getMaterial().blocksMovement();
     }
 
-    private boolean isAirAbove(BlockPos pos, int offsetX, int offsetZ, int multiplier) {
-        return this.yellowfin.world.getBlockState(pos.add(offsetX * multiplier, 1, offsetZ * multiplier)).isAir() && this.yellowfin.world.getBlockState(pos.add(offsetX * multiplier, 2, offsetZ * multiplier)).isAir();
+    private boolean isAirAbove(BlockPos pos) {
+        BlockPos abovePos = pos.up();
+        return yellowfin.world.getBlockState(abovePos).isAir() && yellowfin.world.getBlockState(abovePos.up()).isAir();
     }
 
     public boolean shouldContinue() {
-        double d = this.yellowfin.getVelocity().y;
-        return (!(d * d < 0.029999999329447746) || this.yellowfin.getPitch() == 0.0F || !(Math.abs(this.yellowfin.getPitch()) < 10.0F) || !this.yellowfin.isTouchingWater()) && !this.yellowfin.isOnGround();
+        double velocityY = yellowfin.getVelocity().y;
+        float pitch = yellowfin.getPitch();
+        return velocityY * velocityY >= 0.03 || Math.abs(pitch) >= 10.0F || !yellowfin.isTouchingWater() || yellowfin.isOnGround();
     }
 
     public boolean canStop() {
@@ -62,34 +61,34 @@ public class TunaJumpGoal extends DiveJumpingGoal {
     }
 
     public void start() {
-        Direction direction = this.yellowfin.getMovementDirection();
-        this.yellowfin.setVelocity(this.yellowfin.getVelocity().add((double)direction.getOffsetX() * 0.6, 0.7, (double)direction.getOffsetZ() * 0.6));
-        this.yellowfin.getNavigation().stop();
+        Direction direction = yellowfin.getMovementDirection();
+        double offsetX = direction.getOffsetX() * 0.6;
+        double offsetZ = direction.getOffsetZ() * 0.6;
+        yellowfin.setVelocity(yellowfin.getVelocity().add(offsetX, 0.7, offsetZ));
+        yellowfin.getNavigation().stop();
     }
 
     public void stop() {
-        this.yellowfin.setPitch(0.0F);
+        yellowfin.setPitch(0.0F);
     }
 
     public void tick() {
-        boolean bl = this.inWater;
-        if (!bl) {
-            FluidState fluidState = this.yellowfin.world.getFluidState(this.yellowfin.getBlockPos());
-            this.inWater = fluidState.isIn(FluidTags.WATER);
-        }
+        boolean wasInWater = inWater;
+        inWater = yellowfin.world.getFluidState(yellowfin.getBlockPos()).isIn(FluidTags.WATER);
 
-        if (this.inWater && !bl) {
-            this.yellowfin.playSound(SoundEvents.ENTITY_DOLPHIN_JUMP, 1.0F, 1.0F);
-        }
+        if (inWater && !wasInWater)
+            yellowfin.playSound(SoundEvents.ENTITY_DOLPHIN_JUMP, 1.0F, 1.0F);
 
-        Vec3d vec3d = this.yellowfin.getVelocity();
-        if (vec3d.y * vec3d.y < 0.029999999329447746 && this.yellowfin.getPitch() != 0.0F) {
-            this.yellowfin.setPitch(MathHelper.lerpAngle(this.yellowfin.getPitch(), 0.0F, 0.2F));
-        } else if (vec3d.length() > 9.999999747378752E-6) {
-            double d = vec3d.horizontalLength();
-            double e = Math.atan2(-vec3d.y, d) * 57.2957763671875;
-            this.yellowfin.setPitch((float)e);
-        }
+        Vec3d velocity = yellowfin.getVelocity();
+        double velocityY = velocity.y;
 
+        if (velocityY * velocityY < 0.03 && yellowfin.getPitch() != 0.0F)
+            yellowfin.setPitch(MathHelper.lerpAngle(yellowfin.getPitch(), 0.0F, 0.2F));
+        else if (velocity.length() > 0.00001) {
+            double horizontalLength = velocity.horizontalLength();
+            double pitch = Math.atan2(-velocityY, horizontalLength) * 57.2957763671875;
+            yellowfin.setPitch((float) pitch);
+        }
     }
 }
+
