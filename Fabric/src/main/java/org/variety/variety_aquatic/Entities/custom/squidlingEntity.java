@@ -115,11 +115,6 @@ public class squidlingEntity extends VarietyFish implements Angerable {
 
     }
 
-
-    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return pos.getY() <= world.getSeaLevel() - 15  && world.getBlockState(pos).isOf(Blocks.WATER);
-    }
-
     @Override
     public void onDeath(DamageSource source) {
         super.onDeath(source);

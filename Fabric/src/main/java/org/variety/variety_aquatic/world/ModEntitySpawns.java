@@ -59,6 +59,15 @@ public class ModEntitySpawns {
                 ModEntities.ANGLERFISH, NewConfig.anglerfish_spawnweight, 1, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.OARFISH, NewConfig.oarfish_spawnweight, 1, 1);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.BARRELEE, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.SEAANGLE, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.SQUIDLING, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
+
+
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.VAMPIRESQUID, NewConfig.vampiresquid_spawnweight, 1, 5);
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
@@ -72,11 +81,11 @@ public class ModEntitySpawns {
         SpawnRestriction.register(
                 ModEntities.GIANTGLOWINGSQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, GiantsquidEntity::canMobSpawn);
         SpawnRestriction.register(
-                ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
+                ModEntities.ANGLERFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(
-                ModEntities.OARFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, OarfishEntity::canSpawn);
+                ModEntities.OARFISH, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(
-                ModEntities.VAMPIRESQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AnglerFishEntity::canSpawn);
+                ModEntities.VAMPIRESQUID, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(
                 ModEntities.PIRANHA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PiranhaEntity::canSpawn);
         SpawnRestriction.register(
@@ -88,7 +97,12 @@ public class ModEntitySpawns {
                 ModEntities.BETTA, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, BettaEntity::canSpawn);
         SpawnRestriction.register(
                 ModEntities.SEAHORSE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
-
+        SpawnRestriction.register(
+                ModEntities.SEAANGLE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
+        SpawnRestriction.register(
+                ModEntities.BARRELEE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
+        SpawnRestriction.register(
+                ModEntities.SQUIDLING, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(
                 ModEntities.WHALESHARK, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canMobSpawn);
         SpawnRestriction.register(
