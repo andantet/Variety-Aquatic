@@ -7,11 +7,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import org.varietymods.Entity.AI.TunaJump;
+import org.varietymods.Varietyaquatic;
 
 
 public class YellowfinTunaEntity extends SchoolingVarietyFish {
 
-    public YellowfinTunaEntity(EntityType<? extends YellowfinTunaEntity> entityType, Level world) {
+    public YellowfinTunaEntity(EntityType<? extends SchoolingVarietyFish> entityType, Level world) {
+
         super(entityType, world);
     }
 

@@ -10,7 +10,6 @@ import org.varietymods.Entity.Custom.YellowfinTunaEntity;
 import org.varietymods.Varietyaquatic;
 
 public class ModEntityTypes {
-
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Varietyaquatic.MODID);
 
