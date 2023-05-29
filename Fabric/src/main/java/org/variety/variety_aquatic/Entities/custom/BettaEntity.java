@@ -10,8 +10,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.FishEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.tag.BiomeTags;
 import net.minecraft.util.Util;
@@ -24,7 +22,6 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
-import org.variety.variety_aquatic.Items.ModItems;
 import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVariant> {

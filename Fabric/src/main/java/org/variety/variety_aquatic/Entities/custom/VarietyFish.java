@@ -1,9 +1,7 @@
 package org.variety.variety_aquatic.Entities.custom;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.control.YawAdjustingLookControl;
@@ -126,6 +124,21 @@ public class VarietyFish extends WaterCreatureEntity implements IAnimatable {
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
+    }
+
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return dimensions.height * 0.65F;
+    }
+    public boolean cannotDespawn() {
+        return super.cannotDespawn();
+    }
+
+    public boolean canImmediatelyDespawn(double distanceSquared) {
+        return !this.hasCustomName();
+    }
+
+    public int getLimitPerChunk() {
+        return 8;
     }
 
     protected SoundEvent getFlopSound() {

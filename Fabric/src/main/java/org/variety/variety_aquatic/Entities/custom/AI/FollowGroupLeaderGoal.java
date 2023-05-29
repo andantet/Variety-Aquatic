@@ -2,7 +2,6 @@ package org.variety.variety_aquatic.Entities.custom.AI;
 
 import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.passive.SchoolingFishEntity;
 import org.variety.variety_aquatic.Entities.custom.SchoolingVarietyFish;
 
 import java.util.List;
