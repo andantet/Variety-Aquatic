@@ -29,7 +29,7 @@ import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVariant> {
 
-    public BettaEntity(EntityType<? extends VarietyFishFish> entityType, World world) {
+    public BettaEntity(EntityType<? extends VarietyFish> entityType, World world) {
         super(entityType, world);
     }
 

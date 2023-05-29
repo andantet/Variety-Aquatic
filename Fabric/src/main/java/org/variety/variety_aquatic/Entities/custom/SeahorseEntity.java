@@ -29,7 +29,7 @@ import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class SeahorseEntity extends VarietyFish implements IVariantEntity<SeahorseVariant> {
     private static final TrackedData<Integer> DATA_ID_TYPE_VARIANT = DataTracker.registerData(SeahorseEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public SeahorseEntity(EntityType<? extends VarietyFishFish> entityType, World world) {
+    public SeahorseEntity(EntityType<? extends VarietyFish> entityType, World world) {
         super(entityType, world);
     }
 
