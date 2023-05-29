@@ -16,17 +16,15 @@ import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
-import org.variety.variety_aquatic.Util.BiomeFogConfigLoader;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
 
 public class Variety_AquaticClient implements ClientModInitializer {
-    public static String currentBiome = "";
-    public static String currentDimension = "";
 
     @Override
     public void onInitializeClient() {
-        BiomeFogConfigLoader.CONFIG = BiomeFogConfigLoader.load();
+
+
 
         EntityRendererRegistry.register(ModEntities.SEAHORSE,
                 (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context,new GenericVariantModel<>(Variety_Aquatic.MOD_ID,"seahorse.geo", "seahorse.animation"),1.0f,1.0f,false,false));
