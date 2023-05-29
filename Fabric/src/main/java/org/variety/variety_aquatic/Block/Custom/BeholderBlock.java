@@ -36,8 +36,6 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<State> CURRENT_STATE = EnumProperty.of("current_state", State.class);
     private static final VoxelShape SLAB_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
     private static final VoxelShape MOUTH_SHAPE = Block.createCuboidShape(3,8,4,13,16,12);
-    public static final IntProperty LIGHT_LEVEL = IntProperty.of("light_level", 0, 10);
-
     public enum State implements StringIdentifiable {
         OFF(0),
         LOW(4),
