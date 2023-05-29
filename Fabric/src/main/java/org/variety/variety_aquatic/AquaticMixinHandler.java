@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 import java.util.List;
 import java.util.Set;
-public class AquaticMixinHanlder implements IMixinConfigPlugin {
+public class AquaticMixinHandler implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
 

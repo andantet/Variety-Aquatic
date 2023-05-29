@@ -29,7 +29,7 @@ public class ModBlock {
                     .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
     public static final Block BEHOLDER_BLOCK = registerBlock("beholder",
             new BeholderBlock(FabricBlockSettings.of(Material.DECORATION)
-                    .strength(4f).nonOpaque()), ModItemGroup.VARIETY_MODS);
+                    .strength(4f).nonOpaque().luminance(state -> state.get(BeholderBlock.CURRENT_STATE).getLightLevel())), ModItemGroup.VARIETY_MODS);
     public static final Block AQUARIUM_BLOCK  = registerBlock("aquarium_block",
             new AquariumBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> 14).sounds(BlockSoundGroup.WOOD)),ModItemGroup.VARIETY_MODS);
 

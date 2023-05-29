@@ -10,10 +10,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
+import net.minecraft.state.property.*;
 import net.minecraft.tag.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -39,13 +36,23 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
     public static final EnumProperty<State> CURRENT_STATE = EnumProperty.of("current_state", State.class);
     private static final VoxelShape SLAB_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
     private static final VoxelShape MOUTH_SHAPE = Block.createCuboidShape(3,8,4,13,16,12);
+    public static final IntProperty LIGHT_LEVEL = IntProperty.of("light_level", 0, 10);
 
-    // Enum class for the states
     public enum State implements StringIdentifiable {
-        OFF,
-        LOW,
-        MEDIUM,
-        HIGH;
+        OFF(0),
+        LOW(4),
+        MEDIUM(8),
+        HIGH(12);
+
+        private final int lightLevel;
+
+        State(int lightLevel) {
+            this.lightLevel = lightLevel;
+        }
+
+        public int getLightLevel() {
+            return lightLevel;
+        }
 
         @Override
         public String asString() {
@@ -53,12 +60,16 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
         }
     }
 
+
+
     public BeholderBlock(AbstractBlock.Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(FACING, Direction.NORTH)
                 .with(CURRENT_STATE, State.OFF)
                 .with(WATERLOGGED, false));
+
+
     }
 
     @Override
@@ -98,6 +109,8 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
         return BlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
+
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
@@ -124,16 +137,23 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
                     break;
             }
 
+            // Update the light level property based on the new state
+            int newLightLevel = newState.getLightLevel();
 
-            // Set the active state of the block entity
+            // Set the active state and light level of the block entity
             world.setBlockState(pos, state.with(CURRENT_STATE, newState), 3);
             ((BeholderTileEntity) world.getBlockEntity(pos)).setActiveState(newState);
 
+            // Update the block's light level
+            world.getChunkManager().getLightingProvider().checkBlock(pos);
+            world.updateListeners(pos, state, state, 3);
 
             return ActionResult.SUCCESS;
         }
         return ActionResult.CONSUME;
     }
+
+
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);

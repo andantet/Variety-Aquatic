@@ -2,7 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "org.variety.variety_aquatic.Mixin",
-  "plugin": "org.variety.variety_aquatic.AquaticMixinHanlder",
+  "plugin": "org.variety.variety_aquatic.AquaticMixinHandler",
 
   "compatibilityLevel": "JAVA_17",
   "mixins": [
