@@ -10,7 +10,9 @@
   ],
   "client": [
     "FluidRendererMixin",
-    "SodiumFluidRendererMixin"
+    "SodiumFluidRendererMixin",
+    "WorldRendererMixin",
+    "FogRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
