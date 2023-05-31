@@ -92,9 +92,12 @@ public class NewConfig extends MidnightConfig {
 
     @Entry(min=0,max=100) public static int oarfish_spawnweight = 25;
     @Entry public static boolean waterToggle = true;
+    @Entry public static boolean waterFogCompatility = true;
+
     @Entry(min=-200,max=200) public static float waterStartDeep = -100.0f;
     @Entry(min=-200,max=200)public static float waterStartShallow = -80.0f;
     @Entry(min=-200,max=200)public static float waterEndDeep = 65.0f;
     @Entry(min=-200,max=200)public static float waterEndShallow = 75.0f;
     @Entry(min=-200,max=200)public static float waterEndSwamp = 50.0f;
+
 }
