@@ -22,9 +22,6 @@ public class ModItems {
 
     public static final Item GUIDE_BOOK = registerItem("guide_book", new AbstractBookItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).maxCount(1).group(ModItemGroup.VARIETY_MODS), new Identifier(Variety_Aquatic.MOD_ID, "fish")));
 
-    public static final Item AQUARIUM_LIGHT_ITEM = registerItem("aquarium_light_item",
-            new Item(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
-
     public static final Item SUNFISH_EGG = registerItem("sunfish_egg",
             new SpawnEggItem(ModEntities.SUNFISH,0x22b341, 0x19732e,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
@@ -38,7 +35,7 @@ public class ModItems {
             new SpawnEggItem(ModEntities.SEAHORSE,0xff5c71, 0xffe570,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
     public static final Item SEAANGEL_EGG = registerItem("seaangel_egg",
-            new SpawnEggItem(ModEntities.SEAANGLE,0xb2c3ec, 0xf59b67,
+            new SpawnEggItem(ModEntities.SEAANGEL,0xb2c3ec, 0xf59b67,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
     public static final Item LEVIATHAN_EGG = registerItem("leviathan_egg",
             new SpawnEggItem(ModEntities.LEVIATHAN,0x22b341, 0x19732e,

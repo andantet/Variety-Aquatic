@@ -62,7 +62,7 @@ public class ModEntitySpawns {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.BARRELEE, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.SEAANGLE, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
+                ModEntities.SEAANGEL, NewConfig.oarfish_spawnweight, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.SQUIDLING, 2, 1, 1);//TODO REPLACE WITH OWN SPAWNWEIGHT
 
@@ -98,7 +98,7 @@ public class ModEntitySpawns {
         SpawnRestriction.register(
                 ModEntities.SEAHORSE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
         SpawnRestriction.register(
-                ModEntities.SEAANGLE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
+                ModEntities.SEAANGEL, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(
                 ModEntities.BARRELEE, SpawnRestriction.Location.IN_WATER, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VarietyFish::CanSpawnDeep);
         SpawnRestriction.register(

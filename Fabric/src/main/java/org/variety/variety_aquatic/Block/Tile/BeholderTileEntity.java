@@ -16,7 +16,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.Custom.BeholderBlock;
+import org.variety.variety_aquatic.Block.Custom.Beholder;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -52,7 +52,7 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     }
 
     private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
+        Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         switch (activeState) {
             case OFF:
                 event.getController().setAnimation(new AnimationBuilder().addAnimation("Off", true));
@@ -95,9 +95,9 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
     }
 
     // Method to set the active state
-    public void setActiveState(BeholderBlock.State state) {
+    public void setActiveState(Beholder.State state) {
         if (world != null) {
-            world.setBlockState(pos, getCachedState().with(BeholderBlock.CURRENT_STATE, state), 3);
+            world.setBlockState(pos, getCachedState().with(Beholder.CURRENT_STATE, state), 3);
             markDirty();
         }
     }
@@ -116,16 +116,16 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
             }
         }
 
-        BeholderBlock.State activeState = getCachedState().get(BeholderBlock.CURRENT_STATE);
+        Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         double radius;
 
-        if (activeState == BeholderBlock.State.OFF) {
+        if (activeState == Beholder.State.OFF) {
             radius = 0.0;
-        } else if (activeState == BeholderBlock.State.LOW) {
+        } else if (activeState == Beholder.State.LOW) {
             radius = Math.round(NewConfig.beholder_max_range / 4);
-        } else if (activeState == BeholderBlock.State.MEDIUM) {
+        } else if (activeState == Beholder.State.MEDIUM) {
             radius = Math.round(NewConfig.beholder_max_range / 2);
-        } else if (activeState == BeholderBlock.State.HIGH) {
+        } else if (activeState == Beholder.State.HIGH) {
             radius = Math.round(NewConfig.beholder_max_range);
         } else {
             radius = 0.0;

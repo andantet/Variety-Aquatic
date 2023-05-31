@@ -1,13 +1,21 @@
 package org.variety.variety_aquatic.Client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.BiomeTags;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
@@ -18,11 +26,24 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
+import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
+import vazkii.patchouli.client.base.ClientTicker;
 
 public class Variety_AquaticClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            MinecraftClient mc = MinecraftClient.getInstance();
+            if(mc.player != null && mc.world != null) {
+                BlockPos pos = new BlockPos(mc.player.getPos());
+                Biome biome = mc.world.getBiome(pos).value();
+
+                if (biome.equals(BiomeKeys.FROZEN_OCEAN)) {
+                    mc.player.playSound(SoundEvents.ENTITY_PIG_STEP, 25.0F, 1.0F);
+                }
+            }
+        });
 
 
 
@@ -120,7 +141,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CRAB, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"crab.geo","crab_texture","crab.animation"),Variety_Aquatic.MOD_ID, "crab_texture", 1.6f,0.7f, false,false)
         );
-        EntityRendererRegistry.register(ModEntities.SEAANGLE, (EntityRendererFactory.Context ctx) ->
+        EntityRendererRegistry.register(ModEntities.SEAANGEL, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"seaangle.geo","seaangle_texture","seaangle.animation"), Variety_Aquatic.MOD_ID,"seaangle_texture",1.0f, 1.0f,true, true)
         );
 
@@ -144,7 +165,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
         BlockEntityRendererRegistry.register(ModTileEntity.BEHOLDER,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new BeholderRenderer());
-        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER_BLOCK, RenderLayer.getTranslucent());
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
 

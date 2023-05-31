@@ -14,7 +14,6 @@ public class ModTileEntity {
     public static BlockEntityType<GiantGlowingSquidTileEntity> GIANTSQUID;
 
     public static BlockEntityType<BeholderTileEntity> BEHOLDER;
-    public static BlockEntityType<AquariumBlockEntity> AQUARIUM;
 
 
 
@@ -35,12 +34,7 @@ public class ModTileEntity {
         BEHOLDER = Registry.register(Registry.BLOCK_ENTITY_TYPE,
                 new Identifier(Variety_Aquatic.MOD_ID, "beholder"),
                 FabricBlockEntityTypeBuilder.create(BeholderTileEntity::new,
-                        ModBlock.BEHOLDER_BLOCK).build(null));
-
-        AQUARIUM = Registry.register(Registry.BLOCK_ENTITY_TYPE,
-                new Identifier(Variety_Aquatic.MOD_ID, "aquarium"),
-                FabricBlockEntityTypeBuilder.create(AquariumBlockEntity::new,
-                        ModBlock.AQUARIUM_BLOCK).build(null));
+                        ModBlock.BEHOLDER).build(null));
 
     }
 }

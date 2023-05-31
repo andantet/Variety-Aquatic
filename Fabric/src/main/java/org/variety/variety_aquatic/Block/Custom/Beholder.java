@@ -32,7 +32,7 @@ import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
 import org.variety.variety_aquatic.Sound.ModSound;
 
-public class BeholderBlock extends BlockWithEntity implements Waterloggable {
+public class Beholder extends BlockWithEntity implements Waterloggable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
@@ -63,7 +63,7 @@ public class BeholderBlock extends BlockWithEntity implements Waterloggable {
 
 
 
-    public BeholderBlock(AbstractBlock.Settings settings) {
+    public Beholder(AbstractBlock.Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(FACING, Direction.NORTH)
