@@ -13,6 +13,7 @@ import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.Custom.AbstractBookItem;
+import org.variety.variety_aquatic.Items.Custom.TrophyItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.Items.ModItemGroup;
@@ -141,7 +142,6 @@ public class ModItems {
             new Item(new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)
                     .food(new FoodComponent.Builder().hunger(6).saturationModifier(0.8f).build())));
 
-
     public static final Item PIRANHA_EGG = registerItem("piranha_egg",
             new SpawnEggItem(ModEntities.PIRANHA,0x5e6989, 0x864e3b,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
@@ -152,6 +152,12 @@ public class ModItems {
     public static final Item CRAB_RAVE_MUSIC_DISC = registerItem("crab_rave_music_disc",
             new ModMusicDiskItem(7, ModSound.CRAB_RAVE,
                     new FabricItemSettings().group(ModItemGroup.VARIETY_MODS).maxCount(1),30));
+
+    public static final Item GIANTSQUID_TROPHY_BLOCK_ITEM = registerItem("giantsquidtrophy",
+            new TrophyItem(ModBlock.GIANTSQUID_TROPHY_BLOCK, new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
+    public static final Item LEVIATHAN_TROPHY_BLOCK_ITEM = registerItem("leviathantrophy",
+             new TrophyItem(ModBlock.LEVIATHAN_TROPHY_BLOCK, new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
     }

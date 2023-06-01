@@ -14,21 +14,20 @@ public class GiantGlowingSquidTrophyModel extends AnimatedGeoModel<GiantGlowingS
 
     @Override
     public Identifier getModelResource(GiantGlowingSquidTileEntity animatable) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "geo/glowingsquidtrophy.geo.json");
-
+        return new Identifier(Variety_Aquatic.MOD_ID, "geo/glowingsquidtrophy.geo.json");
     }
 
     @Override
     public Identifier getTextureResource(GiantGlowingSquidTileEntity entity) {
         Difficulty difficulty = entity.getWorld().getDifficulty();
         if (difficulty == Difficulty.EASY) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquidtrophy_copper_texture.png");
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquid_trophy_copper.png");
         } else if (difficulty == Difficulty.NORMAL) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquidtrophy_iron_texture.png");
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquid_trophy_iron.png");
         } else if (difficulty == Difficulty.HARD) {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquidtrophy_gold_texture.png");
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquid_trophy_gold.png");
         } else {
-            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquidtrophy_copper_texture.png");
+            return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquid_trophy_copper.png");
         }
     }
 }

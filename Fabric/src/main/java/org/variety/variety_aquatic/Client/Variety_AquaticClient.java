@@ -10,9 +10,7 @@ import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BiomeTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
@@ -24,10 +22,11 @@ import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
+import org.variety.variety_aquatic.Items.Custom.TrophyItemRenderer;
+import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
-import vazkii.patchouli.client.base.ClientTicker;
+import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
 public class Variety_AquaticClient implements ClientModInitializer {
 
@@ -169,7 +168,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
 
-
+        GeoItemRenderer.registerItemRenderer(ModItems.GIANTSQUID_TROPHY_BLOCK_ITEM, new TrophyItemRenderer("glowingsquid"));
+        GeoItemRenderer.registerItemRenderer(ModItems.LEVIATHAN_TROPHY_BLOCK_ITEM, new TrophyItemRenderer("leviathan"));
 
     }
 }

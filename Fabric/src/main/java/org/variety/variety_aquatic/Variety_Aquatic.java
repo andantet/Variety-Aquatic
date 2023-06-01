@@ -34,9 +34,10 @@ public class Variety_Aquatic implements ModInitializer {
 
         MidnightConfig.init(MOD_ID, NewConfig.class);
 
+        ModBlock.registerModBlocks();
         ModItems.registerModItems();
         ModSound.initializeSounds();
-        ModBlock.registerModBlocks();
+
         ModTileEntity.registerBlockEntities();
         ModWorldGen.generateWorldGen();
 
