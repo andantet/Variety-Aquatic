@@ -151,6 +151,18 @@
   "varietyaquatic.midnightconfig.anglerfish_spawnweight": "Anglerfish Spawnweight",
   "varietyaquatic.midnightconfig.beholder_tps": "Beholder Minimum TPS",
   "varietyaquatic.midnightconfig.beholder_max_range": "Beholder Max Range",
+  "varietyaquatic.midnightconfig.waterEndSwamp": "Fog End Swamp",
+  "varietyaquatic.midnightconfig.waterEndShallow": "Fog End Shallow",
+  "varietyaquatic.midnightconfig.waterEndDeep": "Fog End Deep",
+  "varietyaquatic.midnightconfig.waterStartShallow": "Fog Start Shallow",
+  "varietyaquatic.midnightconfig.waterStartDeep": "Fog Start Deep",
+  "varietyaquatic.midnightconfig.waterFogCompatibility": "Fog compat check",
+  "varietyaquatic.midnightconfig.waterToggle": "Water Fog Toggle",
+  "varietyaquatic.midnightconfig.oarfish_spawnweight": "Oarfish Spawn Weight",
+  "varietyaquatic.midnightconfig.barreleye_followrange": "Barreleye Followrange",
+  "varietyaquatic.midnightconfig.barreleye_health": "Barreleye Health",
+  "varietyaquatic.midnightconfig.barreleye_speed": "Barreleye Speed",
+
 
 
   "varietyaquatic.midnightconfig.title": "Variety Aquatic Config"
