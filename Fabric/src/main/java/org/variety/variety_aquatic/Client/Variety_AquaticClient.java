@@ -89,6 +89,7 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.VAMPIRESQUID, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"vampiresquid.geo","vampiresquid_texture","vampiresquid.animation"),Variety_Aquatic.MOD_ID, "vampiresquid_texture", 1.0f,1.2f, false,true)
         );
+
         EntityRendererRegistry.register(ModEntities.OARFISH, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"oarfish.geo","oarfish_texture","oarfish.animation"),Variety_Aquatic.MOD_ID, "oarfish_texture", 1.0f,1.2f, false,true)
         );

@@ -1,6 +1,8 @@
 package org.variety.variety_aquatic.Items.Custom;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.Difficulty;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
@@ -18,7 +20,26 @@ public class TrophyItemModel extends AnimatedGeoModel<TrophyItem> {
 
   @Override
   public Identifier getTextureResource(TrophyItem object) {
-    return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/" + mobid + "_trophy_copper.png");
+    Difficulty worldDifficulty = MinecraftClient.getInstance().world.getDifficulty();
+    String difficultySuffix;
+
+    // Determine the texture suffix based on the world's difficulty
+    switch (worldDifficulty) {
+      case EASY:
+        difficultySuffix = "_copper";
+        break;
+      case NORMAL:
+        difficultySuffix = "_iron";
+        break;
+      case HARD:
+        difficultySuffix = "_gold";
+        break;
+      default:
+        difficultySuffix = "_copper"; // Default texture if difficulty is not recognized
+        break;
+    }
+
+    return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/" + mobid + "_trophy" + difficultySuffix + ".png");
   }
 
   @Override
