@@ -8,18 +8,18 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class LeviathanTrophyModel extends AnimatedGeoModel<LeviathanTrophyTileEntity> {
     @Override
-    public Identifier getAnimationResource(LeviathanTrophyTileEntity entity) {
+    public Identifier getAnimationFileLocation(LeviathanTrophyTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/leviathantrophy.animation.json");
     }
 
     @Override
-    public Identifier getModelResource(LeviathanTrophyTileEntity animatable) {
+    public Identifier getModelLocation(LeviathanTrophyTileEntity animatable) {
             return new Identifier(Variety_Aquatic.MOD_ID, "geo/leviathantrophy.geo.json");
 
     }
 
     @Override
-    public Identifier getTextureResource(LeviathanTrophyTileEntity entity) {
+    public Identifier getTextureLocation(LeviathanTrophyTileEntity entity) {
         Difficulty difficulty = entity.getWorld().getDifficulty();
         if (difficulty == Difficulty.EASY) {
             return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/leviathan_trophy_copper.png");

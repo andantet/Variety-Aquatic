@@ -14,12 +14,12 @@ public class TrophyItemModel extends AnimatedGeoModel<TrophyItem> {
   }
 
   @Override
-  public Identifier getModelResource(TrophyItem object) {
+  public Identifier getModelLocation(TrophyItem object) {
     return new Identifier(Variety_Aquatic.MOD_ID, "geo/" + mobid + "trophy.geo.json");
   }
 
   @Override
-  public Identifier getTextureResource(TrophyItem object) {
+  public Identifier getTextureLocation(TrophyItem object) {
     Difficulty worldDifficulty = MinecraftClient.getInstance().world.getDifficulty();
     String difficultySuffix;
 
@@ -43,7 +43,7 @@ public class TrophyItemModel extends AnimatedGeoModel<TrophyItem> {
   }
 
   @Override
-  public Identifier getAnimationResource(TrophyItem animatable) {
+  public Identifier getAnimationFileLocation(TrophyItem animatable) {
     return new Identifier(Variety_Aquatic.MOD_ID, "animations/" + mobid + "trophy.animation.json");
   }
 }

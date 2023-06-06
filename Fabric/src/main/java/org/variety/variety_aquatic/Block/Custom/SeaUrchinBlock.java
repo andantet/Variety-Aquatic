@@ -46,7 +46,7 @@ public class SeaUrchinBlock extends PlantBlock implements Waterloggable {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(WATERLOGGED, !ctx.getWorld().getDimension().ultrawarm());
+        return getDefaultState().with(WATERLOGGED, !ctx.getWorld().getDimension().isUltrawarm());
     }
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         entity.damage(DamageSource.CACTUS, 1.0F);

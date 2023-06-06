@@ -18,6 +18,6 @@ public class BeholderRenderer extends GeoBlockRenderer<BeholderTileEntity> {
     public RenderLayer getRenderType(BeholderTileEntity animatable, float partialTicks, MatrixStack stack,
                                      VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                      Identifier textureLocation) {
-        return RenderLayer.getEntityTranslucent(getTextureResource(animatable));
+        return RenderLayer.getEntityTranslucent(getTextureLocation(animatable));
     }
 }

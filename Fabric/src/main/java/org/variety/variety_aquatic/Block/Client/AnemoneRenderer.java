@@ -17,6 +17,6 @@ public class AnemoneRenderer extends GeoBlockRenderer<AnemoneTileEntity> {
     public RenderLayer getRenderType(AnemoneTileEntity animatable, float partialTicks, MatrixStack stack,
                                      VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                      Identifier textureLocation) {
-        return RenderLayer.getEntityTranslucent(getTextureResource(animatable));
+        return RenderLayer.getEntityTranslucent(getTextureLocation(animatable));
     }
 }

@@ -17,6 +17,6 @@ public class GiantGlowingSquidTrophyRenderer extends GeoBlockRenderer<GiantGlowi
     public RenderLayer getRenderType(GiantGlowingSquidTileEntity animatable, float partialTicks, MatrixStack stack,
                                      VertexConsumerProvider renderTypeBuffer, VertexConsumer vertexBuilder, int packedLightIn,
                                      Identifier textureLocation) {
-        return RenderLayer.getEntityTranslucent(getTextureResource(animatable));
+        return RenderLayer.getEntityTranslucent(getTextureLocation(animatable));
     }
 }

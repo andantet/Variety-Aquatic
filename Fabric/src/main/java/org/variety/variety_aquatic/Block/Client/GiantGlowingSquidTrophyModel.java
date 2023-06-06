@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class GiantGlowingSquidTrophyModel extends AnimatedGeoModel<GiantGlowingSquidTileEntity> {
     @Override
-    public Identifier getAnimationResource(GiantGlowingSquidTileEntity entity) {
+    public Identifier getAnimationFileLocation(GiantGlowingSquidTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/glowingsquidtrophy.animation.json");
     }
 
     @Override
-    public Identifier getModelResource(GiantGlowingSquidTileEntity animatable) {
+    public Identifier getModelLocation(GiantGlowingSquidTileEntity animatable) {
         return new Identifier(Variety_Aquatic.MOD_ID, "geo/glowingsquidtrophy.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(GiantGlowingSquidTileEntity entity) {
+    public Identifier getTextureLocation(GiantGlowingSquidTileEntity entity) {
         Difficulty difficulty = entity.getWorld().getDifficulty();
         if (difficulty == Difficulty.EASY) {
             return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/glowingsquid_trophy_copper.png");

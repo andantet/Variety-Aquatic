@@ -7,18 +7,18 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class BeholderModel extends AnimatedGeoModel<BeholderTileEntity> {
     @Override
-    public Identifier getAnimationResource(BeholderTileEntity entity) {
+    public Identifier getAnimationFileLocation(BeholderTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/beholder.animation.json");
     }
 
     @Override
-    public Identifier getModelResource(BeholderTileEntity animatable) {
+    public Identifier getModelLocation(BeholderTileEntity animatable) {
             return new Identifier(Variety_Aquatic.MOD_ID, "geo/beholder.geo.json");
 
     }
 
     @Override
-    public Identifier getTextureResource(BeholderTileEntity entity) {
+    public Identifier getTextureLocation(BeholderTileEntity entity) {
 
         return new Identifier(Variety_Aquatic.MOD_ID, "textures/block/beholder_texture.png");
 

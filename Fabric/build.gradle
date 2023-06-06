@@ -36,7 +36,7 @@ dependencies {
     modImplementation files('libs/VarietyAPI-1.0.jar')
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.18'
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.18:3.0.80'
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
@@ -44,7 +44,7 @@ dependencies {
 
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
     include "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
-    modImplementation "vazkii.patchouli:Patchouli:1.19.2-77-FABRIC"
+    modImplementation "vazkii.patchouli:Patchouli:1.18.2-71.1-FABRIC"
 
     modCompileOnly "maven.modrinth:sodium:${sodium_version}"
     modRuntimeOnly "maven.modrinth:sodium:${sodium_version}"

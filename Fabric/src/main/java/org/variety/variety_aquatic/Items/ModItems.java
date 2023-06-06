@@ -151,7 +151,7 @@ public class ModItems {
 
     public static final Item CRAB_RAVE_MUSIC_DISC = registerItem("crab_rave_music_disc",
             new ModMusicDiskItem(7, ModSound.CRAB_RAVE,
-                    new FabricItemSettings().group(ModItemGroup.VARIETY_MODS).maxCount(1),30));
+                    new FabricItemSettings().group(ModItemGroup.VARIETY_MODS).maxCount(1)));
 
     public static final Item GIANTSQUID_TROPHY_BLOCK_ITEM = registerItem("giantsquidtrophy",
             new TrophyItem(ModBlock.GIANTSQUID_TROPHY_BLOCK, new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));

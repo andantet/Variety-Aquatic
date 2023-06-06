@@ -6,8 +6,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.BlockHitResult;
@@ -22,20 +23,24 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class BlindnessProjectile extends ProjectileEntity implements IAnimatable {
-    public BlindnessProjectile(EntityType<? extends ProjectileEntity> entityType, World world) {
+public class BlindnessProjectile extends PersistentProjectileEntity implements IAnimatable {
+
+    public BlindnessProjectile(EntityType<? extends BlindnessProjectile> entityType, World world) {
         super(entityType, world);
     }
-
     public BlindnessProjectile(World world, CuttlefishEntity owner) {
-        super(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, world);
+        this(ModEntities.BLINDNESS_PROJECTILE_ENTITY_TYPE, world);
         this.setOwner(owner);
         this.updatePosition(owner.getX() - (double)(owner.getWidth() + 1.0F) * 0.5 * (double)MathHelper.sin(owner.bodyYaw * 0.017453292F), owner.getEyeY() - 0.1, owner.getZ() + (double)(owner.getWidth() + 1.0F) * 0.5 * (double)MathHelper.cos(owner.bodyYaw * 0.017453292F));
     }
 
 
+
+
+
     public void tick() {
         super.tick();
+
         Vec3d vec3d = this.getVelocity();
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
         this.onCollision(hitResult);
@@ -47,7 +52,7 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
         float h = 0.06F;
         if (this.world.getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
             this.discard();
-        } else if (!this.isInsideWaterOrBubbleColumn()) {
+        } else if (this.isInsideWaterOrBubbleColumn()) {
             this.discard();
         } else {
             this.setVelocity(vec3d.multiply(0.9900000095367432));
@@ -65,7 +70,7 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
         if (entity instanceof LivingEntity) {
             Entity hitEntity = entityHitResult.getEntity();
             if (hitEntity instanceof LivingEntity) {
-                ((LivingEntity) hitEntity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 60));
+                ((LivingEntity) hitEntity).addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 80));
             }
         }
     }
@@ -79,8 +84,17 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
 
     }
 
-    protected void initDataTracker() {
+    @Override
+    protected ItemStack asItemStack() {
+        return null;
     }
+
+
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+    }
+
 
     public void onSpawnPacket(EntitySpawnS2CPacket packet) {
         super.onSpawnPacket(packet);
@@ -93,8 +107,9 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
             this.world.addParticle(ParticleTypes.SQUID_INK, this.getX(), this.getY(), this.getZ(), d * g, e, f * g);
         }
 
-        this.setVelocity(d, e, f);
+        this.addVelocity(d, e, f);
     }
+
 
     @Override
     public void registerControllers(AnimationData animationData) {
