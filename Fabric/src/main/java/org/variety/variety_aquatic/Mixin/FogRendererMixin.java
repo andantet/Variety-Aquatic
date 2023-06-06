@@ -24,13 +24,9 @@ import org.variety.variety_aquatic.Util.RenderSystemUtil;
 
 @Mixin(BackgroundRenderer.class)
 public class FogRendererMixin {
-    private static final String[] DISABLED_MODS = { "darkerwater", "modid2", "modid3" };
 
     @Inject(method = "applyFog", at = @At("TAIL"))
     private static void afterSetupFog(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
-        if (isAnyModLoaded(DISABLED_MODS) && !NewConfig.waterFogCompatility) {
-            return;
-        }
         CameraSubmersionType submersionType = camera.getSubmersionType();
         Entity entity = camera.getFocusedEntity();
 
@@ -69,9 +65,6 @@ public class FogRendererMixin {
 
     @Inject(method = "render", at = @At(value = "HEAD"), cancellable = true)
     private static void renderInject(Camera camera, float tickDelta, ClientWorld world, int viewDistance, float skyDarkness, CallbackInfo ci) {
-        if (isAnyModLoaded(DISABLED_MODS)&& !NewConfig.waterFogCompatility) {
-            return;
-        }
         if (camera.getSubmersionType() == CameraSubmersionType.WATER && NewConfig.waterToggle) {
             RenderSystemUtil.setClearColor(new Vec3d(0.211, 0.211, 0.211));
             clearFog();
@@ -82,9 +75,6 @@ public class FogRendererMixin {
     // Changes the color of the seam/transition in the sky
     @Inject(method = "setFogBlack", at = @At("HEAD"), cancellable = true)
     private static void setFogBlackInject(CallbackInfo ci) {
-        if (isAnyModLoaded(DISABLED_MODS) && !NewConfig.waterFogCompatility) {
-            return; // Exit the method and skip fog rendering
-        }
         if (MinecraftClient.getInstance().gameRenderer.getCamera().getSubmersionType() == CameraSubmersionType.WATER && NewConfig.waterToggle) {
             RenderSystemUtil.setShaderFogColor(new Vec3d(0.211, 0.211, 0.211));
             ci.cancel();
@@ -101,14 +91,5 @@ public class FogRendererMixin {
         float g = MathHelper.lerp(t, (float) colorStart.y, (float) colorEnd.y);
         float b = MathHelper.lerp(t, (float) colorStart.z, (float) colorEnd.z);
         return new Vec3d(r, g, b);
-    }
-    private static boolean isAnyModLoaded(String[] modIds) {
-        FabricLoader loader = FabricLoader.getInstance();
-        for (String modId : modIds) {
-            if (loader.isModLoaded(modId)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
