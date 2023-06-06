@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
     // The amount of transition between the top of the sky and the bottom of the sky
-    @ModifyVariable(method = "renderSky(Lnet/minecraft/client/render/BufferBuilder;F)Lnet/minecraft/client/render/BufferBuilder$BuiltBuffer;", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;signum(F)F"), argsOnly = true)
+    @ModifyVariable(method = "renderSky(Lnet/minecraft/client/render/BufferBuilder;F)V", at = @At(value = "INVOKE_ASSIGN", target = "Ljava/lang/Math;signum(F)F"), argsOnly = true)
     private static float renderSkyBufferBuilderInject(float g) {
         return Math.signum(16.0f) * 8.0f;
     }
