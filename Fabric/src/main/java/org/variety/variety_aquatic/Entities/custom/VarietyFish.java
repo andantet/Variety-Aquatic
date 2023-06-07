@@ -196,7 +196,7 @@ public class VarietyFish extends WaterCreatureEntity implements IAnimatable {
     }
 
     public static boolean CanSpawnDeep(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
+        return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER)&&WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
     }
 
     @Override
