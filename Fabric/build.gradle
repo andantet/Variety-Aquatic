@@ -44,8 +44,6 @@ dependencies {
 
     annotationProcessor "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
     include "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"
-    modImplementation "vazkii.patchouli:Patchouli:1.19.2-77-FABRIC"
-
     modCompileOnly "maven.modrinth:sodium:${sodium_version}"
     modRuntimeOnly "maven.modrinth:sodium:${sodium_version}"
     implementation "org.joml:joml:1.10.4"

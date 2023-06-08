@@ -8,11 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraft.item.WallStandingBlockItem;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Items.Custom.AbstractBookItem;
 import org.variety.variety_aquatic.Items.Custom.TrophyItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
@@ -20,8 +18,6 @@ import org.varietymods.varietyapi.Items.ModItemGroup;
 
 
 public class ModItems {
-
-    public static final Item GUIDE_BOOK = registerItem("guide_book", new AbstractBookItem(new FabricItemSettings().rarity(Rarity.UNCOMMON).maxCount(1).group(ModItemGroup.VARIETY_MODS), new Identifier(Variety_Aquatic.MOD_ID, "fish")));
 
     public static final Item SUNFISH_EGG = registerItem("sunfish_egg",
             new SpawnEggItem(ModEntities.SUNFISH,0x22b341, 0x19732e,

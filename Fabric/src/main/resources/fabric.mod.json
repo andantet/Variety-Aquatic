@@ -37,7 +37,8 @@
     "varietyaquatic.mixins.json"
   ],
   "conflicts": {
-    "clear-skies": "*"
+    "clear-skies": "*",
+    "darkwaters": "*"
   },
   "suggests": {
     "sodium": "*"
