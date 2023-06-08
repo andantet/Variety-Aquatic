@@ -38,7 +38,7 @@
   ],
   "conflicts": {
     "clear-skies": "*",
-    "darkwaters": "*"
+    "azurelib": "*"
   },
   "suggests": {
     "sodium": "*"
