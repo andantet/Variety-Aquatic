@@ -15,10 +15,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 @SuppressWarnings({"ConstantConditions", "FieldMayBeFinal", "rawtypes"})
 public class SharkEntity extends VarietyFish {
     private static final TrackedData<Integer> SHARKHUNGER;
@@ -74,21 +75,21 @@ public class SharkEntity extends VarietyFish {
     }
 
     @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if(event.isMoving()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if(this.isAttacking()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            event.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if(this.isDead()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
+            event.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
 
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        event.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
 
         return PlayState.CONTINUE;
     }

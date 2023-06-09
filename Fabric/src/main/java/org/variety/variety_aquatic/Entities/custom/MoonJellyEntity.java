@@ -14,18 +14,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 public class MoonJellyEntity extends VarietyFish {
 
@@ -261,8 +257,8 @@ public class MoonJellyEntity extends VarietyFish {
 
             if (attacker != null) {
                 Vec3d difference = new Vec3d(MoonJellyEntity.this.getX() - attacker.getX(), MoonJellyEntity.this.getY() - attacker.getY(), MoonJellyEntity.this.getZ() - attacker.getZ());
-                BlockState blockState = MoonJellyEntity.this.world.getBlockState(new BlockPos(MoonJellyEntity.this.getX() + difference.x, MoonJellyEntity.this.getY() + difference.y, MoonJellyEntity.this.getZ() + difference.z));
-                FluidState fluidState = MoonJellyEntity.this.world.getFluidState(new BlockPos(MoonJellyEntity.this.getX() + difference.x, MoonJellyEntity.this.getY() + difference.y, MoonJellyEntity.this.getZ() + difference.z));
+                BlockState blockState = MoonJellyEntity.this.world.getBlockState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
+                FluidState fluidState = MoonJellyEntity.this.world.getFluidState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
 
                 if (fluidState.isIn(FluidTags.WATER) || blockState.isAir()) {
                     double distance = difference.length();
@@ -291,12 +287,5 @@ public class MoonJellyEntity extends VarietyFish {
                 }
             }
         }
-    }
-
-
-    @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("Swim", true));
-        return PlayState.CONTINUE;
     }
 }

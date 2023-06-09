@@ -10,10 +10,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
 
@@ -97,13 +98,9 @@ public class ClownfishEntity extends VarietyFish {
     }
 
     @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving() && this.isSubmergedInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
-        else if (event.isMoving() && !this.isSubmergedInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
+        if (event.isMoving() && !this.isSubmergedInWater()) {
+            event.getController().setAnimation(RawAnimation.begin().then("flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 

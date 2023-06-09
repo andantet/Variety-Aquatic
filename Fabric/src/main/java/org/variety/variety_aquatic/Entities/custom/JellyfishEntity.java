@@ -17,19 +17,15 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.network.packet.s2c.play.GameStateChangeS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 public class JellyfishEntity extends VarietyFish {
     public float tiltAngle;
@@ -271,8 +267,8 @@ public class JellyfishEntity extends VarietyFish {
 
             if (attacker != null) {
                 Vec3d difference = new Vec3d(JellyfishEntity.this.getX() - attacker.getX(), JellyfishEntity.this.getY() - attacker.getY(), JellyfishEntity.this.getZ() - attacker.getZ());
-                BlockState blockState = JellyfishEntity.this.world.getBlockState(new BlockPos(JellyfishEntity.this.getX() + difference.x, JellyfishEntity.this.getY() + difference.y, JellyfishEntity.this.getZ() + difference.z));
-                FluidState fluidState = JellyfishEntity.this.world.getFluidState(new BlockPos(JellyfishEntity.this.getX() + difference.x, JellyfishEntity.this.getY() + difference.y, JellyfishEntity.this.getZ() + difference.z));
+                BlockState blockState = JellyfishEntity.this.world.getBlockState(new BlockPos((int) (JellyfishEntity.this.getX() + difference.x), (int) (JellyfishEntity.this.getY() + difference.y), (int) (JellyfishEntity.this.getZ() + difference.z)));
+                FluidState fluidState = JellyfishEntity.this.world.getFluidState(new BlockPos((int) (JellyfishEntity.this.getX() + difference.x), (int) (JellyfishEntity.this.getY() + difference.y), (int) (JellyfishEntity.this.getZ() + difference.z)));
 
                 if (fluidState.isIn(FluidTags.WATER) || blockState.isAir()) {
                     double distance = difference.length();

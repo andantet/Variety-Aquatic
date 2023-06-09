@@ -18,7 +18,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
 
@@ -112,17 +114,14 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
 
     @Override
     public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
-        if (this.isOnGround() && !this.isWet()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
-            return PlayState.CONTINUE;
-        }
-        else if (event.isMoving() && !this.isSubmergedInWater()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
+
+         if (event.isMoving() && !this.isSubmergedInWater()) {
+            event.getController().setAnimation(RawAnimation.begin().then("flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
         else if (this.isAttacking()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            event.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;

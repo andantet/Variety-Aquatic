@@ -25,9 +25,4 @@ public class FlashlightfishEntity extends VarietyFish {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, NewConfig.flashlight_speed)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, NewConfig.flashlight_followrange);
     }
-
-
-    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER);
-    }
 }

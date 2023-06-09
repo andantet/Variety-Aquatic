@@ -30,6 +30,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
@@ -117,9 +118,9 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
         this.setMoistness(nbt.getInt("Moistness"));
     }
 
-    private PlayState predicate(AnimationState tAnimationState) {
-        if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("swim", Animation.LoopType.LOOP));
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
+        if(event.isMoving()) {
+            event.getController().setAnimation(RawAnimation.begin().then("swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;

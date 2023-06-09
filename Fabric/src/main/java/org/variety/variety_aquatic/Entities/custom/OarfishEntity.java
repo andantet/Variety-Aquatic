@@ -17,10 +17,11 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.UUID;
 
@@ -111,13 +112,9 @@ public class OarfishEntity extends VarietyFish implements Angerable {
     }
 
     @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
-        }
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if (this.isAttacking()){
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
+            event.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 

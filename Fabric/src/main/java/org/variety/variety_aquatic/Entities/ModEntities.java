@@ -4,8 +4,8 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Variety_Aquatic;
@@ -121,10 +121,7 @@ public class ModEntities {
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "oarfish"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, OarfishEntity::new)
                     .dimensions(EntityDimensions.fixed(1.5f, 1.2f)).trackRangeBlocks(50).build());
-    public static final EntityType<TornadoEntity> TORNADO = Registry.register(
-            Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "tornado"),
-            FabricEntityTypeBuilder.create(SpawnGroup.MISC, TornadoEntity::new)
-                    .dimensions(EntityDimensions.fixed(3f, 5f)).trackRangeBlocks(50).build());
+
     public static final EntityType<BarreleyeEntity> BARRELEE = Registry.register(
             Registry.ENTITY_TYPE, new Identifier(Variety_Aquatic.MOD_ID, "barreleye"),
             FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE, BarreleyeEntity::new)
