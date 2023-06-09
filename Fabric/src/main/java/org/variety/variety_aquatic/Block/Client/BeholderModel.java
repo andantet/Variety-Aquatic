@@ -3,9 +3,9 @@ package org.variety.variety_aquatic.Block.Client;
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class BeholderModel extends AnimatedGeoModel<BeholderTileEntity> {
+public class BeholderModel extends GeoModel<BeholderTileEntity> {
     @Override
     public Identifier getAnimationResource(BeholderTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/beholder.animation.json");

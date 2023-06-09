@@ -4,9 +4,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class GiantGlowingSquidTrophyModel extends AnimatedGeoModel<GiantGlowingSquidTileEntity> {
+public class GiantGlowingSquidTrophyModel extends GeoModel<GiantGlowingSquidTileEntity> {
     @Override
     public Identifier getAnimationResource(GiantGlowingSquidTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/glowingsquidtrophy.animation.json");

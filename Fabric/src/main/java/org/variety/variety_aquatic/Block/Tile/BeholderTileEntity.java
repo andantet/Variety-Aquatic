@@ -19,13 +19,11 @@ import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.Custom.Beholder;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +31,8 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class BeholderTileEntity extends BlockEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     @Override
     public NbtCompound toInitialChunkDataNbt() {
@@ -51,34 +49,39 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
         super(ModTileEntity.BEHOLDER, pos, state);
     }
 
-    private <E extends BlockEntity & IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends BlockEntity & GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         switch (activeState) {
             case OFF:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("Off", true));
+                event.getController().setAnimation(RawAnimation.begin().then("Off", Animation.LoopType.LOOP));
                 break;
             case LOW:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("Low", true));
+                event.getController().setAnimation(RawAnimation.begin().then("Low", Animation.LoopType.LOOP));
                 break;
             case MEDIUM:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("Medium", true));
+                event.getController().setAnimation(RawAnimation.begin().then("Medium", Animation.LoopType.LOOP));
                 break;
             case HIGH:
-                event.getController().setAnimation(new AnimationBuilder().addAnimation("High", true));
+                event.getController().setAnimation(RawAnimation.begin().then("High", Animation.LoopType.LOOP));
                 break;
         }
         return PlayState.CONTINUE;
     }
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<BeholderTileEntity>(this, "controller", 0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<BeholderTileEntity>(this, "controller", 0, this::predicate));
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public double getTick(Object o) {
+        return 0;
     }
+
 
     private Map<UUID, Long> affectedEntities = new HashMap<>();
 
@@ -132,7 +135,7 @@ public class BeholderTileEntity extends BlockEntity implements IAnimatable {
         }
 
 
-        Box searchArea = new Box(pos.add(-radius, -radius, -radius), pos.add(radius, radius, radius));
+        Box searchArea = new Box(pos.add((int) -radius, (int)-radius, (int)-radius), pos.add((int) radius, (int)radius, (int)radius));
         List<Entity> entities = world.getEntitiesByClass(Entity.class, searchArea, entity -> entity instanceof HostileEntity);
         Vec3d blockPos = new Vec3d(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
 

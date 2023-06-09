@@ -4,9 +4,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class LeviathanTrophyModel extends AnimatedGeoModel<LeviathanTrophyTileEntity> {
+public class LeviathanTrophyModel extends GeoModel<LeviathanTrophyTileEntity> {
     @Override
     public Identifier getAnimationResource(LeviathanTrophyTileEntity entity) {
         return new Identifier(Variety_Aquatic.MOD_ID, "animations/leviathantrophy.animation.json");

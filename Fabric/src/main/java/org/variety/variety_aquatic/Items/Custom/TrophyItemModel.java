@@ -4,9 +4,9 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class TrophyItemModel extends AnimatedGeoModel<TrophyItem> {
+public class TrophyItemModel extends GeoModel<TrophyItem> {
   public String mobid;
 
   public TrophyItemModel(String mobid) {
