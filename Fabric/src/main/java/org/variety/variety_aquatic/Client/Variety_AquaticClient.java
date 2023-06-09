@@ -15,6 +15,8 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
+import org.variety.variety_aquatic.Items.Custom.TrophyItemRenderer;
+import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
 
@@ -34,6 +36,8 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.WHALESHARK, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"whaleshark.geo","whaleshark_texture","whaleshark.animation"),Variety_Aquatic.MOD_ID, "whaleshark_texture", 1.3f,1.2f, false,false)
         );
+
+
 
         EntityRendererRegistry.register(ModEntities.SUNFISH, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"sunfish.geo","sunfish_texture","sunfish.animation"),Variety_Aquatic.MOD_ID, "sunfish_texture", 2.0f,1.2f, false,false)
@@ -121,31 +125,25 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
 
 
-        BlockEntityRendererRegistry.register(ModTileEntity.ANEMONE,
-                (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new AnemoneRenderer());
 
-        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
+
 
         BlockEntityRendererRegistry.register(ModTileEntity.LEVIATHAN,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new LeviathanTrophyRenderer());
-
-
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.LEVIATHAN_TROPHY_BLOCK, RenderLayer.getTranslucent());
 
         BlockEntityRendererRegistry.register(ModTileEntity.GIANTSQUID,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GiantGlowingSquidTrophyRenderer());
-
-
-
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.GIANTSQUID_TROPHY_BLOCK, RenderLayer.getTranslucent());
 
 
-        BlockEntityRendererFactories.register(ModTileEntity.BEHOLDER, BeholderRenderer::new);
-
-
+        BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANEMONE_BLOCK, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
 
+
+        BlockEntityRendererFactories.register(ModTileEntity.ANEMONE, AnemoneRenderer::new);
+        BlockEntityRendererFactories.register(ModTileEntity.BEHOLDER, BeholderRenderer::new);
     }
 }

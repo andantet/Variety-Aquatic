@@ -9,4 +9,5 @@ public class BeholderRenderer extends GeoBlockRenderer<BeholderTileEntity> {
         super(new BeholderModel());
     }
 
+
 }
