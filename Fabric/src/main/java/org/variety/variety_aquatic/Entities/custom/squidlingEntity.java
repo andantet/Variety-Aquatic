@@ -109,13 +109,12 @@ public class squidlingEntity extends VarietyFish implements Angerable {
                 // Give the player blindness effect for 2 seconds
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 2 * 20));
 
-                // Check if the squidling is in a deep ocean biome and only water blocks are above it
-                if (this.world.getRegistryManager().get(Registry.BIOME_KEY).getId(this.world.getBiome(this.getBlockPos()).value()).equals(BiomeKeys.DEEP_OCEAN.getValue())) {
+                if (this.world.getBiomeAccess().getBiome(this.getBlockPos()).value().equals(BiomeKeys.DEEP_OCEAN)) {
                     BlockPos blockPos = this.getBlockPos();
                     if (hasOnlyWaterAbove(blockPos)) {
                         BlockState blockStateAbove = this.world.getBlockState(blockPos.up());
                         if (blockStateAbove.isAir() || blockStateAbove.isOf(Blocks.WATER)) {
-                            ModEntities.GIANTGLOWINGSQUID.spawn((ServerWorld) this.world, null, null, null, this.getBlockPos(), SpawnReason.TRIGGERED, true, false);
+                            ModEntities.GIANTGLOWINGSQUID.spawn((ServerWorld) this.world, null, null);
                         }
                     }
                 }

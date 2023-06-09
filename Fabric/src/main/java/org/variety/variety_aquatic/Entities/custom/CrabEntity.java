@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.scoreboard.AbstractTeam;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -29,29 +30,22 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.custom.AI.GoToWaterGoal;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
+public class CrabEntity extends TameableEntity implements GeoAnimatable {
 
-public class CrabEntity extends TameableEntity implements IAnimatable {
-
-    AnimationFactory afactory = new AnimationFactory(this);
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     private boolean songPlaying;
     private static final Ingredient LOVINGFOOD;
@@ -115,13 +109,18 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
 
 
     @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "animations", 0, this::animations));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "animations", 0, this::animations));
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return afactory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 
 
@@ -157,7 +156,7 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
         return null;
     }
 
-    private PlayState animations(AnimationEvent<CrabEntity> event) {
+    private PlayState animations(AnimationState<CrabEntity> event) {
         AnimationController contr = event.getController();
 
         if (this.songSource == null || !this.songSource.isWithinDistance(this.getPos(), 15.0) || !this.world.getBlockState(this.songSource).isOf(Blocks.JUKEBOX)) {
@@ -165,19 +164,18 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
             this.songSource = null;
         }
         if (isSongPlaying()) {
-            contr.setAnimation(new AnimationBuilder().addAnimation("dance",true));
+            event.getController().setAnimation(RawAnimation.begin().then("dance", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if(event.isMoving()){
-            contr.setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         if(this.isSitting()){
-            contr.setAnimation(new AnimationBuilder().addAnimation("sit", true));
+            event.getController().setAnimation(RawAnimation.begin().then("sit", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
 
         }
-
             return PlayState.STOP;
 
     }
@@ -268,5 +266,10 @@ public class CrabEntity extends TameableEntity implements IAnimatable {
     }
     static {
         LOVINGFOOD = Ingredient.ofItems(Items.COD, Items.SALMON, ModItems.RAW_BETTA,ModItems.RAW_LIONFISH,ModItems.RAW_PIRANHA,ModItems.RAW_TETRA,ModItems.RAW_TUNA);
+    }
+
+    @Override
+    public EntityView method_48926() {
+        return null;
     }
 }

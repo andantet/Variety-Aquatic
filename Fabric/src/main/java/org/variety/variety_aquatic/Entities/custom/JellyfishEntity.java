@@ -26,6 +26,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 public class JellyfishEntity extends VarietyFish {
     public float tiltAngle;
@@ -61,7 +66,7 @@ public class JellyfishEntity extends VarietyFish {
     }
 
     public void onPlayerCollision(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity && player.damage(DamageSource.mob(this), (float) (1 + 1))) {
+        if (player instanceof ServerPlayerEntity && player.damage(this.getDamageSources().mobAttack(this), (float)(2))) {
             if (!this.isSilent()) {
                 ((ServerPlayerEntity)player).networkHandler.sendPacket(new GameStateChangeS2CPacket(GameStateChangeS2CPacket.PUFFERFISH_STING, 0.0F));
             }
@@ -301,14 +306,14 @@ public class JellyfishEntity extends VarietyFish {
 
 
     @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if (this.isDead()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("death", true));
+            event.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.LOOP));
         }
         if (this.isOnGround()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("blob", true));
+            event.getController().setAnimation(RawAnimation.begin().then("blob", Animation.LoopType.LOOP));
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
+        event.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 }

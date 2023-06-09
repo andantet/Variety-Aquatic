@@ -28,19 +28,18 @@ import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
 
 import java.util.Random;
 
 
-public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class HermitcrabEntity extends AnimalEntity implements GeoAnimatable {
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     private static final Ingredient TAMING_INGREDIENT;
     private boolean isHiding;
@@ -107,21 +106,21 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
         return stack.getItem() == ModItems.RAW_LIONFISH;
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         AnimationController controller = event.getController();
 
         if (isHiding) {
-            controller.setAnimation(new AnimationBuilder().addAnimation("Hide", false));
+            event.getController().setAnimation(RawAnimation.begin().then("Hide", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
         if (isUnhiding) {
-            controller.setAnimation(new AnimationBuilder().addAnimation("Unhide", false));
+            event.getController().setAnimation(RawAnimation.begin().then("Unhide", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
         if (event.isMoving()) {
-            controller.setAnimation(new AnimationBuilder().addAnimation("walk", true));
+            event.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
 
@@ -130,9 +129,17 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
 
 
     @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
+    }
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 
     private int hidingTime;
@@ -198,14 +205,6 @@ public class HermitcrabEntity extends AnimalEntity implements IAnimatable {
         return SoundEvents.ENTITY_COD_DEATH;
     }
 
-
-
-
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
 
 
     static {

@@ -35,17 +35,15 @@ import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.custom.AI.SonicBoomAttackGoal;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 
-public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class LeviathanEntity extends WaterCreatureEntity implements GeoAnimatable {
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
 
@@ -152,7 +150,7 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
             } else {
                 this.setMoistness(this.getMoistness() - 1);
                 if (this.getMoistness() <= 0) {
-                    this.damage(DamageSource.DRYOUT, 1.0F);
+                    this.damage(this.getDamageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -219,23 +217,25 @@ public class LeviathanEntity extends WaterCreatureEntity implements IAnimatable 
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("Swimming", true));
+            event.getController().setAnimation(RawAnimation.begin().then("Swimming", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-
         return PlayState.STOP;
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
+    }
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public double getTick(Object o) {
+        return 0;
     }
 }

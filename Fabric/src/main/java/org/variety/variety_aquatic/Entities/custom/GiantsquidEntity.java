@@ -38,19 +38,18 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Entities.custom.AI.SquidAttackGoal;
 import org.variety.variety_aquatic.Sound.ModSound;
-import software.bernie.geckolib3.core.AnimationState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
 
 import java.util.function.Predicate;
 
-public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable {
-    private AnimationFactory factory = new AnimationFactory(this);
+public class GiantsquidEntity extends WaterCreatureEntity implements GeoAnimatable {
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     static final TargetPredicate CLOSE_PLAYER_PREDICATE;
     private static final TrackedData<Integer> MOISTNESS;
@@ -78,10 +77,10 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
 
 
 
-    @Override
-    public boolean canBeRiddenInWater() {
-        return true;
-    }
+    //@Override
+    //public boolean canBeRiddenInWater() {
+     //   return true;
+   // }
 
 
     public int getMoistness() {
@@ -183,7 +182,7 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
             } else {
                 this.setMoistness(this.getMoistness() - 1);
                 if (this.getMoistness() <= 0) {
-                    this.damage(DamageSource.DRYOUT, 1.0F);
+                    this.damage(this.getDamageSources().dryOut(), 1.0F);
                 }
 
                 if (this.onGround) {
@@ -252,46 +251,34 @@ public class GiantsquidEntity extends WaterCreatureEntity implements IAnimatable
         MOISTNESS = DataTracker.registerData(GiantsquidEntity.class, TrackedDataHandlerRegistry.INTEGER);
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
-
-
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        AnimationController contr = event.getController();
+    private <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if (event.isMoving()) {
-            contr.transitionLengthTicks = 5;
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
+            event.getController().setAnimation(RawAnimation.begin().then("swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        }
-        else {
-            contr.transitionLengthTicks = 5;
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("idle", true));
-            return PlayState.CONTINUE;
-        }
-    }
+        } else if (this.isAttacking()) {
+            event.getController().setAnimation(RawAnimation.begin().then("bite", Animation.LoopType.LOOP));
 
-    private <E extends IAnimatable> PlayState attackPredicate(AnimationEvent<E> event) {
-        if (this.handSwinging && event.getController().getAnimationState().equals(AnimationState.Stopped)) {
-            event.getController().markNeedsReload();
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("bite", false));
-            this.handSwinging = false;
         }
-
+        event.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(new AnimationController(this, "controller",
-                0, this::predicate));
 
-        animationData.addAnimationController(new AnimationController(this, "attackController",
-                0, this::attackPredicate));
+
+
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
+    }
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 
-
-
     @Override
-    public AnimationFactory getFactory() {
-        return factory;
+    public double getTick(Object o) {
+        return 0;
     }
 
     static class InWaterPredicate implements Predicate<LivingEntity> {
