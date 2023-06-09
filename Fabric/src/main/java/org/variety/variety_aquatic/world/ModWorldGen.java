@@ -5,7 +5,5 @@ public class ModWorldGen {
     public static void generateWorldGen() {
 
         ModEntitySpawns.addEntitySpawn();
-        FeatureHandler.register();
-
     }
 }

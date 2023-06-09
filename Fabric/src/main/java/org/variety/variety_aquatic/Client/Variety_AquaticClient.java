@@ -1,18 +1,12 @@
 package org.variety.variety_aquatic.Client;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
 import org.variety.variety_aquatic.Block.Client.BeholderRenderer;
 import org.variety.variety_aquatic.Block.Client.GiantGlowingSquidTrophyRenderer;
@@ -20,12 +14,8 @@ import org.variety.variety_aquatic.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.client.TornadoRenderer;
-import org.variety.variety_aquatic.Items.Custom.TrophyItemRenderer;
-import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
-import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
 public class Variety_AquaticClient implements ClientModInitializer {
 
@@ -43,9 +33,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.WHALESHARK, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"whaleshark.geo","whaleshark_texture","whaleshark.animation"),Variety_Aquatic.MOD_ID, "whaleshark_texture", 1.3f,1.2f, false,false)
         );
-
-
-        EntityRendererRegistry.register(ModEntities.TORNADO,TornadoRenderer::new); //TODO SWITCH
 
         EntityRendererRegistry.register(ModEntities.SUNFISH, (EntityRendererFactory.Context ctx) ->
                 new GenericRenderer<>(ctx, new GenericModel(Variety_Aquatic.MOD_ID,"sunfish.geo","sunfish_texture","sunfish.animation"),Variety_Aquatic.MOD_ID, "sunfish_texture", 2.0f,1.2f, false,false)
@@ -152,9 +139,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());
-
-        GeoItemRenderer.registerItemRenderer(ModItems.GIANTSQUID_TROPHY_BLOCK_ITEM, new TrophyItemRenderer("glowingsquid"));
-        GeoItemRenderer.registerItemRenderer(ModItems.LEVIATHAN_TROPHY_BLOCK_ITEM, new TrophyItemRenderer("leviathan"));
 
     }
 }

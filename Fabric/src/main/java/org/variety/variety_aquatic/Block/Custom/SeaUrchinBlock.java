@@ -27,7 +27,7 @@ public class SeaUrchinBlock extends PlantBlock implements Waterloggable {
     }
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         if(!canPlaceAt(state, world, pos)) {
             return Blocks.AIR.getDefaultState();
@@ -49,7 +49,7 @@ public class SeaUrchinBlock extends PlantBlock implements Waterloggable {
         return getDefaultState().with(WATERLOGGED, !ctx.getWorld().getDimension().ultrawarm());
     }
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        entity.damage(DamageSource.CACTUS, 1.0F);
+        entity.damage(world.getDamageSources().cactus(), 1.0F);
     }
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
