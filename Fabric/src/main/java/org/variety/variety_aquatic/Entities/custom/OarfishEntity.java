@@ -114,13 +114,10 @@ public class OarfishEntity extends VarietyFish implements Angerable {
     public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (event.isMoving()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("swim", true));
-            return PlayState.CONTINUE;
         }
         if (this.isAttacking()){
             event.getController().setAnimation(new AnimationBuilder().addAnimation("attack", true));
-            return PlayState.CONTINUE;
         }
-
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 }
