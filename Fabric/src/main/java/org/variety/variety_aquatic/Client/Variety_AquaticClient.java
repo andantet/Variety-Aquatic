@@ -31,20 +31,6 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            MinecraftClient mc = MinecraftClient.getInstance();
-            if(mc.player != null && mc.world != null) {
-                BlockPos pos = new BlockPos(mc.player.getPos());
-                Biome biome = mc.world.getBiome(pos).value();
-
-                if (biome.equals(BiomeKeys.FROZEN_OCEAN)) {
-                    mc.player.playSound(SoundEvents.ENTITY_PIG_STEP, 25.0F, 1.0F);
-                }
-            }
-        });
-
-
-
         EntityRendererRegistry.register(ModEntities.SEAHORSE,
                 (EntityRendererFactory.Context context) -> new GenericVariantRenderer<>(context,new GenericVariantModel<>(Variety_Aquatic.MOD_ID,"seahorse.geo", "seahorse.animation"),1.0f,1.0f,false,false));
 
