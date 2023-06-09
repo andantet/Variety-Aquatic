@@ -14,7 +14,7 @@ import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
 import org.variety.variety_aquatic.world.ModWorldGen;
-import software.bernie.geckolib3.GeckoLib;
+import software.bernie.geckolib.GeckoLib;
 
 public class Variety_Aquatic implements ModInitializer {
     public static final String MOD_ID = "varietyaquatic";

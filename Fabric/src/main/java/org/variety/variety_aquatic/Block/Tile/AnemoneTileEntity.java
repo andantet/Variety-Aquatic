@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -17,7 +18,7 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
+public class AnemoneTileEntity extends BlockEntity implements GeoAnimatable {
     private AnimationFactory factory = new AnimationFactory(this);
     private static final int HIDE_DURATION = 200;
     private static final int COOLDOWN_DURATION = 40;

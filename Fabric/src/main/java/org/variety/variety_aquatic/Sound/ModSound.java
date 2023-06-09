@@ -1,40 +1,33 @@
 package org.variety.variety_aquatic.Sound;
 
 
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModSound {
 
-    public static SoundEvent WHALE_AMBIENT = registerSound("whale_ambient");
-    public static SoundEvent DEEP_GROWL = registerSound("deep_growl");
-    public static SoundEvent WHALE_DEATH = registerSound("whale_death");
-    public static SoundEvent WHALE_HURT = registerSound("whale_hurt");
-    public static SoundEvent GIANTSQUID_AMBIENT = registerSound("giantsquid_ambient");
-    public static SoundEvent GIANTSQUID_HURT = registerSound("giantsquid_hurt");
-    public static SoundEvent CRAB_HURT = registerSound("crab_hurt");
-    public static SoundEvent BEHOLDER_CLICK = registerSound("beholder_click");
+    public static SoundEvent WHALE_AMBIENT = registerSoundEvent("whale_ambient");
+    public static SoundEvent DEEP_GROWL = registerSoundEvent("deep_growl");
+    public static SoundEvent WHALE_DEATH = registerSoundEvent("whale_death");
+    public static SoundEvent WHALE_HURT = registerSoundEvent("whale_hurt");
+    public static SoundEvent GIANTSQUID_AMBIENT = registerSoundEvent("giantsquid_ambient");
+    public static SoundEvent GIANTSQUID_HURT = registerSoundEvent("giantsquid_hurt");
+    public static SoundEvent CRAB_HURT = registerSoundEvent("crab_hurt");
+    public static SoundEvent BEHOLDER_CLICK = registerSoundEvent("beholder_click");
 
 
-    public static SoundEvent SPERMWHALE_DEATH = registerSound("spermwhale_death");
+    public static SoundEvent SPERMWHALE_DEATH = registerSoundEvent("spermwhale_death");
 
-    public static SoundEvent CRAB_RAVE = registerSound("crab_rave");
-
-
+    public static SoundEvent CRAB_RAVE = registerSoundEvent("crab_rave");
 
 
 
-    // actual registration of all the custom SoundEvents
-    static SoundEvent registerSound(String id) {
-        SoundEvent sound = new SoundEvent(new Identifier(Variety_Aquatic.MOD_ID, id));
-        return Registry.register(Registry.SOUND_EVENT, new Identifier(Variety_Aquatic.MOD_ID, id), sound);
-    }
 
-    // called in the ModInitializer implementing class
-    // to initialize the ExampleModSounds class
-    public static void initializeSounds() {
-        Variety_Aquatic.LOGGER.info("Registering " + Variety_Aquatic.MOD_ID + " Sounds");
+    private static SoundEvent registerSoundEvent(String name) {
+        Identifier id = new Identifier(Variety_Aquatic.MOD_ID, name);
+        return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 }

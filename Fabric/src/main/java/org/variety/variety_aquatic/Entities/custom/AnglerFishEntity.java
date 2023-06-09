@@ -17,10 +17,10 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.variety.variety_aquatic.Util.NewConfig;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+
 
 import java.util.UUID;
 
@@ -111,7 +111,7 @@ public class AnglerFishEntity extends VarietyFish implements Angerable {
     }
 
     @Override
-    public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    public <E extends GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         if (this.isOnGround() && !this.isWet()) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("flop", true));
             return PlayState.CONTINUE;

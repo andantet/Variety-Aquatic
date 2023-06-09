@@ -33,10 +33,10 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation files('libs/VarietyAPI-1.0.jar')
+    modImplementation files('libs/VarietyAPI-Fabric-1.0.jar')
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19:3.1.18'
+    modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19.4:4.1.3'
     modImplementation("com.terraformersmc:modmenu:${project.modmenu_version}")
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.github.LlamaLad7:MixinExtras:${mixin_extras_version}"

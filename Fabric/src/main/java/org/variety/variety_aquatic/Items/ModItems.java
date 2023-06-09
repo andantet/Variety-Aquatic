@@ -6,9 +6,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.WallStandingBlockItem;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.Custom.TrophyItem;
@@ -155,7 +155,7 @@ public class ModItems {
              new TrophyItem(ModBlock.LEVIATHAN_TROPHY_BLOCK, new FabricItemSettings().group(ModItemGroup.VARIETY_MODS)));
 
     private static Item registerItem(String name, Item item) {
-        return Registry.register(Registry.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
+        return Registry.register(Registries.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
     }
 
     public static void registerModItems() {
