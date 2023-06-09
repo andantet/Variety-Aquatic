@@ -40,7 +40,7 @@ public enum SeahorseVariant implements IVariant {
     }
 
 
-    public Identifier getTextureResource() {
+    public Identifier getTextureLocation() {
         return new Identifier(Variety_Aquatic.MOD_ID, "textures/entity/" + textureName +"_texture"+ ".png");
     }
 }

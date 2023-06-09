@@ -2,8 +2,9 @@ package org.variety.variety_aquatic.Entities.custom.AI;
 
 import net.minecraft.entity.ai.goal.DiveJumpingGoal;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -83,7 +84,7 @@ public class TunaJumpGoal extends DiveJumpingGoal {
         double velocityY = velocity.y;
 
         if (velocityY * velocityY < 0.03 && yellowfin.getPitch() != 0.0F)
-            yellowfin.setPitch(MathHelper.lerpAngle(yellowfin.getPitch(), 0.0F, 0.2F));
+            yellowfin.setPitch(MathHelper.lerpAngleDegrees(yellowfin.getPitch(), 0.0F, 0.2F));
         else if (velocity.length() > 0.00001) {
             double horizontalLength = velocity.horizontalLength();
             double pitch = Math.atan2(-velocityY, horizontalLength) * 57.2957763671875;

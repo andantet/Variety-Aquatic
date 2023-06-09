@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.impl.blockrenderlayer.BlockRenderLayerMapImpl;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import org.variety.variety_aquatic.Block.Client.AnemoneRenderer;
@@ -127,15 +128,21 @@ public class Variety_AquaticClient implements ClientModInitializer {
 
         BlockEntityRendererRegistry.register(ModTileEntity.LEVIATHAN,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new LeviathanTrophyRenderer());
+
+
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.LEVIATHAN_TROPHY_BLOCK, RenderLayer.getTranslucent());
 
         BlockEntityRendererRegistry.register(ModTileEntity.GIANTSQUID,
                 (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new GiantGlowingSquidTrophyRenderer());
+
+
+
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.GIANTSQUID_TROPHY_BLOCK, RenderLayer.getTranslucent());
 
 
-        BlockEntityRendererRegistry.register(ModTileEntity.BEHOLDER,
-                (BlockEntityRendererFactory.Context rendererDispatcherIn) -> new BeholderRenderer());
+        BlockEntityRendererFactories.register(ModTileEntity.BEHOLDER, BeholderRenderer::new);
+
+
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.BEHOLDER, RenderLayer.getTranslucent());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.ANGLER_TORCH, RenderLayer.getCutout());
         BlockRenderLayerMapImpl.INSTANCE.putBlock(ModBlock.WALL_ANGLER_TORCH, RenderLayer.getCutout());

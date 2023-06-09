@@ -1,7 +1,7 @@
 package org.variety.variety_aquatic.Entities.custom.AI;
 import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.tag.FluidTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldView;
 public class GoToWaterGoal extends MoveToTargetPosGoal {

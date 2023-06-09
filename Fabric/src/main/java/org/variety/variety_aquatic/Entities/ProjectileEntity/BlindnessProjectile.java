@@ -18,11 +18,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.CuttlefishEntity;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BlindnessProjectile extends ProjectileEntity implements IAnimatable {
+
+public class BlindnessProjectile extends ProjectileEntity implements GeoAnimatable {
     public BlindnessProjectile(EntityType<? extends ProjectileEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -96,14 +99,17 @@ public class BlindnessProjectile extends ProjectileEntity implements IAnimatable
         this.setVelocity(d, e, f);
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
     }
-    private AnimationFactory factory = new AnimationFactory(this);
+    private AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public double getTick(Object o) {
+        return 0;
     }
 }

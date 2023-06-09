@@ -88,7 +88,7 @@ public class SquidAttackGoal extends MeleeAttackGoal {
                     }
                 } else if (this.attackTime == 0) {
                     this.squid.setTarget(null);
-                    this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+                    //this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
                     if (this.target instanceof PlayerEntity) {
                         this.target.stopRiding();
                     }
@@ -113,7 +113,7 @@ public class SquidAttackGoal extends MeleeAttackGoal {
         }
 
         // Damage player and apply poison effect
-        this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+        //this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
 
         // Check if the squid has reached the bottom of the ocean
         if (this.squid.getY() < 5) {
@@ -130,7 +130,7 @@ public class SquidAttackGoal extends MeleeAttackGoal {
             this.squid.setTarget(this.target);
         } else if (this.attackTime <= 10) {
             // Apply damage to player every tick for the last 10 ticks
-            this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+            //this.target.damage(DamageSource.mob(this.squid), (float) this.squid.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
         }
     }
 
