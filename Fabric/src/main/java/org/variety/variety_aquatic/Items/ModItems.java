@@ -16,7 +16,6 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.Custom.TrophyItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
-import org.varietymods.varietyapi.Items.ModItemGroup;
 
 
 public class ModItems {
@@ -158,6 +157,8 @@ public class ModItems {
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
+
+
     }
 
     public static void registerModItems() {

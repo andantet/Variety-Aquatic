@@ -47,3 +47,4 @@ public class TrophyItemModel extends GeoModel<TrophyItem> {
     return new Identifier(Variety_Aquatic.MOD_ID, "animations/" + mobid + "trophy.animation.json");
   }
 }
+

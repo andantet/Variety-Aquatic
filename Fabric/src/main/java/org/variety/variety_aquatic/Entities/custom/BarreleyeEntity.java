@@ -17,10 +17,6 @@ public class BarreleyeEntity extends VarietyFish {
         super(entityType, world);
     }
 
-    public ItemStack getBucketItem() {
-        return null;
-    }
-
     public static DefaultAttributeContainer.Builder setAttributes() {
         return WaterCreatureEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, NewConfig.barreleye_health)
