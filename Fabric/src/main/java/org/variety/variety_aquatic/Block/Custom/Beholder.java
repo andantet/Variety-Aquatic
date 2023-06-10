@@ -159,7 +159,7 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         FluidState fluidState = world.getFluidState(pos);
-        return super.canPlaceAt(state, world, pos) || blockState.getMaterial().isReplaceable() || fluidState.isIn(FluidTags.WATER);
+        return super.canPlaceAt(state, world, pos) || blockState.isReplaceable()|| fluidState.isIn(FluidTags.WATER);
     }
 
 

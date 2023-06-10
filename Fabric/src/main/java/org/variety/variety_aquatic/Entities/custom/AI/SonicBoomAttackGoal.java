@@ -72,7 +72,7 @@ public class SonicBoomAttackGoal extends Goal {
             if (dotProduct > 0.9) {
                 double distance = mob.distanceTo(entity);
                 entity.addVelocity(targetDirection.x * (sonicBoomRange / distance), targetDirection.y * (sonicBoomRange / distance), targetDirection.z * (sonicBoomRange / distance));
-                mob.world.addParticle(ParticleTypes.EXPLOSION, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0.0D, 0.0D, 0.0D);
+                mob.getWorld().addParticle(ParticleTypes.EXPLOSION, entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
     }

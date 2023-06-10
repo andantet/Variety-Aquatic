@@ -86,7 +86,7 @@ public class ClownfishEntity extends VarietyFish {
                 for (int j = -8; j <= 8; j++) {
                     for (int k = -8; k <= 8; k++) {
                         BlockPos checkPos = currentPos.add(i, j, k);
-                        Block block = this.clownfish.world.getBlockState(checkPos).getBlock();
+                        Block block = this.clownfish.getWorld().getBlockState(checkPos).getBlock();
                         if (block == ModBlock.ANEMONE_BLOCK) {
                             return checkPos;
                         }

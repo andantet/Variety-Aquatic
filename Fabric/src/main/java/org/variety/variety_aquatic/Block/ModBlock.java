@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -24,30 +23,30 @@ public class ModBlock {
 
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f).requiresTool()),ModItemGroup.VARIETYAQUATIC);
+            new Block(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(4.0f).requiresTool()));
 
 
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerTrophyBlock("leviathan",
-            new LeviathanTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
+            new LeviathanTrophyBlock(FabricBlockSettings.copyOf(Blocks.STONE)
                     .strength(4f).nonOpaque()));
     public static final Block GIANTSQUID_TROPHY_BLOCK = registerTrophyBlock("giantsquidtrophy",
-            new GiantGlowingSquidTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
+            new GiantGlowingSquidTrophyBlock(FabricBlockSettings.copyOf(Blocks.STONE)
                     .strength(4f).nonOpaque()));
     public static final Block BEHOLDER = registerBlock("beholder",
-            new Beholder(FabricBlockSettings.of(Material.DECORATION)
-                    .strength(4f).nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel())),ModItemGroup.VARIETYAQUATIC);
+            new Beholder(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)
+                    .strength(4f).nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel())));
 
 
 
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
-            new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
-                    .strength(4f).nonOpaque().breakInstantly()),ModItemGroup.VARIETYAQUATIC);
+            new SeaUrchinBlock(FabricBlockSettings.copyOf(Blocks.KELP)
+                    .strength(4f).nonOpaque().breakInstantly()));
     public static final Block ANGLER_TORCH = Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "angler_torch_ground"),
-            new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
+            new AnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.TORCH).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE));
     public static final Block WALL_ANGLER_TORCH = Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "wall_angler_torch"),
-            new WallAnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
+            new WallAnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.WALL_TORCH).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD).dropsLike(ModBlock.ANGLER_TORCH), ParticleTypes.BUBBLE));
 
@@ -57,17 +56,17 @@ public class ModBlock {
         return Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, name), block);
     }
 
-    private static Block registerBlock(String name, Block block, ItemGroup group) {
-        registerBlockItem(name, block, group);
+    private static Block registerBlock(String name, Block block) {
+        registerBlockItem(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, name), block);
     }
 
-    private static Item registerBlockItem(String name, Block block, ItemGroup group) {
+    private static Item registerBlockItem(String name, Block block) {
         Item item = Registry.register(Registries.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name),
                 new BlockItem(block, new FabricItemSettings()));
-        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
         return item;
     }
+
 
     public static void registerModBlocks() {
         Variety_Aquatic.LOGGER.debug("Registering ModBlocks for " + Variety_Aquatic.MOD_ID);

@@ -36,7 +36,7 @@ public class FollowGroupLeaderGoal extends Goal {
         checkSurroundingDelay = getSurroundingSearchDelay(fish);
 
         Predicate<SchoolingVarietyFish> predicate = f -> f.canHaveMoreFishInGroup() || !f.hasLeader();
-        List<? extends SchoolingVarietyFish> fishList = fish.world.getEntitiesByClass(
+        List<? extends SchoolingVarietyFish> fishList = fish.getWorld().getEntitiesByClass(
                 fish.getClass(), fish.getBoundingBox().expand(8.0, 8.0, 8.0), predicate);
 
         SchoolingVarietyFish schoolingFishEntity = DataFixUtils.orElse(

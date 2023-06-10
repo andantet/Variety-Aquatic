@@ -85,24 +85,23 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
                     this.damage(this.getDamageSources().dryOut(), 1.0F);
                 }
 
-                if (onGround) {
+                if (isOnGround()) {
                     float randomFloat = random.nextFloat();
                     setVelocity(getVelocity().add((randomFloat * 2.0F - 1.0F) * 0.2F, 0.5D, (random.nextFloat() * 2.0F - 1.0F) * 0.2F));
                     setYaw(randomFloat * 360.0F);
-                    onGround = false;
                     velocityDirty = true;
                 }
             }
 
-            if (world.isClient && isTouchingWater() && isAttacking()) {
+            if (getWorld().isClient && isTouchingWater() && isAttacking()) {
                 Vec3d rotationVec = getRotationVec(0.0F);
                 float cosYaw = MathHelper.cos(getYaw() * 0.017453292F) * 0.6F;
                 float sinYaw = MathHelper.sin(getYaw() * 0.017453292F) * 0.6F;
                 float offsetY = 0.0F - random.nextFloat() * 0.7F;
 
                 for (int i = 0; i < 2; ++i) {
-                    world.addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY + cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY + sinYaw, 0.0D, 0.0D, 0.0D);
-                    world.addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY - cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY - sinYaw, 0.0D, 0.0D, 0.0D);
+                    getWorld().addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY + cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY + sinYaw, 0.0D, 0.0D, 0.0D);
+                    getWorld().addParticle(ParticleTypes.BUBBLE, getX() - rotationVec.x * offsetY - cosYaw, getY() - rotationVec.y, getZ() - rotationVec.z * offsetY - sinYaw, 0.0D, 0.0D, 0.0D);
                 }
             }
         }
@@ -213,9 +212,8 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
         CLOSE_PLAYER_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(10.0D).ignoreVisibility();
     }
     public void tickMovement() {
-        if (!this.isTouchingWater() && this.onGround && this.verticalCollision) {
+        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
             this.setVelocity(this.getVelocity().add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F), 0.4000000059604645, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F)));
-            this.onGround = false;
             this.velocityDirty = true;
             this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
         }

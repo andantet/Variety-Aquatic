@@ -153,25 +153,24 @@ public class LeviathanEntity extends WaterCreatureEntity implements GeoAnimatabl
                     this.damage(this.getDamageSources().dryOut(), 1.0F);
                 }
 
-                if (this.onGround) {
+                if (this.isOnGround()) {
                     this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0F - 1.0F) * 0.2F,
                             0.5D,
                             (this.random.nextFloat() * 2.0F - 1.0F) * 0.2F));
                     this.setYaw(this.random.nextFloat() * 360.0F);
-                    this.onGround = false;
                     this.velocityDirty = true;
                 }
             }
 
-            if (this.world.isClient && this.isTouchingWater() && this.isAttacking()) {
+            if (this.getWorld().isClient && this.isTouchingWater() && this.isAttacking()) {
                 Vec3d vec3d = this.getRotationVec(0.0F);
                 float f = MathHelper.cos(this.getYaw() * 0.017453292F) * 0.6F;
                 float g = MathHelper.sin(this.getYaw() * 0.017453292F) * 0.6F;
                 float h = 0.0F - this.random.nextFloat() * 0.7F;
 
                 for(int i = 0; i < 2; ++i) {
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
-                    this.world.addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
+                    this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h + (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h + (double)g, 0.0D, 0.0D, 0.0D);
+                    this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getX() - vec3d.x * (double)h - (double)f, this.getY() - vec3d.y, this.getZ() - vec3d.z * (double)h - (double)g, 0.0D, 0.0D, 0.0D);
                 }
             }
         }

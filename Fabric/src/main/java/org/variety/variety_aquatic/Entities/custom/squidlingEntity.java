@@ -72,7 +72,7 @@ public class squidlingEntity extends VarietyFish implements Angerable {
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.readAngerFromNbt(this.world, nbt);
+        this.readAngerFromNbt(this.getWorld(), nbt);
     }
 
     protected void initGoals() {
@@ -98,23 +98,23 @@ public class squidlingEntity extends VarietyFish implements Angerable {
 
         // Create an ink cloud
         for (int i = 0; i < 20; i++) {
-            this.world.addParticle(ParticleTypes.SQUID_INK, this.getX(), this.getY(), this.getZ(),
+            this.getWorld().addParticle(ParticleTypes.SQUID_INK, this.getX(), this.getY(), this.getZ(),
                     (this.random.nextDouble() - 0.5) * 0.2, -0.1, (this.random.nextDouble() - 0.5) * 0.2);
         }
 
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             Entity attacker = source.getAttacker();
             if (attacker instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity) attacker;
                 // Give the player blindness effect for 2 seconds
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.BLINDNESS, 2 * 20));
 
-                if (this.world.getBiomeAccess().getBiome(this.getBlockPos()).value().equals(BiomeKeys.DEEP_OCEAN)) {
+                if (this.getWorld().getBiomeAccess().getBiome(this.getBlockPos()).value().equals(BiomeKeys.DEEP_OCEAN)) {
                     BlockPos blockPos = this.getBlockPos();
                     if (hasOnlyWaterAbove(blockPos)) {
-                        BlockState blockStateAbove = this.world.getBlockState(blockPos.up());
+                        BlockState blockStateAbove = this.getWorld().getBlockState(blockPos.up());
                         if (blockStateAbove.isAir() || blockStateAbove.isOf(Blocks.WATER)) {
-                            ModEntities.GIANTGLOWINGSQUID.spawn((ServerWorld) this.world, null, null);
+                            ModEntities.GIANTGLOWINGSQUID.spawn((ServerWorld) this.getWorld(), null, null);
                         }
                     }
                 }
@@ -124,8 +124,8 @@ public class squidlingEntity extends VarietyFish implements Angerable {
 
     private boolean hasOnlyWaterAbove(BlockPos pos) {
         BlockPos.Mutable mutablePos = pos.mutableCopy();
-        while (mutablePos.getY() < world.getSeaLevel()) {
-            BlockState blockState = world.getBlockState(mutablePos);
+        while (mutablePos.getY() < getWorld().getSeaLevel()) {
+            BlockState blockState = getWorld().getBlockState(mutablePos);
             if (!blockState.isOf(Blocks.WATER)) {
                 return false;
             }

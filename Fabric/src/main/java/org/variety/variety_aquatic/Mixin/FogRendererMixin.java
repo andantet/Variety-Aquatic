@@ -35,7 +35,7 @@ public class FogRendererMixin {
 
             if (entity instanceof ClientPlayerEntity) {
                 ClientPlayerEntity localPlayer = (ClientPlayerEntity) entity;
-                RegistryEntry<Biome> biomeHolder = localPlayer.world.getBiome(localPlayer.getBlockPos());
+                RegistryEntry<Biome> biomeHolder = localPlayer.getWorld().getBiome(localPlayer.getBlockPos());
 
                 if (biomeHolder.isIn(BiomeTags.HAS_CLOSER_WATER_FOG)) {
                     fogEnd = viewDistance * NewConfig.waterEndSwamp * 0.01f;
@@ -43,7 +43,7 @@ public class FogRendererMixin {
 
                 fogEnd *= Math.max(0.25f, localPlayer.getUnderwaterVisibility());
 
-                float depth = (float) (localPlayer.getPos().y - localPlayer.world.getSeaLevel());
+                float depth = (float) (localPlayer.getPos().y - localPlayer.getWorld().getSeaLevel());
                 float maxDepth = -20.0f;
                 float depthFactor = MathHelper.clamp(depth / maxDepth, 0.0f, 1.0f);
                 float smoothDepthFactor = smoothstep(0.0f, 1.0f, depthFactor);

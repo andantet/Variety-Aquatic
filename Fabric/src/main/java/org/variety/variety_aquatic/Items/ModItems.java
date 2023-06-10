@@ -160,56 +160,8 @@ public class ModItems {
 
 
     }
-    public static void addItemsToItemGroup() {
-
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SUNFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SQUIDLING_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SHARK_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SEAHORSE_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SEAANGEL_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, LEVIATHAN_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, WHALESHARK_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, BETTA_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, BARRELEYE_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, TETRA_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, RAW_BETTA);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, GIANTSQUIDBEAK);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, GIANTSQUIDEYE);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, RAW_TETRA);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, YELLOWFIN_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, STINGRAY_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, FLASHLIGHTFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, OARFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, MOONJELLY_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, ANGLER_BULB);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC,CLOWNFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, JELLYFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, HERMITCRAB_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, CUTTLEFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, ANGLER_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, ANGLER_TORCH);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, OPAH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, VAMPIRESQUID_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, GIANTGLOWINGSQUID_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, LIONFISH_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, CRAB_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, RAW_LIONFISH);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, LIONFISH_COOKED);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, RAW_TUNA);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, COOKED_TUNA);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, PIRANHA_EGG);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, RAW_PIRANHA);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, CRAB_RAVE_MUSIC_DISC);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, GIANTSQUID_TROPHY_BLOCK_ITEM);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, LEVIATHAN_TROPHY_BLOCK_ITEM);
-        addToItemGroup(ModItemGroup.VARIETYAQUATIC, SHARK_EGG);
-    }
-    private static void addToItemGroup(ItemGroup group, Item item) {
-        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
-    }
     public static void registerModItems() {
         Variety_Aquatic.LOGGER.debug("Registering Mod Items for " + Variety_Aquatic.MOD_ID);
-        addItemsToItemGroup();
     }
 }
 

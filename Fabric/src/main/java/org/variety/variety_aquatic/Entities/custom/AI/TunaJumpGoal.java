@@ -1,6 +1,7 @@
 package org.variety.variety_aquatic.Entities.custom.AI;
 
 import net.minecraft.entity.ai.goal.DiveJumpingGoal;
+import net.minecraft.entity.passive.DolphinEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvents;
@@ -12,49 +13,50 @@ import net.minecraft.util.math.Vec3d;
 import org.variety.variety_aquatic.Entities.custom.YellowfinTunaEntity;
 
 public class TunaJumpGoal extends DiveJumpingGoal {
-    private static final int[] OFFSET_MULTIPLIERS = {0, 1, 4, 5, 6, 7};
-    private final YellowfinTunaEntity yellowfin;
+    private static final int[] OFFSET_MULTIPLIERS = new int[]{0, 1, 4, 5, 6, 7};
+    private final YellowfinTunaEntity dolphin;
     private final int chance;
     private boolean inWater;
 
-    public TunaJumpGoal(YellowfinTunaEntity yellowfin, int chance) {
-        this.yellowfin = yellowfin;
+    public TunaJumpGoal(YellowfinTunaEntity dolphin, int chance) {
+        this.dolphin = dolphin;
         this.chance = toGoalTicks(chance);
     }
 
     public boolean canStart() {
-        return yellowfin.getRandom().nextInt(chance) == 0 && checkWaterAndAirBlocks();
-    }
+        if (this.dolphin.getRandom().nextInt(this.chance) != 0) {
+            return false;
+        } else {
+            Direction direction = this.dolphin.getMovementDirection();
+            int i = direction.getOffsetX();
+            int j = direction.getOffsetZ();
+            BlockPos blockPos = this.dolphin.getBlockPos();
+            int[] var5 = OFFSET_MULTIPLIERS;
+            int var6 = var5.length;
 
-    private boolean checkWaterAndAirBlocks() {
-        Direction direction = yellowfin.getMovementDirection();
-        int offsetX = direction.getOffsetX();
-        int offsetZ = direction.getOffsetZ();
-        BlockPos blockPos = yellowfin.getBlockPos();
+            for(int var7 = 0; var7 < var6; ++var7) {
+                int k = var5[var7];
+                if (!this.isWater(blockPos, i, j, k) || !this.isAirAbove(blockPos, i, j, k)) {
+                    return false;
+                }
+            }
 
-        for (int multiplier : OFFSET_MULTIPLIERS) {
-            BlockPos offsetPos = blockPos.add(offsetX * multiplier, 0, offsetZ * multiplier);
-            if (!isWater(offsetPos) || !isAirAbove(offsetPos))
-                return false;
+            return true;
         }
-
-        return true;
     }
 
-    private boolean isWater(BlockPos pos) {
-        FluidState fluidState = yellowfin.world.getFluidState(pos);
-        return fluidState.isIn(FluidTags.WATER) && !yellowfin.world.getBlockState(pos).getMaterial().blocksMovement();
+    private boolean isWater(BlockPos pos, int offsetX, int offsetZ, int multiplier) {
+        BlockPos blockPos = pos.add(offsetX * multiplier, 0, offsetZ * multiplier);
+        return this.dolphin.getWorld().getFluidState(blockPos).isIn(FluidTags.WATER) && !this.dolphin.getWorld().getBlockState(blockPos).blocksMovement();
     }
 
-    private boolean isAirAbove(BlockPos pos) {
-        BlockPos abovePos = pos.up();
-        return yellowfin.world.getBlockState(abovePos).isAir() && yellowfin.world.getBlockState(abovePos.up()).isAir();
+    private boolean isAirAbove(BlockPos pos, int offsetX, int offsetZ, int multiplier) {
+        return this.dolphin.getWorld().getBlockState(pos.add(offsetX * multiplier, 1, offsetZ * multiplier)).isAir() && this.dolphin.getWorld().getBlockState(pos.add(offsetX * multiplier, 2, offsetZ * multiplier)).isAir();
     }
 
     public boolean shouldContinue() {
-        double velocityY = yellowfin.getVelocity().y;
-        float pitch = yellowfin.getPitch();
-        return velocityY * velocityY >= 0.03 || Math.abs(pitch) >= 10.0F || !yellowfin.isTouchingWater() || yellowfin.isOnGround();
+        double d = this.dolphin.getVelocity().y;
+        return (!(d * d < 0.029999999329447746) || this.dolphin.getPitch() == 0.0F || !(Math.abs(this.dolphin.getPitch()) < 10.0F) || !this.dolphin.isTouchingWater()) && !this.dolphin.isOnGround();
     }
 
     public boolean canStop() {
@@ -62,34 +64,34 @@ public class TunaJumpGoal extends DiveJumpingGoal {
     }
 
     public void start() {
-        Direction direction = yellowfin.getMovementDirection();
-        double offsetX = direction.getOffsetX() * 0.6;
-        double offsetZ = direction.getOffsetZ() * 0.6;
-        yellowfin.setVelocity(yellowfin.getVelocity().add(offsetX, 0.7, offsetZ));
-        yellowfin.getNavigation().stop();
+        Direction direction = this.dolphin.getMovementDirection();
+        this.dolphin.setVelocity(this.dolphin.getVelocity().add((double)direction.getOffsetX() * 0.6, 0.7, (double)direction.getOffsetZ() * 0.6));
+        this.dolphin.getNavigation().stop();
     }
 
     public void stop() {
-        yellowfin.setPitch(0.0F);
+        this.dolphin.setPitch(0.0F);
     }
 
     public void tick() {
-        boolean wasInWater = inWater;
-        inWater = yellowfin.world.getFluidState(yellowfin.getBlockPos()).isIn(FluidTags.WATER);
-
-        if (inWater && !wasInWater)
-            yellowfin.playSound(SoundEvents.ENTITY_DOLPHIN_JUMP, 1.0F, 1.0F);
-
-        Vec3d velocity = yellowfin.getVelocity();
-        double velocityY = velocity.y;
-
-        if (velocityY * velocityY < 0.03 && yellowfin.getPitch() != 0.0F)
-            yellowfin.setPitch(MathHelper.lerpAngleDegrees(yellowfin.getPitch(), 0.0F, 0.2F));
-        else if (velocity.length() > 0.00001) {
-            double horizontalLength = velocity.horizontalLength();
-            double pitch = Math.atan2(-velocityY, horizontalLength) * 57.2957763671875;
-            yellowfin.setPitch((float) pitch);
+        boolean bl = this.inWater;
+        if (!bl) {
+            FluidState fluidState = this.dolphin.getWorld().getFluidState(this.dolphin.getBlockPos());
+            this.inWater = fluidState.isIn(FluidTags.WATER);
         }
+
+        if (this.inWater && !bl) {
+            this.dolphin.playSound(SoundEvents.ENTITY_DOLPHIN_JUMP, 1.0F, 1.0F);
+        }
+
+        Vec3d vec3d = this.dolphin.getVelocity();
+        if (vec3d.y * vec3d.y < 0.029999999329447746 && this.dolphin.getPitch() != 0.0F) {
+            this.dolphin.setPitch(MathHelper.lerpAngleDegrees(0.2F, this.dolphin.getPitch(), 0.0F));
+        } else if (vec3d.length() > 9.999999747378752E-6) {
+            double d = vec3d.horizontalLength();
+            double e = Math.atan2(-vec3d.y, d) * 57.2957763671875;
+            this.dolphin.setPitch((float)e);
+        }
+
     }
 }
-

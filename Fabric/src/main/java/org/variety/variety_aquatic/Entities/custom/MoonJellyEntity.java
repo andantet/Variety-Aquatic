@@ -84,7 +84,7 @@ public class MoonJellyEntity extends VarietyFish {
         thrustTimer += thrustTimerSpeed;
 
         if (thrustTimer > Math.PI * 2) {
-            if (world.isClient) {
+            if (getWorld().isClient) {
                 thrustTimer = (float) (Math.PI * 2);
             } else {
                 thrustTimer -= (float) (Math.PI * 2);
@@ -93,7 +93,7 @@ public class MoonJellyEntity extends VarietyFish {
                     thrustTimerSpeed = 1.0F / (random.nextFloat() + 1.0F) * 0.2F;
                 }
 
-                world.sendEntityStatus(this, (byte) 19);
+                getWorld().sendEntityStatus(this, (byte) 19);
             }
         }
 
@@ -114,7 +114,7 @@ public class MoonJellyEntity extends VarietyFish {
                 turningSpeed *= 0.99F;
             }
 
-            if (!world.isClient) {
+            if (!getWorld().isClient) {
                 setVelocity(swimX * swimVelocityScale, swimY * swimVelocityScale, swimZ * swimVelocityScale);
             }
 
@@ -127,7 +127,7 @@ public class MoonJellyEntity extends VarietyFish {
         } else {
             tentacleAngle = MathHelper.abs(MathHelper.sin(thrustTimer)) * (float) Math.PI * 0.25F;
 
-            if (!world.isClient) {
+            if (!getWorld().isClient) {
                 double verticalSpeed = getVelocity().y;
 
                 if (hasStatusEffect(StatusEffects.LEVITATION)) {
@@ -146,7 +146,7 @@ public class MoonJellyEntity extends VarietyFish {
 
     public boolean damage(DamageSource source, float amount) {
         if (super.damage(source, amount) && this.getAttacker() != null) {
-            if (!this.world.isClient) {
+            if (!this.getWorld().isClient) {
                 this.squirt();
             }
 
@@ -169,7 +169,7 @@ public class MoonJellyEntity extends VarietyFish {
         for (int i = 0; i < 30; ++i) {
             Vec3d squirtDir = applyBodyRotations(new Vec3d(random.nextFloat() * 0.6 - 0.3, -1.0, random.nextFloat() * 0.6 - 0.3));
             Vec3d squirtVelocity = squirtDir.multiply(0.3 + (random.nextFloat() * 2.0F));
-            ((ServerWorld) world).spawnParticles(getInkParticle(), startPos.x, startPos.y + 0.5, startPos.z, 0, squirtVelocity.x, squirtVelocity.y, squirtVelocity.z, 0.1);
+            ((ServerWorld) getWorld()).spawnParticles(getInkParticle(), startPos.x, startPos.y + 0.5, startPos.z, 0, squirtVelocity.x, squirtVelocity.y, squirtVelocity.z, 0.1);
         }
     }
 
@@ -257,8 +257,8 @@ public class MoonJellyEntity extends VarietyFish {
 
             if (attacker != null) {
                 Vec3d difference = new Vec3d(MoonJellyEntity.this.getX() - attacker.getX(), MoonJellyEntity.this.getY() - attacker.getY(), MoonJellyEntity.this.getZ() - attacker.getZ());
-                BlockState blockState = MoonJellyEntity.this.world.getBlockState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
-                FluidState fluidState = MoonJellyEntity.this.world.getFluidState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
+                BlockState blockState = MoonJellyEntity.this.getWorld().getBlockState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
+                FluidState fluidState = MoonJellyEntity.this.getWorld().getFluidState(new BlockPos((int) (MoonJellyEntity.this.getX() + difference.x), (int) (MoonJellyEntity.this.getY() + difference.y), (int) (MoonJellyEntity.this.getZ() + difference.z)));
 
                 if (fluidState.isIn(FluidTags.WATER) || blockState.isAir()) {
                     double distance = difference.length();
@@ -283,7 +283,7 @@ public class MoonJellyEntity extends VarietyFish {
                 }
 
                 if (timer % 10 == 5) {
-                    MoonJellyEntity.this.world.addParticle(ParticleTypes.BUBBLE, MoonJellyEntity.this.getX(), MoonJellyEntity.this.getY(), MoonJellyEntity.this.getZ(), 0.0, 0.0, 0.0);
+                    MoonJellyEntity.this.getWorld().addParticle(ParticleTypes.BUBBLE, MoonJellyEntity.this.getX(), MoonJellyEntity.this.getY(), MoonJellyEntity.this.getZ(), 0.0, 0.0, 0.0);
                 }
             }
         }

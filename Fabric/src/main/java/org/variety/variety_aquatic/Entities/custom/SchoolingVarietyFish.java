@@ -84,8 +84,8 @@ public class SchoolingVarietyFish extends VarietyFish {
 
     public void tick() {
         super.tick();
-        if (this.hasOtherFishInGroup() && this.world.random.nextInt(200) == 1) {
-            List<? extends VarietyFish> list = this.world.getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0));
+        if (this.hasOtherFishInGroup() && this.getWorld().random.nextInt(200) == 1) {
+            List<? extends VarietyFish> list = this.getWorld().getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0));
             if (list.size() <= 1) {
                 this.groupSize = 1;
             }

@@ -42,7 +42,7 @@ public class CuttlefishEntity extends VarietyFish {
         for(int i = 0; i < 30; ++i) {
             Vec3d vec3d2 = this.applyBodyRotations(new Vec3d((double)this.random.nextFloat() * 0.6 - 0.3, -1.0, (double)this.random.nextFloat() * 0.6 - 0.3));
             Vec3d vec3d3 = vec3d2.multiply(0.3 + (double)(this.random.nextFloat() * 2.0F));
-            ((ServerWorld)this.world).spawnParticles(this.getInkParticle(), vec3d.x+0.5, vec3d.y + 0.5, vec3d.z , 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
+            ((ServerWorld)this.getWorld()).spawnParticles(this.getInkParticle(), vec3d.x+0.5, vec3d.y + 0.5, vec3d.z , 0, vec3d3.x, vec3d3.y, vec3d3.z, 0.10000000149011612);
         }
 
     }
@@ -60,20 +60,20 @@ public class CuttlefishEntity extends VarietyFish {
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (super.damage(source, amount) && this.getAttacker() != null) {
-            if (!this.world.isClient) {
+            if (!this.getWorld().isClient) {
                 this.squirt();
 
                 // Shoot the blindness projectile at the attacking player (if it's a player)
                 if (this.getAttacker() instanceof PlayerEntity) {
                     PlayerEntity attacker = (PlayerEntity) this.getAttacker();
-                    BlindnessProjectile projectileEntity = new BlindnessProjectile(world, this);
+                    BlindnessProjectile projectileEntity = new BlindnessProjectile(getWorld(), this);
 
                     projectileEntity.setPos(this.getX(), this.getEyeY() - 0.1, this.getZ());
 
                     Vec3d direction = attacker.getPos().subtract(this.getPos()).normalize();
                     projectileEntity.setVelocity(direction.x, direction.y, direction.z, 1.5F, 1.0F);
 
-                    world.spawnEntity(projectileEntity);
+                    getWorld().spawnEntity(projectileEntity);
                 }
             }
             return true;

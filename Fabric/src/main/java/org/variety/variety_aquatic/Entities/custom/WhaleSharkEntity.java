@@ -72,7 +72,7 @@ public class WhaleSharkEntity extends VarietyFish {
         super.tick();
         if (!this.isAiDisabled()) {
             if (this.getTarget() == null && this.isHungry()) {
-                List<FishEntity> nearbyFish = this.world.getEntitiesByClass(FishEntity.class, this.getBoundingBox().expand(12.0D, 8.0D, 12.0D), entity -> entity.isTouchingWater() && entity.isAlive());
+                List<FishEntity> nearbyFish = this.getWorld().getEntitiesByClass(FishEntity.class, this.getBoundingBox().expand(12.0D, 8.0D, 12.0D), entity -> entity.isTouchingWater() && entity.isAlive());
                 if (!nearbyFish.isEmpty()) {
                     FishEntity targetFish = nearbyFish.get(this.random.nextInt(nearbyFish.size()));
                     this.setTarget(targetFish);

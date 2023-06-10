@@ -40,7 +40,7 @@ public class GiantGlowingSquidTrophyBlock extends Block implements BlockEntityPr
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         FluidState fluidState = world.getFluidState(pos);
-        return super.canPlaceAt(state, world, pos) || blockState.getMaterial().isReplaceable() || fluidState.isIn(FluidTags.WATER);
+        return super.canPlaceAt(state, world, pos) || blockState.isReplaceable() || fluidState.isIn(FluidTags.WATER);
     }
     @Override
     public FluidState getFluidState(BlockState state) {

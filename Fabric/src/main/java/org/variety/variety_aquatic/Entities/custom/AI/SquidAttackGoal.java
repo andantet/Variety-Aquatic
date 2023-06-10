@@ -78,7 +78,7 @@ public class SquidAttackGoal extends MeleeAttackGoal {
             holdPlayer();
         } else {
             if ((this.attackTime > 0 && this.attackTime <= 100) || this.squid.getRandom().nextInt(100) == 0) {
-                this.squid.world.addParticle(ParticleTypes.BUBBLE, this.target.getX(), this.target.getY() + this.target.getHeight() / 2.0F, this.target.getZ(), 0.0D, 0.0D, 0.0D);
+                this.squid.getWorld().addParticle(ParticleTypes.BUBBLE, this.target.getX(), this.target.getY() + this.target.getHeight() / 2.0F, this.target.getZ(), 0.0D, 0.0D, 0.0D);
             }
             if (this.attackTime > 0) {
                 --this.attackTime;

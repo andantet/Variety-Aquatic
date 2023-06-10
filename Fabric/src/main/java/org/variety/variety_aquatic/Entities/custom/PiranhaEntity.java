@@ -79,7 +79,7 @@ public class PiranhaEntity extends SchoolingVarietyFish implements Angerable {
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.readAngerFromNbt(this.world, nbt);
+        this.readAngerFromNbt(this.getWorld(), nbt);
     }
 
     protected void initGoals() {
