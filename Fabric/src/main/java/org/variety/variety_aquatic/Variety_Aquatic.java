@@ -10,6 +10,7 @@ import org.variety.variety_aquatic.Block.ModBlock;
 import org.variety.variety_aquatic.Block.ModTileEntity;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
+import org.variety.variety_aquatic.Items.ModItemGroup;
 import org.variety.variety_aquatic.Items.ModItems;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
@@ -25,10 +26,9 @@ public class Variety_Aquatic implements ModInitializer {
     }
     @Override
     public void onInitialize() {
+        ModItemGroup.registerItemGroups();
         GeckoLib.initialize();
-
         MidnightConfig.init(MOD_ID, NewConfig.class);
-
         ModBlock.registerModBlocks();
         ModItems.registerModItems();
         ModTileEntity.registerBlockEntities();

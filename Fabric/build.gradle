@@ -28,7 +28,6 @@ repositories {
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html
     // for more information about repositories.
 }
-
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -47,7 +46,7 @@ dependencies {
     modCompileOnly "maven.modrinth:sodium:${sodium_version}"
     modRuntimeOnly "maven.modrinth:sodium:${sodium_version}"
     implementation "org.joml:joml:1.10.4"
-    }
+}
 
 processResources {
     inputs.property "version", project.version

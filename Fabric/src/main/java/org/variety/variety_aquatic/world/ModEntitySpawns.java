@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.world;
 
+
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.SpawnGroup;
@@ -10,7 +11,6 @@ import net.minecraft.world.biome.BiomeKeys;
 import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Entities.custom.*;
 import org.variety.variety_aquatic.Util.NewConfig;
-
 
 public class ModEntitySpawns {
 
@@ -70,7 +70,7 @@ public class ModEntitySpawns {
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_COLD_OCEAN,BiomeKeys.DEEP_OCEAN,BiomeKeys.DEEP_LUKEWARM_OCEAN,BiomeKeys.DEEP_FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.VAMPIRESQUID, NewConfig.vampiresquid_spawnweight, 1, 5);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN),SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN,BiomeKeys.LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
                 ModEntities.SEAHORSE, NewConfig.seahorse_spawnweight, 3, 5);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BEACH), SpawnGroup.CREATURE,
