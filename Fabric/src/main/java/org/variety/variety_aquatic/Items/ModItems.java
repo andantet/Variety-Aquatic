@@ -1,12 +1,10 @@
 package org.variety.variety_aquatic.Items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.FoodComponent;
-import net.minecraft.item.Item;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.item.VerticallyAttachableBlockItem;
+import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -16,6 +14,7 @@ import org.variety.variety_aquatic.Entities.ModEntities;
 import org.variety.variety_aquatic.Items.Custom.TrophyItem;
 import org.variety.variety_aquatic.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
+import org.varietymods.varietyapi.Items.ModItemGroup;
 
 
 public class ModItems {
@@ -160,9 +159,58 @@ public class ModItems {
 
 
     }
+    public static void addItemsToItemGroup() {
+
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SUNFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SQUIDLING_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SHARK_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SEAHORSE_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SEAANGEL_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, LEVIATHAN_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, WHALESHARK_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, BETTA_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, BARRELEYE_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, TETRA_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, RAW_BETTA);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, GIANTSQUIDBEAK);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, GIANTSQUIDEYE);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, RAW_TETRA);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, YELLOWFIN_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, STINGRAY_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, FLASHLIGHTFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, OARFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, MOONJELLY_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, ANGLER_BULB);
+        addToItemGroup(ModItemGroup.VARIETY_MODS,CLOWNFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, JELLYFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, HERMITCRAB_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, CUTTLEFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, ANGLER_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, ANGLER_TORCH);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, OPAH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, VAMPIRESQUID_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, GIANTGLOWINGSQUID_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, LIONFISH_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, CRAB_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, RAW_LIONFISH);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, LIONFISH_COOKED);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, RAW_TUNA);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, COOKED_TUNA);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, PIRANHA_EGG);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, RAW_PIRANHA);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, CRAB_RAVE_MUSIC_DISC);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, GIANTSQUID_TROPHY_BLOCK_ITEM);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, LEVIATHAN_TROPHY_BLOCK_ITEM);
+        addToItemGroup(ModItemGroup.VARIETY_MODS, SHARK_EGG);
+    }
+
+    private static void addToItemGroup(ItemGroup group, Item item) {
+        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
+    }
 
     public static void registerModItems() {
         Variety_Aquatic.LOGGER.debug("Registering Mod Items for " + Variety_Aquatic.MOD_ID);
+        addItemsToItemGroup();
     }
 }
 
