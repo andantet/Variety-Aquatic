@@ -149,9 +149,11 @@ public class ModItems {
                     new FabricItemSettings().maxCount(1),30));
 
     public static final Item GIANTSQUID_TROPHY_BLOCK_ITEM = registerItem("giantsquidtrophy",
-            new TrophyItem(ModBlock.GIANTSQUID_TROPHY_BLOCK, new FabricItemSettings()));
+            new TrophyItem(ModBlock.GIANTSQUID_TROPHY_BLOCK, new FabricItemSettings(), "glowingsquid"));
+
     public static final Item LEVIATHAN_TROPHY_BLOCK_ITEM = registerItem("leviathantrophy",
-             new TrophyItem(ModBlock.LEVIATHAN_TROPHY_BLOCK, new FabricItemSettings()));
+            new TrophyItem(ModBlock.LEVIATHAN_TROPHY_BLOCK, new FabricItemSettings(), "leviathan"));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Variety_Aquatic.MOD_ID, name), item);
