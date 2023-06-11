@@ -31,7 +31,6 @@ public class LeviathanTrophyBlock extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
         Direction playerLookDirection = ctx.getPlayerLookDirection();
 
         Direction facing = playerLookDirection.getAxis() == Direction.Axis.Y ? Direction.NORTH : playerLookDirection.getOpposite();

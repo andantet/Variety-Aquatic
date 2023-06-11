@@ -55,20 +55,16 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
         switch (activeState) {
             case OFF:
-                System.out.println("Setting animation: Off"); // Debugging statement
-                event.getController().setAnimation(RawAnimation.begin().then("Off", Animation.LoopType.LOOP));
+                event.getController().setAnimation(RawAnimation.begin().thenLoop("Off"));
                 break;
             case LOW:
-                System.out.println("Setting animation: Low"); // Debugging statement
-                event.getController().setAnimation(RawAnimation.begin().then("Low", Animation.LoopType.LOOP));
+                event.getController().setAnimation(RawAnimation.begin().thenLoop("Low"));
                 break;
             case MEDIUM:
-                System.out.println("Setting animation: Medium"); // Debugging statement
-                event.getController().setAnimation(RawAnimation.begin().then("Medium", Animation.LoopType.LOOP));
+                event.getController().setAnimation(RawAnimation.begin().thenLoop("Medium"));
                 break;
             case HIGH:
-                System.out.println("Setting animation: High"); // Debugging statement
-                event.getController().setAnimation(RawAnimation.begin().then("High", Animation.LoopType.LOOP));
+                event.getController().setAnimation(RawAnimation.begin().thenLoop("High"));
                 break;
         }
         return PlayState.CONTINUE;
@@ -76,7 +72,7 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController(this, "controller", 0, this::predicate));
     }
 
     public AnimatableInstanceCache getAnimatableInstanceCache() {

@@ -70,6 +70,7 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
                 .with(CURRENT_STATE, State.OFF)
                 .with(WATERLOGGED, false));
 
+
     }
 
     @Override
@@ -99,7 +100,6 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
                 .with(FACING, facing)
                 .with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
     }
-
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
@@ -163,7 +163,7 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
         FluidState fluidState = world.getFluidState(pos);
-        return super.canPlaceAt(state, world, pos) || blockState.isReplaceable()|| fluidState.isIn(FluidTags.WATER);
+        return super.canPlaceAt(state, world, pos) || blockState.isReplaceable() || fluidState.isIn(FluidTags.WATER);
     }
 
 
