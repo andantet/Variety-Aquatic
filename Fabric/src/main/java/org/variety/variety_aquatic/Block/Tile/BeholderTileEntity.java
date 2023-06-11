@@ -51,17 +51,23 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
     private <E extends BlockEntity & GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
+        System.out.println("Active state: " + activeState); // Debugging statement
+
         switch (activeState) {
             case OFF:
+                System.out.println("Setting animation: Off"); // Debugging statement
                 event.getController().setAnimation(RawAnimation.begin().then("Off", Animation.LoopType.LOOP));
                 break;
             case LOW:
+                System.out.println("Setting animation: Low"); // Debugging statement
                 event.getController().setAnimation(RawAnimation.begin().then("Low", Animation.LoopType.LOOP));
                 break;
             case MEDIUM:
+                System.out.println("Setting animation: Medium"); // Debugging statement
                 event.getController().setAnimation(RawAnimation.begin().then("Medium", Animation.LoopType.LOOP));
                 break;
             case HIGH:
+                System.out.println("Setting animation: High"); // Debugging statement
                 event.getController().setAnimation(RawAnimation.begin().then("High", Animation.LoopType.LOOP));
                 break;
         }
@@ -70,7 +76,7 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(new AnimationController<BeholderTileEntity>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
     }
 
     public AnimatableInstanceCache getAnimatableInstanceCache() {

@@ -2,7 +2,9 @@ package org.variety.variety_aquatic.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.math.BlockPos;
@@ -29,8 +31,15 @@ public class LeviathanTrophyBlock extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite());
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        Direction playerLookDirection = ctx.getPlayerLookDirection();
+
+        Direction facing = playerLookDirection.getAxis() == Direction.Axis.Y ? Direction.NORTH : playerLookDirection.getOpposite();
+
+        return getDefaultState()
+                .with(FACING, facing);
     }
+
 
     @Override
     public BlockRenderType getRenderType(BlockState state) {
