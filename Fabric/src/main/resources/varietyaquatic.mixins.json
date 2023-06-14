@@ -4,7 +4,6 @@
   "package": "org.variety.variety_aquatic.Mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CoralFeatureMixin"
   ],
   "client": [
     "WorldRendererMixin",
