@@ -52,8 +52,6 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
     private <E extends BlockEntity & GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
-        System.out.println("Active state: " + activeState); // Debugging statement
-
         switch (activeState) {
             case off:
                 event.getController().setAnimation(RawAnimation.begin().thenLoop("Off"));

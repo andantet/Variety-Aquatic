@@ -121,8 +121,6 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
         if (!world.isClient) {
             world.playSound(null, pos, ModSound.BEHOLDER_CLICK, SoundCategory.BLOCKS, 0.5F, 1.0F);
             State currentState = state.get(CURRENT_STATE);
-            System.out.println("Current state: " + currentState.toString()); // Debugging code
-
             State newState;
             switch (currentState) {
                 case off:

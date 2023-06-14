@@ -14,6 +14,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.util.RenderUtils;
 
 
 public class AnemoneTileEntity extends BlockEntity implements GeoAnimatable {
@@ -107,6 +108,6 @@ public class AnemoneTileEntity extends BlockEntity implements GeoAnimatable {
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return RenderUtils.getCurrentTick();
     }
 }
