@@ -34,8 +34,7 @@
     "varietyaquatic.mixins.json"
   ],
   "conflicts": {
-    "clear-skies": "*",
-    "azurelib": "*"
+    "clear-skies": "*"
   },
   "suggests": {
     "sodium": "*"
