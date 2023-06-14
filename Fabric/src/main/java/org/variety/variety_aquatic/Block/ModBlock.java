@@ -24,24 +24,24 @@ public class ModBlock {
 
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
-            new AnemoneBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f).requiresTool()),ModItemGroup.VARIETYAQUATIC);
+            new AnemoneBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f).requiresTool().nonOpaque().noBlockBreakParticles()),ModItemGroup.VARIETYAQUATIC);
 
 
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerTrophyBlock("leviathan",
             new LeviathanTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
-                    .strength(4f).nonOpaque()));
+                    .strength(4f).noBlockBreakParticles().nonOpaque()));
     public static final Block GIANTSQUID_TROPHY_BLOCK = registerTrophyBlock("giantsquidtrophy",
             new GiantGlowingSquidTrophyBlock(FabricBlockSettings.of(Material.DECORATION)
-                    .strength(4f).nonOpaque()));
+                    .strength(4f).nonOpaque().noBlockBreakParticles()));
     public static final Block BEHOLDER = registerBlock("beholder",
             new Beholder(FabricBlockSettings.of(Material.DECORATION)
-                    .strength(4f).nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel())),ModItemGroup.VARIETYAQUATIC);
+                    .strength(4f).noBlockBreakParticles().nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel())),ModItemGroup.VARIETYAQUATIC);
 
 
 
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
             new SeaUrchinBlock(FabricBlockSettings.of(Material.REPLACEABLE_UNDERWATER_PLANT)
-                    .strength(4f).nonOpaque().breakInstantly()),ModItemGroup.VARIETYAQUATIC);
+                    .strength(4f).nonOpaque().breakInstantly().noBlockBreakParticles()),ModItemGroup.VARIETYAQUATIC);
     public static final Block ANGLER_TORCH = Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "angler_torch_ground"),
             new AnglerTorchBlock(FabricBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> {
                 return 14;
