@@ -24,7 +24,7 @@ public class ModBlock {
 
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
-            new Block(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f).requiresTool()),ModItemGroup.VARIETYAQUATIC);
+            new AnemoneBlock(FabricBlockSettings.copyOf(Blocks.STONE).strength(4.0f).requiresTool()),ModItemGroup.VARIETYAQUATIC);
 
 
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerTrophyBlock("leviathan",

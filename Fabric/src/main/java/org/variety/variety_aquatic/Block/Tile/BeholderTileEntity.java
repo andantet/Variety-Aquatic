@@ -24,6 +24,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,16 +53,16 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
     private <E extends BlockEntity & GeoAnimatable> PlayState predicate(AnimationState<E> event) {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         switch (activeState) {
-            case OFF:
+            case off:
                 event.getController().setAnimation(RawAnimation.begin().then("Off", Animation.LoopType.LOOP));
                 break;
-            case LOW:
+            case low:
                 event.getController().setAnimation(RawAnimation.begin().then("Low", Animation.LoopType.LOOP));
                 break;
-            case MEDIUM:
+            case medium:
                 event.getController().setAnimation(RawAnimation.begin().then("Medium", Animation.LoopType.LOOP));
                 break;
-            case HIGH:
+            case high:
                 event.getController().setAnimation(RawAnimation.begin().then("High", Animation.LoopType.LOOP));
                 break;
         }
@@ -79,7 +80,7 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
 
     @Override
     public double getTick(Object o) {
-        return 0;
+        return RenderUtils.getCurrentTick();
     }
 
 
@@ -122,13 +123,13 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         double radius;
 
-        if (activeState == Beholder.State.OFF) {
+        if (activeState == Beholder.State.off) {
             radius = 0.0;
-        } else if (activeState == Beholder.State.LOW) {
+        } else if (activeState == Beholder.State.low) {
             radius = Math.round(NewConfig.beholder_max_range / 4);
-        } else if (activeState == Beholder.State.MEDIUM) {
+        } else if (activeState == Beholder.State.medium) {
             radius = Math.round(NewConfig.beholder_max_range / 2);
-        } else if (activeState == Beholder.State.HIGH) {
+        } else if (activeState == Beholder.State.high) {
             radius = Math.round(NewConfig.beholder_max_range);
         } else {
             radius = 0.0;
