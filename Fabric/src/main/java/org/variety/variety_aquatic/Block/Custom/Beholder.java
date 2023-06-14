@@ -121,8 +121,6 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
         if (!world.isClient) {
             world.playSound(null, pos, ModSound.BEHOLDER_CLICK, SoundCategory.BLOCKS, 0.5F, 1.0F);
             State currentState = state.get(CURRENT_STATE);
-            System.out.println("Current state: " + currentState.toString()); // Debugging code
-
             State newState;
             switch (currentState) {
                 case off:
@@ -141,10 +139,6 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
                     newState = State.off;
                     break;
             }
-
-            // Update the light level property based on the new state
-            int newLightLevel = newState.getLightLevel();
-
             // Set the active state and light level of the block entity
             world.setBlockState(pos, state.with(CURRENT_STATE, newState), 3);
             ((BeholderTileEntity) world.getBlockEntity(pos)).setActiveState(newState);
