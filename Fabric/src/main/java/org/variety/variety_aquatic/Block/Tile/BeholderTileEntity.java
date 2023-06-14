@@ -54,16 +54,16 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
         System.out.println("Active state: " + activeState); // Debugging statement
 
         switch (activeState) {
-            case OFF:
+            case off:
                 event.getController().setAnimation(RawAnimation.begin().thenLoop("Off"));
                 break;
-            case LOW:
+            case low:
                 event.getController().setAnimation(RawAnimation.begin().thenLoop("Low"));
                 break;
-            case MEDIUM:
+            case medium:
                 event.getController().setAnimation(RawAnimation.begin().thenLoop("Medium"));
                 break;
-            case HIGH:
+            case high:
                 event.getController().setAnimation(RawAnimation.begin().thenLoop("High"));
                 break;
         }
@@ -124,13 +124,13 @@ public class BeholderTileEntity extends BlockEntity implements GeoAnimatable {
         Beholder.State activeState = getCachedState().get(Beholder.CURRENT_STATE);
         double radius;
 
-        if (activeState == Beholder.State.OFF) {
+        if (activeState == Beholder.State.off) {
             radius = 0.0;
-        } else if (activeState == Beholder.State.LOW) {
+        } else if (activeState == Beholder.State.low) {
             radius = Math.round(NewConfig.beholder_max_range / 4);
-        } else if (activeState == Beholder.State.MEDIUM) {
+        } else if (activeState == Beholder.State.medium) {
             radius = Math.round(NewConfig.beholder_max_range / 2);
-        } else if (activeState == Beholder.State.HIGH) {
+        } else if (activeState == Beholder.State.high) {
             radius = Math.round(NewConfig.beholder_max_range);
         } else {
             radius = 0.0;

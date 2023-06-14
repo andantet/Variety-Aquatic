@@ -23,30 +23,30 @@ public class ModBlock {
 
 
     public static final Block ANEMONE_BLOCK = registerBlock("anemone",
-            new Block(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(4.0f).requiresTool()));
+            new Block(FabricBlockSettings.copyOf(Blocks.GRASS_BLOCK).strength(4.0f).requiresTool().noBlockBreakParticles()));
 
 
     public static final Block LEVIATHAN_TROPHY_BLOCK = registerTrophyBlock("leviathan",
             new LeviathanTrophyBlock(FabricBlockSettings.copyOf(Blocks.STONE)
-                    .strength(4f).nonOpaque()));
+                    .strength(4f).nonOpaque().noBlockBreakParticles()));
     public static final Block GIANTSQUID_TROPHY_BLOCK = registerTrophyBlock("giantsquidtrophy",
             new GiantGlowingSquidTrophyBlock(FabricBlockSettings.copyOf(Blocks.STONE)
-                    .strength(4f).nonOpaque()));
+                    .strength(4f).nonOpaque().noBlockBreakParticles()));
     public static final Block BEHOLDER = registerBlock("beholder",
             new Beholder(FabricBlockSettings.copyOf(Blocks.COBBLESTONE)
-                    .strength(4f).nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel())));
+                    .strength(4f).nonOpaque().luminance(state -> state.get(Beholder.CURRENT_STATE).getLightLevel()).noBlockBreakParticles()));
 
 
 
     public static final Block SEA_URCHIN_BLOCK = registerBlock("sea_urchin_block",
             new SeaUrchinBlock(FabricBlockSettings.copyOf(Blocks.KELP)
-                    .strength(4f).nonOpaque().breakInstantly()));
+                    .strength(4f).nonOpaque().breakInstantly().noBlockBreakParticles()));
     public static final Block ANGLER_TORCH = Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "angler_torch_ground"),
-            new AnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.TORCH).noCollision().breakInstantly().luminance((state) -> {
+            new AnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.TORCH).noCollision().noBlockBreakParticles().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD), ParticleTypes.BUBBLE));
     public static final Block WALL_ANGLER_TORCH = Registry.register(Registries.BLOCK, new Identifier(Variety_Aquatic.MOD_ID, "wall_angler_torch"),
-            new WallAnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.WALL_TORCH).noCollision().breakInstantly().luminance((state) -> {
+            new WallAnglerTorchBlock(FabricBlockSettings.copyOf(Blocks.WALL_TORCH).noBlockBreakParticles().noCollision().breakInstantly().luminance((state) -> {
                 return 14;
             }).sounds(BlockSoundGroup.WOOD).dropsLike(ModBlock.ANGLER_TORCH), ParticleTypes.BUBBLE));
 
