@@ -40,10 +40,10 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
     private static final VoxelShape SLAB_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
     private static final VoxelShape MOUTH_SHAPE = Block.createCuboidShape(3,8,4,13,16,12);
     public enum State implements StringIdentifiable {
-        OFF(0),
-        LOW(4),
-        MEDIUM(8),
-        HIGH(12);
+        off(0),
+        low(4),
+        medium(8),
+        high(12);
 
         private final int lightLevel;
 
@@ -67,7 +67,7 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(FACING, Direction.NORTH)
-                .with(CURRENT_STATE, State.OFF)
+                .with(CURRENT_STATE, State.off)
                 .with(WATERLOGGED, false));
 
 
@@ -117,24 +117,22 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
         if (!world.isClient) {
             world.playSound(null, pos, ModSound.BEHOLDER_CLICK, SoundCategory.BLOCKS, 0.5F, 1.0F);
             State currentState = state.get(CURRENT_STATE);
-            System.out.println("Current state: " + currentState.toString()); // Debugging code
-
             State newState;
             switch (currentState) {
-                case OFF:
-                    newState = State.LOW;
+                case off:
+                    newState = State.low;
                     break;
-                case LOW:
-                    newState = State.MEDIUM;
+                case low:
+                    newState = State.medium;
                     break;
-                case MEDIUM:
-                    newState = State.HIGH;
+                case medium:
+                    newState = State.high;
                     break;
-                case HIGH:
-                    newState = State.OFF;
+                case high:
+                    newState = State.off;
                     break;
                 default:
-                    newState = State.OFF;
+                    newState = State.off;
                     break;
             }
 

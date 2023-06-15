@@ -54,10 +54,8 @@ public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
         }
 
         if (hideTimer > 0) {
-            System.out.println("Hide Timer: " + hideTimer);
             hideTimer--;
             if (hideTimer <= 0 && hiddenClownfish != null) {
-                System.out.println("Releasing clownfish...");
                 releaseClownfish();
             }
         } else if (cooldownTimer > 0) {
@@ -76,7 +74,6 @@ public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
             hiddenClownfish = clownfish;
             hideTimer = HIDE_DURATION;
             cooldownTimer = COOLDOWN_DURATION;
-            System.out.println("Clownfish set in anemone. Hide Timer: " + hideTimer + ", Cooldown Timer: " + cooldownTimer);
         }
     }
 
@@ -85,7 +82,6 @@ public class AnemoneTileEntity extends BlockEntity implements IAnimatable {
             hiddenClownfish.refreshPositionAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
             world.spawnEntity(hiddenClownfish);
             hiddenClownfish = null;
-            System.out.println("Clownfish released from anemone.");
         }
     }
 
