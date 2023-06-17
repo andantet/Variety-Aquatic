@@ -24,6 +24,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. Windows]
 - Modding Platfrom [Forge/Fabric/Bedrock]
  - Version [e.g. 1.0.4]
+- Minecraft Version [e.g. 1.19.2]
 
 
 **Additional context**
