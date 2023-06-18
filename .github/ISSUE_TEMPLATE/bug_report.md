@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 - Modding Platfrom [Forge/Fabric/Bedrock]
  - Version [e.g. 1.0.4]
 - Minecraft Version [e.g. 1.19.2]
-
+- Modlist
 
 **Additional context**
 Add any other context about the problem here.
