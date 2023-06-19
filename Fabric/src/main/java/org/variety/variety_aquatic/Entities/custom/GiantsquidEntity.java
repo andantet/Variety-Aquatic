@@ -210,17 +210,17 @@ public class GiantsquidEntity extends WaterCreatureEntity implements GeoAnimatab
     }
 
     protected SoundEvent getHurtSound(DamageSource source) {
-        return ModSound.GIANTSQUID_HURT;
+        return ModSound.GIANT_GLOWSQUID_HURT;
     }
 
     @Nullable
     protected SoundEvent getDeathSound() {
-        return ModSound.WHALE_DEATH;
+        return ModSound.GIANT_GLOWSQUID_DEATH;
     }
 
     @Nullable
     protected SoundEvent getAmbientSound() {
-        return  ModSound.GIANTSQUID_AMBIENT;
+        return  ModSound.GIANT_GLOWSQUID_AMBIENT;
     }
 
     protected SoundEvent getSplashSound() {
