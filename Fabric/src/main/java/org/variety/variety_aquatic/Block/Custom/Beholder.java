@@ -92,8 +92,12 @@ public class Beholder extends BlockWithEntity implements Waterloggable {
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        Direction playerLookDirection = ctx.getPlayerLookDirection();
+
+        Direction facing = playerLookDirection.getAxis() == Direction.Axis.Y ? Direction.NORTH : playerLookDirection.getOpposite();
+
         return getDefaultState()
-                .with(FACING, ctx.getPlayerLookDirection().getOpposite())
+                .with(FACING, facing)
                 .with(WATERLOGGED, fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8);
     }
 
