@@ -1,8 +1,8 @@
-package org.variety.variety_aquatic.Entities.custom.AI;
+package org.variety.variety_aquatic.Common.Entities.custom.AI;
 
 import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.entity.ai.goal.Goal;
-import org.variety.variety_aquatic.Entities.custom.SchoolingVarietyFish;
+import org.variety.variety_aquatic.Common.Entities.custom.SchoolingVarietyFish;
 
 import java.util.List;
 import java.util.function.Predicate;

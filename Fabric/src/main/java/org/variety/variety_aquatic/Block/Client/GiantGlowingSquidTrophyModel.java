@@ -1,8 +1,8 @@
-package org.variety.variety_aquatic.Block.Client;
+package org.variety.variety_aquatic.Common.Block.Client;
 
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
-import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.GiantGlowingSquidTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib.model.GeoModel;
 

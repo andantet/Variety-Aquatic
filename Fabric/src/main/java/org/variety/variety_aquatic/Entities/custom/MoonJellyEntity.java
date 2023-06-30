@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;

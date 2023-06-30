@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -32,8 +32,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.custom.AI.SonicBoomAttackGoal;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Entities.custom.AI.SonicBoomAttackGoal;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;

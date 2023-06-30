@@ -1,7 +1,7 @@
-package org.variety.variety_aquatic.Block.Client;
+package org.variety.variety_aquatic.Common.Block.Client;
 
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.AnemoneTileEntity;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import software.bernie.geckolib.model.GeoModel;
 

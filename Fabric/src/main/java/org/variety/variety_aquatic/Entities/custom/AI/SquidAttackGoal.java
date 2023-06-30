@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom.AI;
+package org.variety.variety_aquatic.Common.Entities.custom.AI;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
@@ -9,7 +9,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
-import org.variety.variety_aquatic.Entities.custom.GiantsquidEntity;
+import org.variety.variety_aquatic.Common.Entities.custom.GiantsquidEntity;
 
 import java.util.EnumSet;
 

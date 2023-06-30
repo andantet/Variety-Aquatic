@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.ProjectileEntity;
+package org.variety.variety_aquatic.Common.Entities.ProjectileEntity;
 
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.Entity;
@@ -16,8 +16,8 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.CuttlefishEntity;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Entities.custom.CuttlefishEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;

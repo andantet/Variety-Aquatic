@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.world;
+package org.variety.variety_aquatic.Common.world;
 
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
@@ -8,8 +8,8 @@ import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.*;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Entities.custom.*;
 import org.variety.variety_aquatic.Util.NewConfig;
 
 public class ModEntitySpawns {

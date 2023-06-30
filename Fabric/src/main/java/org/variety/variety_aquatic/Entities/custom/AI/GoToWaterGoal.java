@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom.AI;
+package org.variety.variety_aquatic.Common.Entities.custom.AI;
 import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.registry.tag.FluidTags;

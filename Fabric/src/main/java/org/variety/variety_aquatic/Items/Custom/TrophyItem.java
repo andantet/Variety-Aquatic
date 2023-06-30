@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Items.Custom;
+package org.variety.variety_aquatic.Common.Items.Custom;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;

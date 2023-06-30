@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Tile;
+package org.variety.variety_aquatic.Common.Block.Tile;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -7,8 +7,8 @@ import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.ModTileEntity;
-import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
+import org.variety.variety_aquatic.Common.Block.ModTileEntity;
+import org.variety.variety_aquatic.Common.Entities.custom.ClownfishEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;

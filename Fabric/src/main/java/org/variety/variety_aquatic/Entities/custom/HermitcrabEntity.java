@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 
 import net.minecraft.entity.EntityGroup;
@@ -25,9 +25,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Items.ModItems;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;

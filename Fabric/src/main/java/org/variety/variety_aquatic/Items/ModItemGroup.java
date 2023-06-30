@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Items;
+package org.variety.variety_aquatic.Common.Items;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
@@ -7,7 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Block.ModBlock;
+import org.variety.variety_aquatic.Common.Block.ModBlock;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModItemGroup {

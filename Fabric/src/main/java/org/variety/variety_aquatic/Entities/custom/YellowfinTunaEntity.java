@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.variety.variety_aquatic.Entities.custom.AI.TunaJumpGoal;
+import org.variety.variety_aquatic.Common.Entities.custom.AI.TunaJumpGoal;
 import org.variety.variety_aquatic.Util.NewConfig;
 
 

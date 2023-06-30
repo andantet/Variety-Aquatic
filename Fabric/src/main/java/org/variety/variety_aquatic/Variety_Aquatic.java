@@ -6,15 +6,15 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.variety.variety_aquatic.Block.ModBlock;
-import org.variety.variety_aquatic.Block.ModTileEntity;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Entities.custom.*;
-import org.variety.variety_aquatic.Items.ModItemGroup;
-import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Block.ModBlock;
+import org.variety.variety_aquatic.Common.Block.ModTileEntity;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Entities.custom.*;
+import org.variety.variety_aquatic.Common.Items.ModItemGroup;
+import org.variety.variety_aquatic.Common.Items.ModItems;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 import org.variety.variety_aquatic.Util.NewConfig;
-import org.variety.variety_aquatic.world.ModWorldGen;
+import org.variety.variety_aquatic.Common.world.ModWorldGen;
 import software.bernie.geckolib.GeckoLib;
 
 public class Variety_Aquatic implements ModInitializer {

@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.Variant;
+package org.variety.variety_aquatic.Common.Entities.Variant;
 
 import net.minecraft.util.Identifier;
 import org.variety.variety_aquatic.Variety_Aquatic;

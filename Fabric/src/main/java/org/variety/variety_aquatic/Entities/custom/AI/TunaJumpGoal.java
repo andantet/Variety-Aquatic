@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom.AI;
+package org.variety.variety_aquatic.Common.Entities.custom.AI;
 
 import net.minecraft.entity.ai.goal.DiveJumpingGoal;
 import net.minecraft.entity.passive.DolphinEntity;
@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import org.variety.variety_aquatic.Entities.custom.YellowfinTunaEntity;
+import org.variety.variety_aquatic.Common.Entities.custom.YellowfinTunaEntity;
 
 public class TunaJumpGoal extends DiveJumpingGoal {
     private static final int[] OFFSET_MULTIPLIERS = new int[]{0, 1, 4, 5, 6, 7};

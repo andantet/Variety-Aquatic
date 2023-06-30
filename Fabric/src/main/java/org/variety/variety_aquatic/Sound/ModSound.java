@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Sound;
+package org.variety.variety_aquatic.Common.Sound;
 
 
 import net.minecraft.registry.Registries;

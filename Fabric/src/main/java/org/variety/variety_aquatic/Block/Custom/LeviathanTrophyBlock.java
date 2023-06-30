@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Custom;
+package org.variety.variety_aquatic.Common.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -12,7 +12,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.LeviathanTrophyTileEntity;
 
 public class LeviathanTrophyBlock extends Block implements BlockEntityProvider {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;

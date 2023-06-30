@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Custom;
+package org.variety.variety_aquatic.Common.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.fluid.Fluid;

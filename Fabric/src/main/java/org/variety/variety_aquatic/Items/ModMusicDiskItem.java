@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Items;
+package org.variety.variety_aquatic.Common.Items;
 
 import net.minecraft.item.MusicDiscItem;
 import net.minecraft.sound.SoundEvent;

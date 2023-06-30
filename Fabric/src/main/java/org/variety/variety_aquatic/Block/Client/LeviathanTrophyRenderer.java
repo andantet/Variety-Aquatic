@@ -1,6 +1,6 @@
-package org.variety.variety_aquatic.Block.Client;
+package org.variety.variety_aquatic.Common.Block.Client;
 
-import org.variety.variety_aquatic.Block.Tile.LeviathanTrophyTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.LeviathanTrophyTileEntity;
 import software.bernie.geckolib.renderer.GeoBlockRenderer;
 
 public class LeviathanTrophyRenderer extends GeoBlockRenderer<LeviathanTrophyTileEntity> {

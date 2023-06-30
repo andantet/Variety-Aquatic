@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 
 import net.minecraft.block.Blocks;
@@ -33,9 +33,9 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.custom.AI.GoToWaterGoal;
-import org.variety.variety_aquatic.Items.ModItems;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Entities.custom.AI.GoToWaterGoal;
+import org.variety.variety_aquatic.Common.Items.ModItems;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;

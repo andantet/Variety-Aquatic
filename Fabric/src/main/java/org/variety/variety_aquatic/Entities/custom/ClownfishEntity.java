@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -8,7 +8,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.variety.variety_aquatic.Block.ModBlock;
+import org.variety.variety_aquatic.Common.Block.ModBlock;
 import org.variety.variety_aquatic.Util.NewConfig;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.Animation;

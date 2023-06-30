@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block;
+package org.variety.variety_aquatic.Common.Block;
 
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -14,8 +14,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Block.Custom.*;
-import org.variety.variety_aquatic.Items.ModItemGroup;
+import org.variety.variety_aquatic.Common.Block.Custom.*;
+import org.variety.variety_aquatic.Common.Items.ModItemGroup;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModBlock {

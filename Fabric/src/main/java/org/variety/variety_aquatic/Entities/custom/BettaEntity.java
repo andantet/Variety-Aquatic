@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.Variant.BettaVariant;
+import org.variety.variety_aquatic.Common.Entities.Variant.BettaVariant;
 import org.varietymods.varietyapi.API.IVariantEntity;
 
 public class BettaEntity extends VarietyFish implements IVariantEntity<BettaVariant> {

@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -20,7 +20,7 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.Variant.SeahorseVariant;
+import org.variety.variety_aquatic.Common.Entities.Variant.SeahorseVariant;
 import org.variety.variety_aquatic.Util.NewConfig;
 import org.varietymods.varietyapi.API.IVariantEntity;
 

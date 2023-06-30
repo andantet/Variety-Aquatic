@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Custom;
+package org.variety.variety_aquatic.Common.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,7 +17,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.Tile.GiantGlowingSquidTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.GiantGlowingSquidTileEntity;
 
 public class GiantGlowingSquidTrophyBlock extends Block implements BlockEntityProvider,Waterloggable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;

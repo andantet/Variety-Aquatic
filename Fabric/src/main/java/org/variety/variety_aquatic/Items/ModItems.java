@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Items;
+package org.variety.variety_aquatic.Common.Items;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -9,10 +9,10 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
-import org.variety.variety_aquatic.Block.ModBlock;
-import org.variety.variety_aquatic.Entities.ModEntities;
-import org.variety.variety_aquatic.Items.Custom.TrophyItem;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Block.ModBlock;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Items.Custom.TrophyItem;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 

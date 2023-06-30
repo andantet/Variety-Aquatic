@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Custom;
+package org.variety.variety_aquatic.Common.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -19,8 +19,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.Tile.AnemoneTileEntity;
-import org.variety.variety_aquatic.Entities.custom.ClownfishEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.AnemoneTileEntity;
+import org.variety.variety_aquatic.Common.Entities.custom.ClownfishEntity;
 
 public class AnemoneBlock extends PlantBlock implements BlockEntityProvider,Waterloggable {
     private static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

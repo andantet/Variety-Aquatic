@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -13,7 +13,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
+import org.variety.variety_aquatic.Common.Entities.ProjectileEntity.BlindnessProjectile;
 import org.variety.variety_aquatic.Util.NewConfig;
 
 

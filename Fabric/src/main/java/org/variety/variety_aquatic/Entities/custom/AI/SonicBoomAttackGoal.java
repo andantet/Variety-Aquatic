@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom.AI;
+package org.variety.variety_aquatic.Common.Entities.custom.AI;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -7,7 +7,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import org.variety.variety_aquatic.Entities.custom.LeviathanEntity;
+import org.variety.variety_aquatic.Common.Entities.custom.LeviathanEntity;
 
 import java.util.EnumSet;
 

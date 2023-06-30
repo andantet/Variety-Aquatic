@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -8,7 +8,7 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.custom.AI.FollowGroupLeaderGoal;
+import org.variety.variety_aquatic.Common.Entities.custom.AI.FollowGroupLeaderGoal;
 
 import java.util.List;
 import java.util.stream.Stream;

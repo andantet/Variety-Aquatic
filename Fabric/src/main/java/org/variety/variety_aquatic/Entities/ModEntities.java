@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities;
+package org.variety.variety_aquatic.Common.Entities;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
@@ -7,8 +7,8 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import org.variety.variety_aquatic.Entities.ProjectileEntity.BlindnessProjectile;
-import org.variety.variety_aquatic.Entities.custom.*;
+import org.variety.variety_aquatic.Common.Entities.ProjectileEntity.BlindnessProjectile;
+import org.variety.variety_aquatic.Common.Entities.custom.*;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModEntities {

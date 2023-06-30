@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Entities.custom;
+package org.variety.variety_aquatic.Common.Entities.custom;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -29,7 +29,7 @@ import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Entities.ModEntities;
+import org.variety.variety_aquatic.Common.Entities.ModEntities;
 import org.variety.variety_aquatic.Util.NewConfig;
 
 import java.util.UUID;

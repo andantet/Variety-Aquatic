@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Block.Custom;
+package org.variety.variety_aquatic.Common.Block.Custom;
 
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,9 +28,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
-import org.variety.variety_aquatic.Block.ModTileEntity;
-import org.variety.variety_aquatic.Block.Tile.BeholderTileEntity;
-import org.variety.variety_aquatic.Sound.ModSound;
+import org.variety.variety_aquatic.Common.Block.ModTileEntity;
+import org.variety.variety_aquatic.Common.Block.Tile.BeholderTileEntity;
+import org.variety.variety_aquatic.Common.Sound.ModSound;
 
 public class Beholder extends BlockWithEntity implements Waterloggable {
     public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
