@@ -14,6 +14,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -50,10 +51,11 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
+        System.out.println("foo");
         super.initGoals();
         this.goalSelector.add(8, new EscapeDangerGoal(this, 2.1f));
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new SwimAroundGoal(this, 0.50, 6));
+        this.goalSelector.add(2, new SwimToRandomPlaceGoal(this, 0.50, 6));
         this.goalSelector.add(5, new LookAtEntityGoal(this, PlayerEntity.class, 12.0F));
         this.goalSelector.add(4, new LookAroundGoal(this));
     }
@@ -193,6 +195,9 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
     public int getBodyYawSpeed() {
         return 1;
     }
+    protected boolean hasSelfControl() {
+        return true;
+    }
 
     public static boolean CanSpawnDeep(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         return pos.getY() <= world.getSeaLevel() - 25  && world.getBlockState(pos).isOf(Blocks.WATER)&&WaterCreatureEntity.canSpawn(type, world, reason, pos, random);
@@ -255,6 +260,19 @@ public class VarietyFish extends WaterCreatureEntity implements GeoEntity {
             } else {
                 this.fish.setMovementSpeed(0.0F);
             }
+        }
+    }
+
+    static class SwimToRandomPlaceGoal extends SwimAroundGoal {
+        private final VarietyFish fish;
+
+        public SwimToRandomPlaceGoal(VarietyFish fish, double d, int i) {
+            super(fish, 1.0, 40);
+            this.fish = fish;
+        }
+
+        public boolean canStart() {
+            return this.fish.hasSelfControl() && super.canStart();
         }
     }
 }

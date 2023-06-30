@@ -1,5 +1,6 @@
 package org.variety.variety_aquatic.Common.Entities;
 
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -12,6 +13,36 @@ import org.variety.variety_aquatic.Common.Entities.custom.*;
 import org.variety.variety_aquatic.Variety_Aquatic;
 
 public class ModEntities {
+
+    public static void registerModEntities() {
+        FabricDefaultAttributeRegistry.register(ModEntities.SEAANGEL, SeaangleEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SHARK, SharkEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.WHALESHARK, WhaleSharkEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.VAMPIRESQUID, VampireSquidEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.OARFISH, OarfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SQUIDLING, squidlingEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SUNFISH, SunfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.HERMITCRAB, HermitcrabEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.JELLYFISH, JellyfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.MOONJELLY, MoonJellyEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.YELLOWFIN, YellowfinTunaEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CUTTLEFISH, CuttlefishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.OPAH, OpahEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.LIONFISH, LionfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SPOTTEDSTINGRAY, SpottedStingray.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.GIANTGLOWINGSQUID, GiantsquidEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.PIRANHA, PiranhaEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.LEVIATHAN, LeviathanEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.TETRA, TetraEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.BETTA, BettaEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.ANGLERFISH, AnglerFishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.SEAHORSE, SeahorseEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.CRAB, CrabEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.BARRELEE, BarreleyeEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.FLASHLIGHTFISH, FlashlightfishEntity.setAttributes());
+    }
+
     public static final EntityType<BlindnessProjectile> BLINDNESS_PROJECTILE_ENTITY_TYPE = Registry.register(
             Registries.ENTITY_TYPE,
             new Identifier(Variety_Aquatic.MOD_ID, "blindness_projectile"),

@@ -1,4 +1,4 @@
-package org.variety.variety_aquatic.Common.world;
+package org.variety.variety_aquatic.Common.World;
 
 
 public class ModWorldGen {

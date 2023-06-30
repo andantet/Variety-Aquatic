@@ -16,8 +16,6 @@ import org.variety.variety_aquatic.Common.Block.Client.LeviathanTrophyRenderer;
 import org.variety.variety_aquatic.Common.Block.ModBlock;
 import org.variety.variety_aquatic.Common.Block.ModTileEntity;
 import org.variety.variety_aquatic.Common.Entities.ModEntities;
-import org.variety.variety_aquatic.Common.Items.Custom.TrophyItemRenderer;
-import org.variety.variety_aquatic.Common.Items.ModItems;
 import org.variety.variety_aquatic.Variety_Aquatic;
 import org.varietymods.varietyapi.API.*;
 
